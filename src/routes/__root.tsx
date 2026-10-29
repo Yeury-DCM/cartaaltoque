@@ -1,7 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
-import { APP_NAME, APP_TAGLINE } from "@/lib/brand";
+import { APP_DOMAIN, APP_NAME, APP_TAGLINE } from "@/lib/brand";
 import { securityHeaders } from "@/lib/security-headers";
 
 function NotFoundComponent() {
@@ -34,11 +34,17 @@ export const Route = createRootRoute({
       { property: "og:title", content: APP_NAME },
       { property: "og:description", content: APP_TAGLINE },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:image", content: `https://${APP_DOMAIN}/og-image.png` },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#0d0d0d" },
     ],
     links: [
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", href: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { rel: "icon", href: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { rel: "icon", href: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { rel: "icon", href: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

@@ -120,7 +120,7 @@ async function renderPoster(r: Restaurant, qr: HTMLCanvasElement, logo: HTMLImag
 
   // El QR ocupa el espacio que queda, hasta 820 px.
   const qrY = y + 40;
-  const qrSize = Math.min(820, H - qrY - 190);
+  const qrSize = Math.min(820, H - qrY - 280);
   const qrX = (W - qrSize) / 2;
   ctx.drawImage(qr, qrX, qrY, qrSize, qrSize);
 
@@ -128,9 +128,18 @@ async function renderPoster(r: Restaurant, qr: HTMLCanvasElement, logo: HTMLImag
   ctx.fillStyle = r.brand_color;
   ctx.fillText("y haz tu pedido por WhatsApp", W / 2, qrY + qrSize + 70);
 
-  ctx.font = '26px "DM Sans", sans-serif';
+  // Pie con el logo oficial de la plataforma (versión para fondo claro).
+  ctx.font = '24px "DM Sans", sans-serif';
   ctx.fillStyle = "#999999";
-  ctx.fillText(`Menú hecho con ${APP_NAME}`, W / 2, H - 40);
+  ctx.fillText("Menú hecho con", W / 2, H - 112);
+  const brand = await loadImage("/logo-claro.png");
+  if (brand) {
+    const h = 64;
+    const w = (brand.width / brand.height) * h;
+    ctx.drawImage(brand, (W - w) / 2, H - 98, w, h);
+  } else {
+    ctx.fillText(APP_NAME, W / 2, H - 60);
+  }
   return canvas;
 }
 

@@ -4,6 +4,7 @@ import { Check, Clock, MapPin, Plus, Search, UtensilsCrossed } from "lucide-reac
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { CartBar } from "@/components/CartBar";
 import { CartDrawer } from "@/components/CartDrawer";
+import { BrandLogo } from "@/components/BrandLogo";
 import { CategoryNav } from "@/components/CategoryNav";
 import { ItemDialog } from "@/components/ItemDialog";
 import { PlatformLinks } from "@/components/PlatformLinks";
@@ -282,9 +283,11 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
           )}
           <Link
             to="/"
-            className="text-[11px] uppercase tracking-[0.25em] text-foreground/40 transition hover:text-primary"
+            aria-label={`Menú hecho con ${APP_NAME}`}
+            className="inline-flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-foreground/40 opacity-80 transition hover:opacity-100"
           >
-            Menú hecho con {APP_NAME}
+            Menú hecho con
+            <BrandLogo className="h-9" />
           </Link>
         </footer>
       </main>

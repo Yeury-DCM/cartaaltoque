@@ -8,14 +8,14 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const PROJECT_REF = "ghptqhnhhazaufcchzsw";
-const LOGO_URL = "";
+const LOGO_URL = "https://cartaaltoque.com/logo-oscuro.png";
 const BRAND = "#F5A01E";
 const INK = "#0D0D0D";
 
 const root = join(import.meta.dirname, "..");
 
 const header = LOGO_URL
-  ? `<img src="${LOGO_URL}" alt="Carta al Toque" width="200" style="display:block;margin:0 auto;border:0;max-width:200px;height:auto;">`
+  ? `<img src="${LOGO_URL}" alt="Carta al Toque" width="220" style="display:block;margin:0 auto;border:0;max-width:220px;height:auto;">`
   : `<div style="font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-size:34px;line-height:1;letter-spacing:1px;color:#ffffff;text-transform:uppercase;">Carta al <span style="color:${BRAND};">Toque</span></div>`;
 
 /** Esqueleto con tablas: es lo que mejor se ve en Gmail, Outlook y el correo del celular. */

@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ExternalLink, Loader2, LogOut, RefreshCw, Search } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Center, ErrorNote, FullSpinner } from "@/components/Center";
 import { APP_NAME, menuPath } from "@/lib/brand";
 import { PLAN_LABEL } from "@/lib/features";
@@ -171,7 +172,8 @@ function Dashboard() {
             >
               <ArrowLeft className="h-5 w-5" />
             </Link>
-            <span className="font-display text-2xl uppercase">{APP_NAME} · Super admin</span>
+            <BrandLogo className="h-9" />
+            <span className="font-display text-2xl uppercase text-foreground/70">Super admin</span>
           </div>
           <div className="flex items-center gap-2">
             <button

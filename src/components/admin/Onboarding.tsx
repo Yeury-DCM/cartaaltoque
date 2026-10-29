@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Check, Loader2, LogOut, X } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { ErrorNote, fieldClass, labelClass } from "@/components/Center";
 import { GrainOverlay } from "@/components/GrainOverlay";
-import { APP_NAME, TRIAL_DAYS, menuUrl } from "@/lib/brand";
+import { TRIAL_DAYS, menuUrl } from "@/lib/brand";
 import { errorMessage, supabase } from "@/lib/supabase";
 import { isValidSlug, onlyDigits, slugify } from "@/lib/tenant";
 
@@ -70,7 +71,7 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
       <GrainOverlay />
       <div className="relative mx-auto max-w-md">
         <div className="mb-8 flex items-center justify-between">
-          <span className="font-display text-3xl uppercase">{APP_NAME}</span>
+          <BrandLogo className="h-12" />
           <button
             className="btn-ghost !px-3 !py-2 !text-xs"
             onClick={() => supabase.auth.signOut()}

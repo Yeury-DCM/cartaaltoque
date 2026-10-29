@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Loader2, MailCheck } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Center, ErrorNote, fieldClass } from "@/components/Center";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { APP_NAME } from "@/lib/brand";
@@ -116,11 +117,8 @@ function AuthPage() {
       <GrainOverlay />
       <Center>
         <div className="relative w-full max-w-sm">
-          <Link
-            to="/"
-            className="mb-6 block text-center font-display text-4xl uppercase tracking-wide"
-          >
-            {APP_NAME}
+          <Link to="/" aria-label={APP_NAME} className="mb-6 flex justify-center">
+            <BrandLogo className="h-16" />
           </Link>
           {sent ? (
             <div className="glass-card space-y-3 p-6 text-center">

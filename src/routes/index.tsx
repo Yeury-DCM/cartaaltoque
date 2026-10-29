@@ -9,6 +9,7 @@ import {
   Smartphone,
   UtensilsCrossed,
 } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { Reveal } from "@/components/Reveal";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
@@ -73,9 +74,7 @@ function Landing() {
       <GrainOverlay />
 
       <header className="relative z-20 mx-auto flex max-w-6xl items-center justify-between px-5 py-5 md:px-8">
-        <span className="whitespace-nowrap font-display text-2xl uppercase tracking-wide sm:text-3xl">
-          {APP_NAME}
-        </span>
+        <BrandLogo className="h-9 sm:h-12" />
         <nav className="flex items-center gap-2">
           <Link
             to="/entrar"
