@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test:db": "node scripts/test-db.mjs"
+    "test:db": "node scripts/test-db.mjs",
+    "deploy": "vite build && wrangler deploy"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.25.5",

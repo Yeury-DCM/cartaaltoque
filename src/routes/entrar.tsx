@@ -32,6 +32,9 @@ const ERRORS: Record<string, string> = {
   "Invalid login credentials": "Correo o contraseña incorrectos.",
   "Email not confirmed": "Confirma tu correo antes de entrar (revisa tu bandeja).",
   "User already registered": "Ya existe una cuenta con ese correo. Entra con tu contraseña.",
+  "Failed to fetch": "No pudimos conectar con el servidor. Revisa tu internet e intenta de nuevo.",
+  "email rate limit exceeded":
+    "Se enviaron demasiados correos seguidos. Espera un rato e intenta de nuevo.",
 };
 const friendly = (msg: string) => ERRORS[msg] ?? msg;
 

@@ -10,10 +10,12 @@ export const TRIAL_DAYS = 14;
 /** Contacto para soporte y planes (WhatsApp del negocio del SaaS, solo dígitos). */
 export const SUPPORT_WHATSAPP = (import.meta.env.VITE_SUPPORT_WHATSAPP as string | undefined) ?? "";
 
-/** Origen público para enlaces y QR (en desarrollo, el del navegador). */
+/**
+ * Origen del sitio para enlaces y QR: el de la página que se está viendo, así que no
+ * hace falta configurar el dominio ni volver a desplegar si cambia. Solo se usa en el
+ * panel (que corre en el navegador), nunca en el servidor.
+ */
 export function publicOrigin(): string {
-  const configured = import.meta.env.VITE_PUBLIC_SITE_URL as string | undefined;
-  if (configured) return configured.replace(/\/+$/, "");
   return typeof window !== "undefined" ? window.location.origin : "";
 }
 
