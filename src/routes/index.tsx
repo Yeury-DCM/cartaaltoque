@@ -308,6 +308,12 @@ function Landing() {
             >
               Entrar
             </Link>
+            <Link to="/privacidad" className="hover:text-primary">
+              Privacidad
+            </Link>
+            <Link to="/terminos" className="hover:text-primary">
+              Términos
+            </Link>
           </nav>
           <p className="text-xs uppercase tracking-[0.25em] text-foreground/35">
             © {new Date().getFullYear()} {APP_NAME}

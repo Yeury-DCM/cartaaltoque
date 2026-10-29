@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Loader2, MailCheck } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Center, ErrorNote, fieldClass } from "@/components/Center";
+import { GoogleIcon } from "@/components/icons/GoogleIcon";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { APP_NAME } from "@/lib/brand";
 import { useSession } from "@/lib/session";
@@ -33,6 +34,8 @@ const ERRORS: Record<string, string> = {
   "Invalid login credentials": "Correo o contraseña incorrectos.",
   "Email not confirmed": "Confirma tu correo antes de entrar (revisa tu bandeja).",
   "User already registered": "Ya existe una cuenta con ese correo. Entra con tu contraseña.",
+  "Unsupported provider: provider is not enabled":
+    "El inicio de sesión con Google todavía no está disponible. Usa tu correo y contraseña.",
   "Failed to fetch": "No pudimos conectar con el servidor. Revisa tu internet e intenta de nuevo.",
   "email rate limit exceeded":
     "Se enviaron demasiados correos seguidos. Espera un rato e intenta de nuevo.",
@@ -105,6 +108,16 @@ function AuthPage() {
     });
   };
 
+  // Google: la página se va a Google y vuelve a /app (o a /super) ya con la sesión iniciada.
+  const google = () =>
+    void run(async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: `${window.location.origin}${next}` },
+      });
+      if (error) throw error;
+    });
+
   const title = {
     entrar: "Entrar",
     registro: "Crear cuenta",
@@ -141,6 +154,22 @@ function AuthPage() {
                 <p className="text-center text-sm text-foreground/60">
                   Crea tu cuenta y arma tu menú en minutos.
                 </p>
+              )}
+              {(mode === "entrar" || mode === "registro") && (
+                <>
+                  <button
+                    type="button"
+                    onClick={google}
+                    disabled={busy}
+                    className="flex h-12 w-full items-center justify-center gap-3 rounded-lg bg-white px-4 text-[15px] font-medium text-[#1F1F1F] transition hover:bg-neutral-100 disabled:opacity-60"
+                  >
+                    <GoogleIcon /> Continuar con Google
+                  </button>
+                  <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-foreground/40">
+                    <span className="h-px flex-1 bg-white/10" /> o con tu correo
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+                </>
               )}
               {mode !== "nueva-clave" && (
                 <input

@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as EntrarRouteImport } from './routes/entrar'
+import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as SuperRouteImport } from './routes/super'
+import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppMenuRouteImport } from './routes/app.menu'
 import { Route as AppPaginaRouteImport } from './routes/app.pagina'
@@ -35,9 +37,19 @@ const EntrarRoute = EntrarRouteImport.update({
   path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacidadRoute = PrivacidadRouteImport.update({
+  id: '/privacidad',
+  path: '/privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SuperRoute = SuperRouteImport.update({
   id: '/super',
   path: '/super',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TerminosRoute = TerminosRouteImport.update({
+  id: '/terminos',
+  path: '/terminos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -75,7 +87,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/entrar': typeof EntrarRoute
+  '/privacidad': typeof PrivacidadRoute
   '/super': typeof SuperRoute
+  '/terminos': typeof TerminosRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
   '/app/qr': typeof AppQrRoute
@@ -86,7 +100,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/entrar': typeof EntrarRoute
+  '/privacidad': typeof PrivacidadRoute
   '/super': typeof SuperRoute
+  '/terminos': typeof TerminosRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
   '/app/qr': typeof AppQrRoute
@@ -99,7 +115,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/entrar': typeof EntrarRoute
+  '/privacidad': typeof PrivacidadRoute
   '/super': typeof SuperRoute
+  '/terminos': typeof TerminosRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
   '/app/qr': typeof AppQrRoute
@@ -113,7 +131,9 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/entrar'
+    | '/privacidad'
     | '/super'
+    | '/terminos'
     | '/app/menu'
     | '/app/pagina'
     | '/app/qr'
@@ -124,7 +144,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/entrar'
+    | '/privacidad'
     | '/super'
+    | '/terminos'
     | '/app/menu'
     | '/app/pagina'
     | '/app/qr'
@@ -136,7 +158,9 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/entrar'
+    | '/privacidad'
     | '/super'
+    | '/terminos'
     | '/app/menu'
     | '/app/pagina'
     | '/app/qr'
@@ -149,7 +173,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   EntrarRoute: typeof EntrarRoute
+  PrivacidadRoute: typeof PrivacidadRoute
   SuperRoute: typeof SuperRoute
+  TerminosRoute: typeof TerminosRoute
   RSlugRoute: typeof RSlugRoute
 }
 
@@ -176,11 +202,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacidad': {
+      id: '/privacidad'
+      path: '/privacidad'
+      fullPath: '/privacidad'
+      preLoaderRoute: typeof PrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/super': {
       id: '/super'
       path: '/super'
       fullPath: '/super'
       preLoaderRoute: typeof SuperRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terminos': {
+      id: '/terminos'
+      path: '/terminos'
+      fullPath: '/terminos'
+      preLoaderRoute: typeof TerminosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -250,7 +290,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   EntrarRoute: EntrarRoute,
+  PrivacidadRoute: PrivacidadRoute,
   SuperRoute: SuperRoute,
+  TerminosRoute: TerminosRoute,
   RSlugRoute: RSlugRoute,
 }
 export const routeTree = rootRouteImport

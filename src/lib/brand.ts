@@ -7,6 +7,8 @@ export const APP_NAME = "Carta al Toque";
 export const APP_DOMAIN = "cartaaltoque.com";
 export const APP_TAGLINE = "Tu menú digital con pedidos por WhatsApp";
 export const TRIAL_DAYS = 14;
+/** Correo público de contacto (privacidad y soporte). */
+export const CONTACT_EMAIL = "hola@cartaaltoque.com";
 /** Contacto para soporte y planes (WhatsApp del negocio del SaaS, solo dígitos). */
 export const SUPPORT_WHATSAPP = (import.meta.env.VITE_SUPPORT_WHATSAPP as string | undefined) ?? "";
 
