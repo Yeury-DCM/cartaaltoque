@@ -75,6 +75,24 @@ begin
   end if;
 end $$;
 
+-- El borrado no toca nada: o afecta 0 filas, o la base de datos lo bloquea
+-- (Supabase real prohíbe borrar directo en storage.objects).
+create function tests.deletes_nothing(p_label text, p_sql text) returns void language plpgsql as $$
+declare v bigint; v_msg text;
+begin
+  begin
+    execute 'with x as (' || p_sql || ' returning 1) select count(*) from x' into v;
+  exception when others then
+    v_msg := sqlerrm;
+  end;
+  if v_msg is not null and v_msg !~* 'not allowed|row-level security|permission denied' then
+    raise exception 'FAIL [%]: error inesperado "%"', p_label, v_msg;
+  end if;
+  if v_msg is null and v <> 0 then
+    raise exception 'FAIL [%]: borró % filas', p_label, v;
+  end if;
+end $$;
+
 create function tests.check(p_label text, p_ok boolean) returns void language plpgsql as $$
 begin
   if p_ok is not true then raise exception 'FAIL [%]', p_label; end if;
@@ -205,8 +223,8 @@ begin
   perform tests.fails('B no sube a la carpeta de A',
     format('insert into storage.objects (bucket_id, name) values (%L, %L)', 'media', ra || '/items/x.webp'), 'row-level security');
   insert into storage.objects (bucket_id, name) values ('media', rb || '/items/ok.webp');
-  perform tests.affects('B no borra archivos de A',
-    format('delete from storage.objects where name like %L', ra || '/%'), 0);
+  perform tests.deletes_nothing('B no borra archivos de A',
+    format('delete from storage.objects where name like %L', ra || '/%'));
 
   perform tests.affects('B sí edita lo suyo', format('update public.restaurants set tagline = %L where id = %L', 'Las mejores', rb), 1);
   perform tests.fails('Enlace no-https rechazado',

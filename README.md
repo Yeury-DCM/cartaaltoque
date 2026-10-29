@@ -38,6 +38,9 @@ versiones de TanStack que funcionan juntas.
    insert into private.platform_admins (user_id)
    select id from auth.users where email = 'TU_CORREO' on conflict do nothing;
    ```
+8. **Restaurante demo (opcional):** correr `supabase/seed_demo.sql` → `/r/demo`.
+
+Proyecto Supabase actual: `cartaaltoque` (ref `ghptqhnhhazaufcchzsw`, us-west-2).
 
 ## Pruebas
 
