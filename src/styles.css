@@ -567,6 +567,24 @@
     mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 25%, transparent 75%);
   }
 
+  /* Luz que sigue al cursor (HeroSpotlight escribe --mx / --my en píxeles). */
+  .hero-spot {
+    background: radial-gradient(
+      620px circle at var(--mx, 50%) var(--my, 0px),
+      color-mix(in srgb, var(--primary) 24%, transparent),
+      transparent 62%
+    );
+  }
+  /* Bajo la luz, la cuadrícula se ve un poco más. */
+  .grid-spot {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0px), #000, transparent 70%);
+    mask-image: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0px), #000, transparent 70%);
+  }
+
   .nav-glass {
     background: rgba(16, 16, 16, 0.42);
     border: 1px solid rgba(255, 255, 255, 0.09);

@@ -16,6 +16,7 @@ import { Reveal } from "@/components/Reveal";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { Compare } from "@/components/landing/Compare";
 import { Faq } from "@/components/landing/Faq";
+import { HeroSpotlight } from "@/components/landing/HeroSpotlight";
 import { LiveDemo } from "@/components/landing/LiveDemo";
 import { Statement } from "@/components/landing/Statement";
 import { TryQr } from "@/components/landing/TryQr";
@@ -87,6 +88,7 @@ function Landing() {
       <section id="inicio" className="relative overflow-hidden pb-24 pt-36 md:pt-44">
         <div aria-hidden className="hero-glow absolute inset-0" />
         <div aria-hidden className="grid-lines absolute inset-0" />
+        <HeroSpotlight />
         <GrainOverlay />
         <div className="relative mx-auto max-w-6xl px-5 text-center md:px-8">
           <h1 className="fade-up-in delay-150 mx-auto max-w-5xl font-display text-[clamp(64px,10.5vw,148px)] uppercase leading-[0.86]">
