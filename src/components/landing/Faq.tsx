@@ -15,6 +15,10 @@ const QA = [
     a: "Por WhatsApp, ya armados: platos, tamaños, notas, recoger o delivery con su zona, y el total. Cada pedido llega con un número para que lo ubiques fácil.",
   },
   {
+    q: "¿Y si mi negocio no usa WhatsApp?",
+    a: "Puedes usar Carta al Toque solo como carta digital: tu menú con fotos y precios, tu QR y tus redes. Sin WhatsApp, el menú se muestra sin carrito. Cuando quieras recibir pedidos, agregas tu número y se activa.",
+  },
+  {
     q: "¿Puedo cambiar precios o marcar algo agotado?",
     a: "Sí, desde tu panel y en segundos. Tu menú se actualiza al momento, sin reimprimir nada: el QR sigue siendo el mismo.",
   },

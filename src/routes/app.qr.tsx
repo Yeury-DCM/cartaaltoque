@@ -126,7 +126,11 @@ async function renderPoster(r: Restaurant, qr: HTMLCanvasElement, logo: HTMLImag
 
   ctx.font = '700 40px "DM Sans", sans-serif';
   ctx.fillStyle = r.brand_color;
-  ctx.fillText("y haz tu pedido por WhatsApp", W / 2, qrY + qrSize + 70);
+  ctx.fillText(
+    r.whatsapp ? "y haz tu pedido por WhatsApp" : "y mira todo lo que tenemos",
+    W / 2,
+    qrY + qrSize + 70,
+  );
 
   // Pie con el logo oficial de la plataforma (versión para fondo claro).
   ctx.font = '24px "DM Sans", sans-serif';

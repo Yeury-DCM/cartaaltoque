@@ -303,7 +303,7 @@ function PageSettings() {
         </label>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className={labelClass}>
-            WhatsApp de pedidos
+            WhatsApp de pedidos (opcional)
             <input
               className={fieldClass}
               value={form.whatsapp}
@@ -311,6 +311,11 @@ function PageSettings() {
               placeholder="18095550000"
               onChange={(e) => set("whatsapp", e.target.value)}
             />
+            <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
+              {onlyDigits(form.whatsapp)
+                ? "Tus clientes arman el pedido en el menú y te llega por aquí."
+                : "Sin WhatsApp, tu menú se muestra sin carrito (solo carta con precios)."}
+            </span>
           </label>
           <label className={labelClass}>
             Moneda

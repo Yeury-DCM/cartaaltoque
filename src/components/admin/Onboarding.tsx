@@ -41,7 +41,8 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
   }, [slug]);
 
   const phone = onlyDigits(whatsapp);
-  const phoneOk = phone.length >= 8 && phone.length <= 15;
+  // Opcional: sin WhatsApp el menú se muestra sin carrito. Si lo escribe, tiene que ser válido.
+  const phoneOk = phone.length === 0 || (phone.length >= 8 && phone.length <= 15);
   const canSubmit = name.trim().length >= 2 && isValidSlug(slug) && available !== false && phoneOk;
 
   const submit = async (e: React.FormEvent) => {
@@ -53,7 +54,7 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
       const { data: id, error } = await supabase.rpc("create_restaurant", {
         p_name: name.trim(),
         p_slug: slug,
-        p_whatsapp: phone,
+        p_whatsapp: phone || null,
       });
       if (error) throw new Error(CREATE_ERRORS[error.message] ?? error.message);
       await supabase
@@ -139,17 +140,17 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
           </label>
 
           <label className={labelClass}>
-            WhatsApp para recibir pedidos
+            WhatsApp para recibir pedidos (opcional)
             <input
               className={fieldClass}
               value={whatsapp}
               onChange={(e) => setWhatsapp(e.target.value)}
               inputMode="tel"
               placeholder="1 809 555 0000"
-              required
             />
             <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
-              Con código de país (en RD empieza con 1). Aquí te llegan los pedidos.
+              Con código de país (en RD empieza con 1). Aquí te llegan los pedidos. Si no trabajas
+              con WhatsApp, déjalo vacío: tu menú se verá igual, solo que sin carrito.
             </span>
           </label>
 

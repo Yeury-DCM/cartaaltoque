@@ -136,6 +136,8 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
 
   const grouped = sort === "default" && cat === "all";
   const chatLink = r.whatsapp ? whatsappUrl(r.whatsapp, `Hola ${r.name}`) : undefined;
+  // Sin WhatsApp el negocio no recibe pedidos: el menú es solo una carta con precios.
+  const canOrder = !!r.whatsapp;
   const mapsLink = links.find((l) => l.kind === "maps")?.url;
 
   return (
@@ -267,12 +269,22 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
                     <span className="h-px flex-1 bg-gradient-to-r from-primary/50 to-transparent" />
                   </h2>
                 </Reveal>
-                <ItemGrid items={list} onSelect={setSelected} onQuickAdd={quickAdd} />
+                <ItemGrid
+                  items={list}
+                  canOrder={canOrder}
+                  onSelect={setSelected}
+                  onQuickAdd={quickAdd}
+                />
               </section>
             );
           })
         ) : (
-          <ItemGrid items={visible} onSelect={setSelected} onQuickAdd={quickAdd} />
+          <ItemGrid
+            items={visible}
+            canOrder={canOrder}
+            onSelect={setSelected}
+            onQuickAdd={quickAdd}
+          />
         )}
 
         <footer className="mt-16 border-t border-primary/10 pt-6 text-center">
@@ -292,9 +304,11 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
         </footer>
       </main>
 
-      {selected && <ItemDialog item={selected} onClose={() => setSelected(null)} />}
+      {selected && (
+        <ItemDialog item={selected} canOrder={canOrder} onClose={() => setSelected(null)} />
+      )}
 
-      <CartBar onOpen={() => setCartOpen(true)} />
+      {canOrder && <CartBar onOpen={() => setCartOpen(true)} />}
       {cartOpen && (
         <CartDrawer
           slug={r.slug}
@@ -310,10 +324,12 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
 
 function ItemGrid({
   items,
+  canOrder,
   onSelect,
   onQuickAdd,
 }: {
   items: Item[];
+  canOrder: boolean;
   onSelect: (item: Item) => void;
   onQuickAdd: (item: Item) => void;
 }) {
@@ -321,7 +337,12 @@ function ItemGrid({
     <ul className="grid gap-4 md:grid-cols-2">
       {items.map((i, n) => (
         <Reveal as="li" key={i.id} delay={(n % 2) * 90}>
-          <ItemCard item={i} onSelect={() => onSelect(i)} onQuickAdd={() => onQuickAdd(i)} />
+          <ItemCard
+            item={i}
+            canOrder={canOrder}
+            onSelect={() => onSelect(i)}
+            onQuickAdd={() => onQuickAdd(i)}
+          />
         </Reveal>
       ))}
     </ul>
@@ -330,10 +351,12 @@ function ItemGrid({
 
 function ItemCard({
   item,
+  canOrder,
   onSelect,
   onQuickAdd,
 }: {
   item: Item;
+  canOrder: boolean;
   onSelect: () => void;
   onQuickAdd: () => void;
 }) {
@@ -370,7 +393,9 @@ function ItemCard({
             <p className="mt-1 line-clamp-3 text-sm text-foreground/65">{item.description}</p>
           )}
           {item.item_variants.length > 0 && (
-            <ul className="mt-auto flex flex-wrap gap-x-4 gap-y-1 pr-12 pt-2">
+            <ul
+              className={`mt-auto flex flex-wrap gap-x-4 gap-y-1 pt-2 ${canOrder ? "pr-12" : ""}`}
+            >
               {item.item_variants.map((v) => (
                 <li key={v.id} className="flex items-baseline gap-1.5">
                   <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/60">
@@ -393,7 +418,7 @@ function ItemCard({
           </div>
         </div>
       </button>
-      {item.is_available && (
+      {canOrder && item.is_available && (
         <button
           type="button"
           aria-label={`Agregar ${item.name} al pedido`}

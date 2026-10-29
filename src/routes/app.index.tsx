@@ -86,7 +86,11 @@ function HomePage() {
 
   const steps = [
     { done: !!r.logo_path, label: "Sube tu logo y elige tu color", to: "/app/pagina" as const },
-    { done: !!r.whatsapp, label: "Configura tu WhatsApp", to: "/app/pagina" as const },
+    {
+      done: !!r.whatsapp,
+      label: "Agrega tu WhatsApp para recibir pedidos (opcional)",
+      to: "/app/pagina" as const,
+    },
     { done: (stats?.items ?? 0) >= 3, label: "Carga al menos 3 platos", to: "/app/menu" as const },
     {
       done: (stats?.withPhoto ?? 0) >= 3,

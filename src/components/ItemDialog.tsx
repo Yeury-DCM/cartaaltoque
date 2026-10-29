@@ -16,7 +16,16 @@ function orderedPhotos(item: Item) {
  * debajo va la información con menos peso y al pie, fija, la barra para agregar al pedido.
  * En celular sube como una hoja desde abajo.
  */
-export function ItemDialog({ item, onClose }: { item: Item; onClose: () => void }) {
+export function ItemDialog({
+  item,
+  onClose,
+  canOrder = true,
+}: {
+  item: Item;
+  onClose: () => void;
+  /** Sin WhatsApp el negocio no recibe pedidos: se muestra solo la ficha del plato. */
+  canOrder?: boolean;
+}) {
   const photos = orderedPhotos(item);
   const cart = useCart();
   const [closing, setClosing] = useState(false);
@@ -182,7 +191,7 @@ export function ItemDialog({ item, onClose }: { item: Item; onClose: () => void 
               </div>
             )}
 
-            {item.is_available && (
+            {canOrder && item.is_available && (
               <div className="mt-4">
                 {noteOpen ? (
                   <input
@@ -208,7 +217,9 @@ export function ItemDialog({ item, onClose }: { item: Item; onClose: () => void 
         </div>
 
         {/* Barra fija: cantidad + agregar */}
-        <div className="shrink-0 border-t border-primary/15 bg-background px-5 py-3">
+        <div
+          className={`shrink-0 border-t border-primary/15 bg-background px-5 py-3 ${canOrder ? "" : "hidden"}`}
+        >
           {item.is_available ? (
             <div className="flex items-center gap-3">
               <div className="flex items-center rounded-xl border border-primary/25 bg-foreground/5">

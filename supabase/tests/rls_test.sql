@@ -310,6 +310,10 @@ begin
   perform tests.fails('id basura',
     format('select public.place_order(%L, %L::jsonb, %L)', 'pizza-a', '[{"item_id":"x; drop table items","qty":1}]', 'pickup'), 'invalid_lines');
   perform tests.fails('pedido vacío', 'select public.place_order(''pizza-a'', ''[]''::jsonb, ''pickup'')', 'invalid_lines');
+  -- Burger B se creó sin WhatsApp: su menú es público, pero no acepta pedidos.
+  perform tests.check('menú sin WhatsApp sigue público', public.get_public_menu('burger-b') is not null);
+  perform tests.fails('sin WhatsApp no recibe pedidos',
+    format('select public.place_order(%L, %L::jsonb, %L)', 'burger-b', jsonb_build_array(jsonb_build_object('item_id', tests.id('b_item'), 'variant_id', tests.id('b_variant'), 'qty', 1)), 'pickup'), 'ordering_unavailable');
   perform tests.fails('zona de otro restaurante',
     format('select public.place_order(%L, %L::jsonb, %L, %L)', 'pizza-a', jsonb_build_array(jsonb_build_object('item_id', soda, 'qty', 1)), 'delivery', tests.id('b_zone')), 'zone_unavailable');
   perform tests.fails('delivery sin zona',
