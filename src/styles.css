@@ -180,8 +180,8 @@
   }
 
   ::selection {
-    background-color: var(--color-primary);
-    color: var(--color-primary-foreground);
+    background-color: var(--primary);
+    color: var(--primary-foreground);
   }
 
   /* Safari en iOS hace zoom automático al enfocar un campo con letra menor a
@@ -201,7 +201,7 @@
   /* Glassmorphism card */
   .glass-card {
     background: rgba(255, 255, 255, 0.04);
-    border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
     border-radius: 16px;
     transition:
       box-shadow 280ms ease,
@@ -210,10 +210,10 @@
   }
 
   .glass-card:hover {
-    border-color: color-mix(in srgb, var(--color-primary) 55%, transparent);
+    border-color: color-mix(in srgb, var(--primary) 55%, transparent);
     box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-primary) 15%, transparent),
-      0 12px 40px -10px color-mix(in srgb, var(--color-primary) 35%, transparent);
+      0 0 0 1px color-mix(in srgb, var(--primary) 15%, transparent),
+      0 12px 40px -10px color-mix(in srgb, var(--primary) 35%, transparent);
   }
 
   /* Filled orange button */
@@ -223,8 +223,8 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.85rem 1.6rem;
-    background: var(--color-primary);
-    color: var(--color-primary-foreground);
+    background: var(--primary);
+    color: var(--primary-foreground);
     font-family: var(--font-body);
     font-weight: 700;
     font-size: 0.875rem;
@@ -241,7 +241,7 @@
 
   .btn-primary:hover {
     transform: scale(1.03);
-    box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--color-primary) 55%, transparent);
+    box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--primary) 55%, transparent);
   }
 
   .btn-primary:active {
@@ -262,7 +262,7 @@
     text-transform: uppercase;
     letter-spacing: 0.12em;
     border-radius: 8px;
-    border: 1px solid color-mix(in srgb, var(--color-primary) 50%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 50%, transparent);
     transition:
       transform 200ms ease,
       background 200ms ease,
@@ -272,8 +272,8 @@
 
   .btn-ghost:hover {
     transform: scale(1.03);
-    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
-    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    border-color: var(--primary);
   }
 
   /* Animated grain — slow drift gives a hand-printed feel */
@@ -399,12 +399,12 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      color-mix(in srgb, var(--color-primary) 60%, transparent) 20%,
-      color-mix(in srgb, var(--color-primary) 90%, transparent) 50%,
-      color-mix(in srgb, var(--color-primary) 60%, transparent) 80%,
+      color-mix(in srgb, var(--primary) 60%, transparent) 20%,
+      color-mix(in srgb, var(--primary) 90%, transparent) 50%,
+      color-mix(in srgb, var(--primary) 60%, transparent) 80%,
       transparent 100%
     );
-    box-shadow: 0 0 22px 0 color-mix(in srgb, var(--color-primary) 22%, transparent);
+    box-shadow: 0 0 22px 0 color-mix(in srgb, var(--primary) 22%, transparent);
   }
 
   /* El grano se desvanece hacia los bordes (máscara) para no dibujar un recuadro */
@@ -449,10 +449,10 @@
   @keyframes glow-pulse {
     0%,
     100% {
-      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 40%, transparent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 40%, transparent);
     }
     50% {
-      box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-primary) 0%, transparent);
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--primary) 0%, transparent);
     }
   }
 
@@ -536,6 +536,184 @@
   @media (min-width: 1024px) {
     .masonry > * {
       margin-bottom: 1rem;
+    }
+  }
+}
+
+/* ───────────────────────── Landing ───────────────────────── */
+@layer components {
+  /* Brillo del color de marca que nace arriba al centro. */
+  .hero-glow {
+    background:
+      radial-gradient(
+        ellipse 60% 45% at 50% 0%,
+        color-mix(in srgb, var(--primary) 30%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 30% at 85% 35%,
+        color-mix(in srgb, var(--primary) 10%, transparent),
+        transparent 70%
+      );
+  }
+
+  /* Cuadrícula muy tenue que se desvanece hacia abajo. */
+  .grid-lines {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 25%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 25%, transparent 75%);
+  }
+
+  .nav-glass {
+    background: rgba(16, 16, 16, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 12px 40px -18px rgba(0, 0, 0, 0.8),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(32px) saturate(170%);
+    -webkit-backdrop-filter: blur(32px) saturate(170%);
+  }
+
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1.9rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease,
+      background 220ms ease,
+      border-color 220ms ease;
+  }
+  .btn-pill:active {
+    transform: scale(0.98);
+  }
+  .btn-pill-primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow:
+      0 14px 40px -12px color-mix(in srgb, var(--primary) 70%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  .btn-pill-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 22px 50px -14px color-mix(in srgb, var(--primary) 85%, transparent),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  .btn-pill-ghost {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--color-foreground);
+  }
+  .btn-pill-ghost:hover {
+    border-color: color-mix(in srgb, var(--primary) 70%, transparent);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+
+  .check-item::before {
+    content: "✓";
+    margin-right: 0.5rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* Tarjeta con borde de luz sutil y brillo al pasar el cursor. */
+  .premium-card {
+    position: relative;
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition:
+      border-color 300ms ease,
+      transform 300ms ease,
+      box-shadow 300ms ease;
+  }
+  .premium-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 24px 60px -24px color-mix(in srgb, var(--primary) 45%, transparent);
+  }
+
+  /* Dispositivos de la demo. */
+  .phone-frame {
+    padding: 11px;
+    border-radius: 52px;
+    background: linear-gradient(160deg, #3a3a3a, #121212 45%, #1e1e1e);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 50px 100px -30px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .phone-screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 42px;
+    background: #0d0d0d;
+  }
+  .phone-island {
+    position: absolute;
+    left: 50%;
+    z-index: 50;
+    border-radius: 999px;
+    background: #000;
+  }
+  .win-frame {
+    overflow: hidden;
+    border-radius: 16px;
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 60px 120px -40px rgba(0, 0, 0, 0.95),
+      0 0 80px -30px color-mix(in srgb, var(--primary) 35%, transparent);
+  }
+  .dev-stage {
+    perspective: 2400px;
+  }
+  .dev-tilt {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  @keyframes demo-flash {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 70%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 14px transparent;
+    }
+  }
+  .demo-flash {
+    animation: demo-flash 900ms ease-out;
+  }
+
+  /* Frase que se enciende con el scroll. */
+  .word {
+    color: rgba(255, 255, 255, 0.13);
+    transition: color 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .word.on {
+    color: var(--color-foreground);
+  }
+  .word.on.hl {
+    color: var(--primary);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo-flash {
+      animation: none;
     }
   }
 }

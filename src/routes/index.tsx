@@ -1,45 +1,54 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  ArrowDown,
   BarChart3,
   Bike,
   Palette,
   QrCode,
-  ScanLine,
   ShoppingBag,
   Smartphone,
+  Store,
   UtensilsCrossed,
 } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { Reveal } from "@/components/Reveal";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
-import { APP_NAME, APP_TAGLINE, TRIAL_DAYS } from "@/lib/brand";
+import { Compare } from "@/components/landing/Compare";
+import { Faq } from "@/components/landing/Faq";
+import { LiveDemo } from "@/components/landing/LiveDemo";
+import { Statement } from "@/components/landing/Statement";
+import { TryQr } from "@/components/landing/TryQr";
+import { APP_NAME, TRIAL_DAYS } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({ component: Landing });
+
+const signup = { modo: "registro", next: "/app" } as const;
 
 const STEPS = [
   {
     Icon: UtensilsCrossed,
     title: "Arma tu menú",
-    text: "Platos, fotos, tamaños y precios en minutos, desde el celular.",
+    text: "Platos, fotos, tamaños y precios desde el celular. Con tu logo y tu color.",
   },
   {
     Icon: QrCode,
-    title: "Imprime tu QR",
-    text: "Con tu logo y un afiche listo para las mesas o la vitrina.",
+    title: "Pon tu QR",
+    text: "Descarga tu código y un afiche listo para las mesas, la vitrina o el delivery.",
   },
   {
     Icon: WhatsAppIcon,
     title: "Recibe pedidos",
-    text: "Tu cliente arma el carrito y te llega el pedido completo por WhatsApp.",
+    text: "Tu cliente arma el carrito y te llega el pedido completo a tu WhatsApp.",
   },
 ];
 
 const FEATURES = [
   {
     Icon: ShoppingBag,
-    title: "Carrito de verdad",
-    text: "No es un PDF: el cliente elige, suma y envía. Tú recibes el pedido con total y número.",
+    title: "Un carrito de verdad",
+    text: "No es un PDF: tu cliente elige, suma y envía. Tú recibes el pedido con número, entrega y total.",
+    wide: true,
   },
   {
     Icon: Bike,
@@ -52,190 +61,296 @@ const FEATURES = [
     text: "Tu logo, tu portada y tu color. Se ve como tu propia página.",
   },
   {
-    Icon: Smartphone,
-    title: "Hecho para el celular",
-    text: "Rápido, claro y fácil de usar con el pulgar.",
-  },
-  {
-    Icon: ScanLine,
+    Icon: Store,
     title: "Tus plataformas",
-    text: "Botones a PedidosYa, Uber Eats, Instagram y más, todo en un lugar.",
+    text: "Botones a PedidosYa, Uber Eats, Instagram y más, en un solo lugar.",
   },
   {
     Icon: BarChart3,
-    title: "Visitas a tu menú",
+    title: "Visitas y pedidos",
     text: "Mira cuántas personas abren tu menú cada día y cuántas te piden por WhatsApp.",
+  },
+  {
+    Icon: Smartphone,
+    title: "Hecho para el celular",
+    text: "Rápido y claro, pensado para el pulgar de tus clientes y para el tuyo.",
+    wide: true,
   },
 ];
 
 function Landing() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
-      <GrainOverlay />
+      <Nav />
 
-      <header className="relative z-20 mx-auto flex max-w-6xl items-center justify-between px-5 py-5 md:px-8">
-        <BrandLogo className="h-9 sm:h-12" />
-        <nav className="flex items-center gap-2">
-          <Link
-            to="/entrar"
-            search={{ modo: "entrar", next: "/app" }}
-            className="btn-ghost !px-4 !py-2 !text-xs"
-          >
-            Entrar
-          </Link>
-          <Link
-            to="/entrar"
-            search={{ modo: "registro", next: "/app" }}
-            className="btn-primary !hidden !px-4 !py-2 !text-xs min-[400px]:!inline-flex"
-          >
-            Crear mi menú
-          </Link>
-        </nav>
-      </header>
-
-      <section className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-10 md:grid-cols-[1.15fr_1fr] md:px-8 md:pt-16">
-        <div>
-          <span className="fade-up-in inline-block text-[11px] uppercase tracking-[0.4em] text-primary">
-            Menú digital · QR · WhatsApp
-          </span>
-          <h1 className="fade-up-in delay-150 mt-3 font-display text-6xl uppercase leading-[0.92] md:text-8xl">
-            Tu menú en el celular de tus clientes.{" "}
-            <span className="text-primary">Los pedidos, en tu WhatsApp.</span>
+      {/* ─── Hero + demo en vivo ─── */}
+      <section id="inicio" className="relative overflow-hidden pb-24 pt-36 md:pt-44">
+        <div aria-hidden className="hero-glow absolute inset-0" />
+        <div aria-hidden className="grid-lines absolute inset-0" />
+        <GrainOverlay />
+        <div className="relative mx-auto max-w-6xl px-5 text-center md:px-8">
+          <h1 className="fade-up-in delay-150 mx-auto max-w-5xl font-display text-[clamp(64px,10.5vw,148px)] uppercase leading-[0.86]">
+            Tu menú, <span className="text-primary">al toque.</span>
           </h1>
-          <p className="fade-up-in delay-300 mt-6 max-w-xl text-lg text-foreground/70">
-            {APP_TAGLINE}. Sin apps, sin comisiones por pedido y listo en minutos.
+          <p className="fade-up-in delay-300 mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-foreground/70 md:text-xl">
+            Tus clientes escanean el QR, arman su pedido desde el celular y te llega completo por
+            WhatsApp: platos, tamaños, entrega y total. Sin apps y sin comisiones por pedido.
           </p>
-          <div className="fade-up-in delay-500 mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/entrar"
-              search={{ modo: "registro", next: "/app" }}
-              className="btn-primary glow-pulse"
-            >
-              Prueba gratis {TRIAL_DAYS} días
+          <div className="fade-up-in delay-500 mt-10 flex flex-wrap justify-center gap-3">
+            <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary">
+              Crear mi menú gratis
             </Link>
-            <a href="#como-funciona" className="btn-ghost">
-              Cómo funciona
+            <a href="#demo" className="btn-pill btn-pill-ghost">
+              Pruébalo aquí <ArrowDown className="h-4 w-4" />
             </a>
           </div>
+          <ul className="fade-up-in delay-500 mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 text-[14px] text-foreground/55">
+            {[
+              `${TRIAL_DAYS} días gratis`,
+              "Sin tarjeta",
+              "Sin comisión por pedido",
+              "Listo en minutos",
+            ].map((f) => (
+              <li key={f} className="check-item">
+                {f}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <PhoneMock />
+        <div id="demo" className="relative mx-auto mt-20 max-w-6xl scroll-mt-28 px-5 md:px-8">
+          <LiveDemo />
+        </div>
       </section>
 
-      <div className="divider-grain mx-auto max-w-5xl" />
-
-      <section id="como-funciona" className="relative z-10 mx-auto max-w-6xl px-5 py-20 md:px-8">
-        <Reveal>
-          <h2 className="text-center font-display text-5xl uppercase md:text-6xl">
-            Así de <span className="text-primary">sencillo</span>
-          </h2>
-        </Reveal>
-        <ol className="mt-12 grid gap-4 md:grid-cols-3">
-          {STEPS.map(({ Icon, title, text }, i) => (
-            <Reveal as="li" key={title} delay={i * 120} className="glass-card p-6">
-              <span className="font-display text-5xl text-primary/40">0{i + 1}</span>
-              <Icon className="mt-2 h-7 w-7 text-primary" />
-              <h3 className="mt-3 font-display text-3xl uppercase">{title}</h3>
-              <p className="mt-1 text-foreground/65">{text}</p>
-            </Reveal>
-          ))}
-        </ol>
+      {/* ─── El problema ─── */}
+      <section className="relative border-t border-white/5 bg-[#0A0A0A] py-28 md:py-40">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Statement text="Tus clientes ya te piden por *WhatsApp. Lo cansado es todo lo demás: mandar el menú, responder precios, sumar totales y preguntar la dirección. Carta al Toque lo hace *por *ti." />
+        </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-6xl px-5 pb-20 md:px-8">
-        <Reveal>
-          <h2 className="text-center font-display text-5xl uppercase md:text-6xl">
-            Todo lo que <span className="text-primary">necesitas</span>
-          </h2>
-        </Reveal>
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map(({ Icon, title, text }, i) => (
-            <Reveal as="li" key={title} delay={(i % 3) * 100} className="glass-card p-6">
-              <Icon className="h-6 w-6 text-primary" />
-              <h3 className="mt-3 font-display text-2xl uppercase">{title}</h3>
-              <p className="mt-1 text-sm text-foreground/65">{text}</p>
-            </Reveal>
-          ))}
-        </ul>
+      {/* ─── Antes y después ─── */}
+      <section id="comparacion" className="relative bg-[#F6F1EA] py-28 text-[#1A1712] md:py-36">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal>
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-[#C25500]">
+              Antes y después
+            </span>
+            <h2 className="mt-4 max-w-[14ch] font-display text-[clamp(52px,7vw,104px)] uppercase leading-[0.9]">
+              Doce mensajes contra uno.
+            </h2>
+          </Reveal>
+          <Compare />
+        </div>
       </section>
 
-      <section className="relative z-10 mx-auto max-w-3xl px-5 pb-24 text-center md:px-8">
-        <Reveal className="glass-card p-8 md:p-12">
-          <span className="text-[11px] uppercase tracking-[0.4em] text-primary">Plan Básico</span>
-          <h2 className="mt-2 font-display text-5xl uppercase md:text-6xl">Empieza gratis</h2>
-          <p className="mx-auto mt-3 max-w-md text-foreground/70">
-            {TRIAL_DAYS} días con todo incluido: menú, QR, pedidos por WhatsApp y zonas de delivery.
-            Sin tarjeta.
+      {/* ─── Cómo funciona ─── */}
+      <section id="como-funciona" className="relative py-28 md:py-36">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal className="text-center">
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">
+              Cómo funciona
+            </span>
+            <h2 className="mt-4 font-display text-[clamp(52px,7vw,104px)] uppercase leading-[0.9]">
+              Tres pasos. <span className="text-primary">Hoy mismo.</span>
+            </h2>
+          </Reveal>
+          <ol className="relative mt-16 grid gap-5 md:grid-cols-3">
+            <span
+              aria-hidden
+              className="absolute left-[16%] right-[16%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent md:block"
+            />
+            {STEPS.map(({ Icon, title, text }, i) => (
+              <Reveal
+                as="li"
+                key={title}
+                delay={i * 120}
+                className="premium-card relative p-7 text-center"
+              >
+                <span className="relative mx-auto grid h-[72px] w-[72px] place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[0_18px_40px_-12px_var(--primary)]">
+                  <Icon className="h-8 w-8" />
+                </span>
+                <span className="mt-6 block font-mono text-[12px] tracking-[0.3em] text-foreground/40">
+                  PASO 0{i + 1}
+                </span>
+                <h3 className="mt-2 font-display text-[34px] uppercase leading-none">{title}</h3>
+                <p className="mt-3 text-foreground/65">{text}</p>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ─── Lo que incluye ─── */}
+      <section className="relative border-t border-white/5 bg-[#0A0A0A] py-28 md:py-36">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal>
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">
+              Todo incluido
+            </span>
+            <h2 className="mt-4 max-w-[16ch] font-display text-[clamp(52px,7vw,104px)] uppercase leading-[0.9]">
+              Lo que necesitas, <span className="text-primary">nada más.</span>
+            </h2>
+          </Reveal>
+          <ul className="mt-14 grid gap-4 md:grid-cols-3">
+            {FEATURES.map(({ Icon, title, text, wide }, i) => (
+              <Reveal
+                as="li"
+                key={title}
+                delay={(i % 3) * 90}
+                className={`premium-card group p-7 ${wide ? "md:col-span-2" : ""}`}
+              >
+                <span className="grid h-12 w-12 place-items-center rounded-xl border border-primary/30 bg-primary/10 text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
+                  <Icon className="h-6 w-6" />
+                </span>
+                <h3 className="mt-5 font-display text-[30px] uppercase leading-none">{title}</h3>
+                <p className="mt-2 max-w-md text-foreground/65">{text}</p>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ─── Pruébalo en tu celular ─── */}
+      <section className="relative py-24 md:py-32">
+        <div className="mx-auto max-w-6xl px-5 md:px-8">
+          <Reveal>
+            <TryQr />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ─── Precio ─── */}
+      <section id="precio" className="relative py-24 md:py-32">
+        <div className="mx-auto max-w-3xl px-5 md:px-8">
+          <Reveal className="premium-card relative overflow-hidden p-10 text-center md:p-14">
+            <div aria-hidden className="hero-glow absolute inset-0 opacity-70" />
+            <div className="relative">
+              <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">
+                Plan Básico
+              </span>
+              <h2 className="mt-3 font-display text-[clamp(56px,7vw,96px)] uppercase leading-[0.9]">
+                Empieza gratis
+              </h2>
+              <p className="mx-auto mt-4 max-w-md text-foreground/70">
+                {TRIAL_DAYS} días con todo incluido: menú, QR con tu logo, pedidos por WhatsApp,
+                zonas de delivery y estadísticas. Sin tarjeta.
+              </p>
+              <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary mt-9">
+                Crear mi menú
+              </Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ─── Preguntas ─── */}
+      <section
+        id="preguntas"
+        className="relative border-t border-white/5 bg-[#0A0A0A] py-28 md:py-36"
+      >
+        <div className="mx-auto max-w-4xl px-5 md:px-8">
+          <Reveal>
+            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">
+              Preguntas
+            </span>
+            <h2 className="mt-4 font-display text-[clamp(52px,7vw,96px)] uppercase leading-[0.9]">
+              Lo que nos preguntan.
+            </h2>
+          </Reveal>
+          <Faq />
+        </div>
+      </section>
+
+      {/* ─── Cierre ─── */}
+      <section className="relative overflow-hidden py-32 text-center md:py-44">
+        <div aria-hidden className="hero-glow absolute inset-0" />
+        <GrainOverlay />
+        <div className="relative mx-auto max-w-4xl px-5 md:px-8">
+          <Reveal>
+            <h2 className="font-display text-[clamp(60px,9vw,132px)] uppercase leading-[0.86]">
+              Tu menú, listo <span className="text-primary">hoy.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-lg text-foreground/70">
+              Créalo en minutos, imprime tu QR y empieza a recibir pedidos por WhatsApp.
+            </p>
+            <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary mt-10">
+              Crear mi menú gratis
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      <footer className="border-t border-white/5 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-5 px-5 md:flex-row md:px-8">
+          <BrandLogo className="h-10" />
+          <nav className="flex flex-wrap justify-center gap-6 text-sm text-foreground/55">
+            <a href="#demo" className="hover:text-primary">
+              Demo
+            </a>
+            <a href="#como-funciona" className="hover:text-primary">
+              Cómo funciona
+            </a>
+            <a href="#preguntas" className="hover:text-primary">
+              Preguntas
+            </a>
+            <Link
+              to="/entrar"
+              search={{ modo: "entrar", next: "/app" }}
+              className="hover:text-primary"
+            >
+              Entrar
+            </Link>
+          </nav>
+          <p className="text-xs uppercase tracking-[0.25em] text-foreground/35">
+            © {new Date().getFullYear()} {APP_NAME}
           </p>
-          <Link
-            to="/entrar"
-            search={{ modo: "registro", next: "/app" }}
-            className="btn-primary mt-8"
-          >
-            Crear mi menú
-          </Link>
-        </Reveal>
-      </section>
-
-      <footer className="relative z-10 border-t border-primary/10 py-8 text-center text-xs uppercase tracking-[0.25em] text-foreground/40">
-        © {new Date().getFullYear()} {APP_NAME}
+        </div>
       </footer>
     </div>
   );
 }
 
-/** Vista de ejemplo del menú en un teléfono (solo decorativa). */
-function PhoneMock() {
-  const dishes = [
-    { name: "Pizza de la casa", price: "RD$ 650" },
-    { name: "Hamburguesa doble", price: "RD$ 450" },
-    { name: "Limonada frozen", price: "RD$ 150" },
-  ];
+/** Barra flotante de vidrio, como una cápsula. */
+function Nav() {
   return (
-    <div aria-hidden className="fade-up-in delay-300 relative mx-auto w-full max-w-[320px]">
-      <div className="absolute -inset-10 rounded-full bg-primary/20 blur-3xl" />
-      <div className="relative rounded-[2.5rem] border border-primary/30 bg-card p-3 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">
-        <div className="overflow-hidden rounded-[2rem] bg-background">
-          <div className="px-5 pb-4 pt-8 text-center">
-            <span className="text-[9px] uppercase tracking-[0.4em] text-primary">Carta</span>
-            <p className="font-display text-3xl uppercase leading-none">Pizzería Don Juan</p>
-            <p className="mt-1 text-[11px] text-foreground/55">Lun–Sáb · 12 pm – 11 pm</p>
-          </div>
-          <div className="flex gap-1.5 px-4 pb-3">
-            {["Todo", "Pizzas", "Burgers"].map((c, i) => (
-              <span
-                key={c}
-                className={`rounded-full border px-3 py-1 text-[10px] font-bold uppercase ${i === 0 ? "border-primary bg-primary text-primary-foreground" : "border-primary/30 text-foreground/75"}`}
-              >
-                {c}
-              </span>
-            ))}
-          </div>
-          <ul className="space-y-2 px-4 pb-4">
-            {dishes.map((d) => (
-              <li key={d.name} className="glass-card flex items-center gap-3 p-2">
-                <span className="h-12 w-12 shrink-0 rounded-lg bg-gradient-to-br from-primary/50 to-primary/10" />
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate font-display text-lg uppercase leading-tight">
-                    {d.name}
-                  </span>
-                  <span className="font-display text-base text-primary">{d.price}</span>
-                </span>
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
-                  +
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="mx-4 mb-5 flex items-center gap-2 rounded-xl bg-primary px-3 py-2.5 text-primary-foreground">
-            <ShoppingBag className="h-4 w-4" />
-            <span className="flex-1 text-[11px] font-bold uppercase tracking-[0.1em]">
-              Ver mi pedido
-            </span>
-            <span className="font-display text-lg">RD$ 1,100</span>
-          </div>
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-5">
+      <div className="nav-glass mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl px-3 py-2 md:px-4">
+        <a href="#inicio" aria-label={APP_NAME} className="shrink-0">
+          <BrandLogo className="h-8 md:h-9" />
+        </a>
+        <nav className="hidden items-center gap-7 text-[13px] font-bold uppercase tracking-[0.14em] text-foreground/65 lg:flex">
+          <a href="#demo" className="transition hover:text-foreground">
+            Demo
+          </a>
+          <a href="#como-funciona" className="transition hover:text-foreground">
+            Cómo funciona
+          </a>
+          <a href="#precio" className="transition hover:text-foreground">
+            Precio
+          </a>
+          <a href="#preguntas" className="transition hover:text-foreground">
+            Preguntas
+          </a>
+        </nav>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/entrar"
+            search={{ modo: "entrar", next: "/app" }}
+            className="hidden rounded-xl px-3 py-2 text-[12px] font-bold uppercase tracking-[0.14em] text-foreground/75 transition hover:text-foreground sm:block"
+          >
+            Entrar
+          </Link>
+          <Link
+            to="/entrar"
+            search={signup}
+            className="btn-pill btn-pill-primary !px-4 !py-2.5 !text-[11px]"
+          >
+            Crear mi menú
+          </Link>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
