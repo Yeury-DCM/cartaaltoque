@@ -95,16 +95,17 @@ export const fetchPublicMenu = (rawSlug: string) => {
 };
 
 const HEX_RE = /^#[0-9a-f]{6}$/i;
-export const DEFAULT_BRAND = "#F5A01E";
+export const DEFAULT_BRAND = "#FF7101";
 
-/** ¿Texto oscuro o claro sobre este color? (luminancia relativa WCAG). */
+/** ¿Texto oscuro o claro sobre este color? Se elige el de mayor contraste (WCAG). */
 function readableOn(hex: string): string {
   const [r, g, b] = [1, 3, 5].map((i) => {
     const c = parseInt(hex.slice(i, i + 2), 16) / 255;
     return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
   });
   const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return lum > 0.35 ? "oklch(0.13 0 0)" : "oklch(1 0 0)";
+  // Contraste con negro: (lum + .05) / .05; con blanco: 1.05 / (lum + .05).
+  return (lum + 0.05) / 0.05 >= 1.05 / (lum + 0.05) ? "oklch(0.13 0 0)" : "oklch(1 0 0)";
 }
 
 /**

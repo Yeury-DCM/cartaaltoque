@@ -11,7 +11,7 @@ with r as (
   ) values (
     'demo', 'Pizzería Don Juan', 'Pizzas al horno de leña y burgers de la casa',
     'Restaurante de demostración de Carta al Toque. Arma tu pedido y mira cómo llega por WhatsApp.',
-    '#F5A01E', '18090000000', 'Av. Ejemplo 123, Santo Domingo', 'Lun–Dom · 12 pm – 11 pm',
+    '#FF7101', '18090000000', 'Av. Ejemplo 123, Santo Domingo', 'Lun–Dom · 12 pm – 11 pm',
     'active', 'basic'
   ) returning id
 ),

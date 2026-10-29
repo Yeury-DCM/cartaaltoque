@@ -25,6 +25,7 @@ import {
 export const Route = createFileRoute("/app/pagina")({ component: PageSettings });
 
 const PRESETS = [
+  "#FF7101",
   "#F5A01E",
   "#E63946",
   "#2A9D8F",

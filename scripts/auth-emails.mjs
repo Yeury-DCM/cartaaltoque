@@ -9,7 +9,7 @@ import { join } from "node:path";
 
 const PROJECT_REF = "ghptqhnhhazaufcchzsw";
 const LOGO_URL = "https://cartaaltoque.com/logo-oscuro.png";
-const BRAND = "#F5A01E";
+const BRAND = "#FF7101";
 const INK = "#0D0D0D";
 
 const root = join(import.meta.dirname, "..");
