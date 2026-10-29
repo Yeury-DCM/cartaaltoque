@@ -1,4 +1,4 @@
-# Carta al Toque — cartaltoque.com
+# Carta al Toque — cartaaltoque.com
 
 SaaS multi-tenant de menú digital: cada restaurante arma su menú, genera su QR y
 recibe los pedidos armados por WhatsApp. Nació del código de Chambra Food Truck,

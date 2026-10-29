@@ -4,7 +4,7 @@
  * el dominio va junto.
  */
 export const APP_NAME = "Carta al Toque";
-export const APP_DOMAIN = "cartaltoque.com";
+export const APP_DOMAIN = "cartaaltoque.com";
 export const APP_TAGLINE = "Tu menú digital con pedidos por WhatsApp";
 export const TRIAL_DAYS = 14;
 /** Contacto para soporte y planes (WhatsApp del negocio del SaaS, solo dígitos). */
