@@ -17,7 +17,7 @@ export function HeroSpotlight() {
     // Posición en píxeles dentro de la sección; arranca arriba al centro.
     const home = () => ({ x: section.clientWidth / 2, y: 0 });
     let target = home();
-    let cur = { ...target };
+    const cur = { ...target };
     let raf = 0;
 
     const onMove = (e: PointerEvent) => {
