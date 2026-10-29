@@ -1,18 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Circle, Copy, ExternalLink, Lock } from "lucide-react";
+import { Check, Circle, Copy, ExternalLink } from "lucide-react";
 import { useAdmin } from "@/lib/admin";
 import { menuPath, menuUrl } from "@/lib/brand";
-import { hasFeature } from "@/lib/features";
-import { formatMoney } from "@/lib/menu";
 import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/app/")({ component: HomePage });
 
 type Stats = {
+  viewsToday: number;
+  viewsWeek: number;
   today: number;
   week: number;
-  weekTotal: number;
   items: number;
   withPhoto: number;
   links: number;
@@ -22,6 +21,12 @@ function startOfToday() {
   const d = new Date();
   d.setHours(0, 0, 0, 0);
   return d.toISOString();
+}
+
+/** Fecha (AAAA-MM-DD) en Santo Domingo, igual que las visitas guardadas en la base de datos. */
+function drDate(offsetDays = 0) {
+  const d = new Date(Date.now() - offsetDays * 86_400_000);
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Santo_Domingo" }).format(d);
 }
 
 function HomePage() {
@@ -40,21 +45,27 @@ function HomePage() {
         .gte("created_at", startOfToday()),
       supabase
         .from("orders")
-        .select("total")
+        .select("id", { count: "exact", head: true })
         .eq("restaurant_id", rid)
-        .neq("status", "cancelled")
         .gte("created_at", weekAgo),
       supabase.from("items").select("id, item_photos(id)").eq("restaurant_id", rid),
       supabase
         .from("restaurant_links")
         .select("id", { count: "exact", head: true })
         .eq("restaurant_id", rid),
-    ]).then(([today, week, items, links]) => {
+      supabase
+        .from("menu_views_daily")
+        .select("day, views")
+        .eq("restaurant_id", rid)
+        .gte("day", drDate(6)),
+    ]).then(([today, week, items, links, views]) => {
       const list = (items.data ?? []) as { item_photos: unknown[] }[];
+      const days = (views.data ?? []) as { day: string; views: number }[];
       setStats({
+        viewsToday: days.find((d) => d.day === drDate())?.views ?? 0,
+        viewsWeek: days.reduce((n, d) => n + d.views, 0),
         today: today.count ?? 0,
-        week: week.data?.length ?? 0,
-        weekTotal: (week.data ?? []).reduce((n, o) => n + Number(o.total), 0),
+        week: week.count ?? 0,
         items: list.length,
         withPhoto: list.filter((i) => i.item_photos.length > 0).length,
         links: links.count ?? 0,
@@ -119,14 +130,18 @@ function HomePage() {
       </section>
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
-        <Stat label="Pedidos hoy" value={stats ? String(stats.today) : "—"} />
-        <Stat label="Pedidos 7 días" value={stats ? String(stats.week) : "—"} />
         <Stat
-          label="Vendido 7 días"
-          value={stats ? formatMoney(stats.weekTotal, r.currency) : "—"}
-          hint="Según pedidos registrados"
+          label="Visitas hoy"
+          value={stats ? String(stats.viewsToday) : "—"}
+          hint="Personas que abrieron tu menú hoy (una vez por visita)"
         />
-        <Stat label="Platos" value={stats ? String(stats.items) : "—"} />
+        <Stat label="Visitas 7 días" value={stats ? String(stats.viewsWeek) : "—"} />
+        <Stat
+          label="Pedidos enviados hoy"
+          value={stats ? String(stats.today) : "—"}
+          hint="Pedidos que tus clientes te mandaron por WhatsApp desde el menú"
+        />
+        <Stat label="Pedidos enviados 7 días" value={stats ? String(stats.week) : "—"} />
       </section>
 
       <section className="glass-card p-5">
@@ -149,19 +164,6 @@ function HomePage() {
           ))}
         </ul>
       </section>
-
-      <section className="grid gap-3 md:grid-cols-2">
-        <ProCard
-          title="Comanda digital"
-          text="Los pedidos llegan a una pantalla en la cocina y se marcan al prepararlos."
-          enabled={hasFeature(r.plan, "kitchen_display")}
-        />
-        <ProCard
-          title="Facturación"
-          text="Comprobantes desde tus pedidos, sin escribirlos dos veces."
-          enabled={hasFeature(r.plan, "invoicing")}
-        />
-      </section>
     </div>
   );
 }
@@ -171,21 +173,6 @@ function Stat({ label, value, hint }: { label: string; value: string; hint?: str
     <div className="rounded-2xl border border-primary/15 bg-foreground/5 p-4" title={hint}>
       <p className="text-[10px] uppercase tracking-[0.2em] text-foreground/55">{label}</p>
       <p className="mt-1 font-display text-3xl text-primary">{value}</p>
-    </div>
-  );
-}
-
-function ProCard({ title, text, enabled }: { title: string; text: string; enabled: boolean }) {
-  return (
-    <div className="rounded-2xl border border-dashed border-primary/25 p-4">
-      <p className="flex items-center gap-2 font-display text-2xl uppercase">
-        {!enabled && <Lock className="h-4 w-4 text-foreground/40" />}
-        {title}
-        <span className="rounded-md bg-primary/15 px-2 py-0.5 font-body text-[10px] font-bold tracking-[0.15em] text-primary">
-          PRO · PRÓXIMAMENTE
-        </span>
-      </p>
-      <p className="mt-1 text-sm text-foreground/60">{text}</p>
     </div>
   );
 }

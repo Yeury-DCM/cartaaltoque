@@ -62,8 +62,8 @@ const FEATURES = [
   },
   {
     Icon: BarChart3,
-    title: "Historial de pedidos",
-    text: "Cada pedido queda registrado: cuántos, cuándo y cuánto vendiste.",
+    title: "Visitas a tu menú",
+    text: "Mira cuántas personas abren tu menú cada día y cuántas te piden por WhatsApp.",
   },
 ];
 
@@ -165,8 +165,8 @@ function Landing() {
           <span className="text-[11px] uppercase tracking-[0.4em] text-primary">Plan Básico</span>
           <h2 className="mt-2 font-display text-5xl uppercase md:text-6xl">Empieza gratis</h2>
           <p className="mx-auto mt-3 max-w-md text-foreground/70">
-            {TRIAL_DAYS} días con todo incluido: menú, QR, pedidos por WhatsApp, zonas de delivery e
-            historial. Sin tarjeta.
+            {TRIAL_DAYS} días con todo incluido: menú, QR, pedidos por WhatsApp y zonas de delivery.
+            Sin tarjeta.
           </p>
           <Link
             to="/entrar"
@@ -175,9 +175,6 @@ function Landing() {
           >
             Crear mi menú
           </Link>
-          <p className="mt-6 text-xs uppercase tracking-[0.2em] text-foreground/45">
-            Próximamente plan Pro: comanda digital y facturación
-          </p>
         </Reveal>
       </section>
 
@@ -201,10 +198,8 @@ function PhoneMock() {
       <div className="relative rounded-[2.5rem] border border-primary/30 bg-card p-3 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)]">
         <div className="overflow-hidden rounded-[2rem] bg-background">
           <div className="px-5 pb-4 pt-8 text-center">
-            <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary font-display text-3xl text-primary-foreground">
-              P
-            </div>
-            <p className="mt-3 font-display text-3xl uppercase leading-none">Pizzería Don Juan</p>
+            <span className="text-[9px] uppercase tracking-[0.4em] text-primary">Carta</span>
+            <p className="font-display text-3xl uppercase leading-none">Pizzería Don Juan</p>
             <p className="mt-1 text-[11px] text-foreground/55">Lun–Sáb · 12 pm – 11 pm</p>
           </div>
           <div className="flex gap-1.5 px-4 pb-3">

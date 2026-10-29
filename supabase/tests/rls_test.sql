@@ -275,6 +275,14 @@ begin
   perform tests.check('menú no expone plan ni estado', not (m->'restaurant' ? 'plan' or m->'restaurant' ? 'status'));
   perform tests.check('slug inexistente → null', public.get_public_menu('no-existe') is null);
 
+  -- Visitas: el público solo suma con la función; no lee ni escribe la tabla.
+  perform public.track_menu_view('pizza-a');
+  perform public.track_menu_view('PIZZA-A');
+  perform public.track_menu_view('no-existe');
+  perform tests.fails('anon no lee visitas', 'select * from public.menu_views_daily', 'permission denied');
+  perform tests.fails('anon no infla visitas directo',
+    format('insert into public.menu_views_daily (restaurant_id, day, views) values (%L, current_date, 999)', ra), 'permission denied');
+
   -- Pedido válido. Se manda un unit_price falso: se ignora.
   o := public.place_order('pizza-a', jsonb_build_array(
          jsonb_build_object('item_id', pizza, 'variant_id', grande, 'qty', 2, 'unit_price', 1, 'note', 'Sin cebolla'),
@@ -325,12 +333,15 @@ begin
   perform tests.fails('A no altera montos', format('update public.orders set total = 1 where id = %L', oid), 'permission denied');
   perform tests.fails('A no borra pedidos', format('delete from public.orders where id = %L', oid), 'permission denied');
   perform tests.fails('A no altera líneas', 'update public.order_items set unit_price = 0', 'permission denied');
+  perform tests.check('A ve sus 2 visitas', (select sum(views) from public.menu_views_daily) = 2);
+  perform tests.fails('A no altera sus visitas', 'update public.menu_views_daily set views = 1000', 'permission denied');
   perform tests.keep('a_order', oid);
   perform tests.logout();
 
   perform tests.login('00000000-0000-4000-8000-00000000000b');
   perform tests.rows('B no ve pedidos de A', 'select 1 from public.orders', 0);
   perform tests.rows('B no ve líneas de A', 'select 1 from public.order_items', 0);
+  perform tests.rows('B no ve visitas de A', 'select 1 from public.menu_views_daily', 0);
   perform tests.affects('B no cambia estados de A', format('update public.orders set status = %L where id = %L', 'cancelled', tests.id('a_order')), 0);
   perform tests.logout();
 end $$;
@@ -372,20 +383,24 @@ do $$
 declare ra uuid := tests.id('ra'); rb uuid := tests.id('rb');
 begin
   perform tests.login('00000000-0000-4000-8000-0000000000ff');
-  perform tests.rows('super lista todos', 'select * from public.admin_list_restaurants()', 2);
+  perform tests.rows('super lista los de prueba',
+    format('select * from public.admin_list_restaurants() where id in (%L, %L)', ra, rb), 2);
   perform tests.check('super ve correo del dueño', (select owner_email from public.admin_list_restaurants() where id = ra) = 'a@tests.local');
+  perform tests.check('super ve visitas 7 días', (select views_7d from public.admin_list_restaurants() where id = ra) = 2);
   perform tests.rows('super NO lee tablas de tenants directo', 'select 1 from public.items', 0);
   perform tests.check('super es admin', public.is_platform_admin());
 
   perform public.admin_update_restaurant(ra, 'suspended');
   perform public.admin_update_restaurant(rb, null, 'pro', now() - interval '1 day');
-  perform tests.rows('auditoría registra cambios', 'select * from public.admin_audit_log() where action = ''restaurant.update''', 2);
+  perform tests.rows('auditoría registra cambios',
+    'select * from public.admin_audit_log() where action = ''restaurant.update'' and restaurant_name in (''Pizza A'', ''Burger B'')', 2);
   perform tests.fails('estado inválido', format('select public.admin_update_restaurant(%L, %L)', ra, 'gratis-para-siempre'), 'check constraint');
   perform tests.logout();
 
   perform tests.as_anon();
   perform tests.check('suspendido → menú oculto', public.get_public_menu('pizza-a') is null);
   perform tests.check('prueba vencida → menú oculto', public.get_public_menu('burger-b') is null);
+  perform public.track_menu_view('pizza-a');
   perform tests.fails('suspendido no recibe pedidos',
     format('select public.place_order(%L, %L::jsonb, %L)', 'pizza-a', jsonb_build_array(jsonb_build_object('item_id', tests.id('a_soda'), 'qty', 1)), 'pickup'), 'restaurant_unavailable');
   perform tests.logout();
@@ -395,6 +410,11 @@ begin
   perform tests.logout();
   perform tests.as_anon();
   perform tests.check('reactivado → menú visible', public.get_public_menu('pizza-a') is not null);
+  perform tests.logout();
+  -- Mientras estuvo suspendido no sumó visitas (antes de suspender había 2).
+  perform tests.check('suspendido no suma visitas',
+    (select sum(views) from public.menu_views_daily where restaurant_id = ra) = 2);
+  perform tests.as_anon();
   perform tests.logout();
 end $$;
 

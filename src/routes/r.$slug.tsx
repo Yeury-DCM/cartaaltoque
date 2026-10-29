@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Check, Clock, MapPin, Plus, Search, UtensilsCrossed } from "lucide-react";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { CartBar } from "@/components/CartBar";
@@ -12,7 +12,7 @@ import { APP_NAME } from "@/lib/brand";
 import { CartProvider, useCart } from "@/lib/cart";
 import { filterAndSort, mainPhoto, type Item, type SortKey } from "@/lib/menu";
 import { whatsappUrl } from "@/lib/order";
-import { mediaUrl, photoUrl, useOriginalOnError } from "@/lib/supabase";
+import { mediaUrl, photoUrl, supabase, useOriginalOnError } from "@/lib/supabase";
 import { brandStyle, fetchPublicMenu, type PublicMenu } from "@/lib/tenant";
 
 export const Route = createFileRoute("/r/$slug")({
@@ -89,6 +89,20 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
   const listRef = useRef<HTMLElement>(null);
   const previousCategory = useRef(cat);
 
+  // Cuenta la visita una vez por sesión del navegador (recargar o volver no suma otra).
+  // Se hace en el navegador, no en el servidor: el menú del servidor sale de caché.
+  useEffect(() => {
+    const key = `visita-${r.slug}`;
+    try {
+      if (sessionStorage.getItem(key)) return;
+      sessionStorage.setItem(key, "1");
+    } catch {
+      /* sin almacenamiento: igual se cuenta */
+    }
+    // supabase-js solo envía la petición al esperarla: sin .then() nunca sale.
+    void supabase.rpc("track_menu_view", { p_slug: r.slug }).then(() => undefined);
+  }, [r.slug]);
+
   // Espera a que React pinte la nueva lista: al acortarse, el navegador reajusta
   // el scroll y puede cancelar un desplazamiento iniciado antes del render.
   useLayoutEffect(() => {
@@ -139,18 +153,15 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
           </div>
         )}
         <div className="relative mx-auto max-w-5xl px-5 pt-10 text-center md:px-8 md:pt-16">
-          {r.logo_path ? (
+          {/* El logo va con su forma propia (PNG/WebP transparente): sin recuadro ni fondo. */}
+          {r.logo_path && (
             <img
               src={mediaUrl(r.logo_path)}
               alt={r.name}
-              className="fade-up-in mx-auto h-24 w-24 rounded-3xl border border-primary/30 bg-background object-contain p-1.5 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)] md:h-28 md:w-28"
+              className="fade-up-in mx-auto mb-6 h-auto max-h-28 w-auto max-w-[220px] object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.55)] md:max-h-36 md:max-w-[280px]"
             />
-          ) : (
-            <div className="fade-up-in mx-auto grid h-24 w-24 place-items-center rounded-3xl border border-primary/30 bg-primary font-display text-5xl text-primary-foreground md:h-28 md:w-28">
-              {r.name.slice(0, 1).toUpperCase()}
-            </div>
           )}
-          <span className="fade-up-in delay-150 mt-6 inline-block text-[11px] uppercase tracking-[0.4em] text-primary">
+          <span className="fade-up-in delay-150 inline-block text-[11px] uppercase tracking-[0.4em] text-primary">
             Carta
           </span>
           <h1 className="fade-up-in delay-150 font-display text-6xl uppercase leading-none md:text-8xl">

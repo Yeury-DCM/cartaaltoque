@@ -86,25 +86,19 @@ async function renderPoster(r: Restaurant, qr: HTMLCanvasElement, logo: HTMLImag
   ctx.fillStyle = "#FFFFFF";
   ctx.fillRect(0, 0, W, H);
 
-  // Banda superior con el color del restaurante.
+  // Franja superior con el color del restaurante.
   ctx.fillStyle = r.brand_color;
-  ctx.fillRect(0, 0, W, 330);
+  ctx.fillRect(0, 0, W, 90);
 
-  const logoSize = 220;
-  const logoY = 330 - logoSize / 2;
-  ctx.fillStyle = "#FFFFFF";
-  ctx.shadowColor = "rgba(0,0,0,0.18)";
-  ctx.shadowBlur = 30;
-  roundRect(ctx, (W - logoSize) / 2, logoY, logoSize, logoSize, 48);
-  ctx.shadowBlur = 0;
+  // El logo va libre, con su forma (sin recuadro). Sin logo, el nombre sube.
+  let y = 190;
   if (logo) {
-    drawContain(ctx, logo, (W - logoSize) / 2 + 22, logoY + 22, logoSize - 44);
-  } else {
-    ctx.fillStyle = r.brand_color;
-    ctx.font = '160px "Bebas Neue", sans-serif';
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(r.name.slice(0, 1).toUpperCase(), W / 2, logoY + logoSize / 2 + 8);
+    const box = { w: 420, h: 260 };
+    const scale = Math.min(box.w / logo.width, box.h / logo.height);
+    const w = logo.width * scale;
+    const h = logo.height * scale;
+    ctx.drawImage(logo, (W - w) / 2, y, w, h);
+    y += h + 40;
   }
 
   ctx.textAlign = "center";
@@ -116,15 +110,18 @@ async function renderPoster(r: Restaurant, qr: HTMLCanvasElement, logo: HTMLImag
     size -= 6;
     ctx.font = `${size}px "Bebas Neue", sans-serif`;
   }
-  ctx.fillText(r.name.toUpperCase(), W / 2, 720);
+  y += size * 0.85;
+  ctx.fillText(r.name.toUpperCase(), W / 2, y);
 
   ctx.font = '700 44px "DM Sans", sans-serif';
   ctx.fillStyle = "#444444";
-  ctx.fillText("Escanea para ver el menú", W / 2, 800);
+  y += 80;
+  ctx.fillText("Escanea para ver el menú", W / 2, y);
 
-  const qrSize = 760;
+  // El QR ocupa el espacio que queda, hasta 820 px.
+  const qrY = y + 40;
+  const qrSize = Math.min(820, H - qrY - 190);
   const qrX = (W - qrSize) / 2;
-  const qrY = 850;
   ctx.drawImage(qr, qrX, qrY, qrSize, qrSize);
 
   ctx.font = '700 40px "DM Sans", sans-serif';

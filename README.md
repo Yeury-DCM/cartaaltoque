@@ -13,7 +13,7 @@ pero es un proyecto independiente.
 | `/` | Público | Landing del SaaS |
 | `/entrar` | Público | Entrar, crear cuenta, recuperar contraseña |
 | `/r/:slug` | Público | Menú de un restaurante (lo que abre el QR) |
-| `/app` | Dueño / staff | Panel: inicio, menú, pedidos, mi página, QR, zonas |
+| `/app` | Dueño / staff | Panel: inicio (visitas), menú, mi página, QR, zonas |
 | `/super` | Super admin | Restaurantes, planes, estados, auditoría |
 
 ## Stack
@@ -53,6 +53,7 @@ pruebas de aislamiento entre restaurantes. Ver `docs/SEGURIDAD.md`.
 
 ## Planes
 
-`src/lib/features.ts` decide qué trae cada plan (`hasFeature`). Hoy todo es plan
-Básico; Pro (comanda digital, facturación, equipo) queda listado como "próximamente".
+Hoy todos los restaurantes usan el plan Básico: menú, QR, pedido por WhatsApp y zonas.
+Los pedidos se guardan solo para numerarlos (#12 en el mensaje) y contarlos; el producto
+no gestiona pedidos: el negocio los atiende por WhatsApp.
 El plan y el estado de cada restaurante solo los cambia el super admin.

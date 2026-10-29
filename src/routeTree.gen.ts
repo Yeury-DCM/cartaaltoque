@@ -16,7 +16,6 @@ import { Route as SuperRouteImport } from './routes/super'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppMenuRouteImport } from './routes/app.menu'
 import { Route as AppPaginaRouteImport } from './routes/app.pagina'
-import { Route as AppPedidosRouteImport } from './routes/app.pedidos'
 import { Route as AppQrRouteImport } from './routes/app.qr'
 import { Route as AppZonasRouteImport } from './routes/app.zonas'
 import { Route as RSlugRouteImport } from './routes/r.$slug'
@@ -56,11 +55,6 @@ const AppPaginaRoute = AppPaginaRouteImport.update({
   path: '/pagina',
   getParentRoute: () => AppRoute,
 } as any)
-const AppPedidosRoute = AppPedidosRouteImport.update({
-  id: '/pedidos',
-  path: '/pedidos',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppQrRoute = AppQrRouteImport.update({
   id: '/qr',
   path: '/qr',
@@ -84,7 +78,6 @@ export interface FileRoutesByFullPath {
   '/super': typeof SuperRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
-  '/app/pedidos': typeof AppPedidosRoute
   '/app/qr': typeof AppQrRoute
   '/app/zonas': typeof AppZonasRoute
   '/r/$slug': typeof RSlugRoute
@@ -96,7 +89,6 @@ export interface FileRoutesByTo {
   '/super': typeof SuperRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
-  '/app/pedidos': typeof AppPedidosRoute
   '/app/qr': typeof AppQrRoute
   '/app/zonas': typeof AppZonasRoute
   '/r/$slug': typeof RSlugRoute
@@ -110,7 +102,6 @@ export interface FileRoutesById {
   '/super': typeof SuperRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
-  '/app/pedidos': typeof AppPedidosRoute
   '/app/qr': typeof AppQrRoute
   '/app/zonas': typeof AppZonasRoute
   '/r/$slug': typeof RSlugRoute
@@ -125,7 +116,6 @@ export interface FileRouteTypes {
     | '/super'
     | '/app/menu'
     | '/app/pagina'
-    | '/app/pedidos'
     | '/app/qr'
     | '/app/zonas'
     | '/r/$slug'
@@ -137,7 +127,6 @@ export interface FileRouteTypes {
     | '/super'
     | '/app/menu'
     | '/app/pagina'
-    | '/app/pedidos'
     | '/app/qr'
     | '/app/zonas'
     | '/r/$slug'
@@ -150,7 +139,6 @@ export interface FileRouteTypes {
     | '/super'
     | '/app/menu'
     | '/app/pagina'
-    | '/app/pedidos'
     | '/app/qr'
     | '/app/zonas'
     | '/r/$slug'
@@ -216,13 +204,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPaginaRouteImport
       parentRoute: typeof AppRoute
     }
-    '/app/pedidos': {
-      id: '/app/pedidos'
-      path: '/pedidos'
-      fullPath: '/app/pedidos'
-      preLoaderRoute: typeof AppPedidosRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/app/qr': {
       id: '/app/qr'
       path: '/qr'
@@ -250,7 +231,6 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppMenuRoute: typeof AppMenuRoute
   AppPaginaRoute: typeof AppPaginaRoute
-  AppPedidosRoute: typeof AppPedidosRoute
   AppQrRoute: typeof AppQrRoute
   AppZonasRoute: typeof AppZonasRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -259,7 +239,6 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppMenuRoute: AppMenuRoute,
   AppPaginaRoute: AppPaginaRoute,
-  AppPedidosRoute: AppPedidosRoute,
   AppQrRoute: AppQrRoute,
   AppZonasRoute: AppZonasRoute,
   AppIndexRoute: AppIndexRoute,

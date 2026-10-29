@@ -666,7 +666,9 @@ begin
   end if;
 end $$;
 
-create or replace function public.admin_list_restaurants()
+-- Se borra antes porque una migración posterior le agrega columnas.
+drop function if exists public.admin_list_restaurants();
+create function public.admin_list_restaurants()
 returns table (
   id uuid, slug text, name text, status text, plan text, trial_ends_at timestamptz,
   is_published boolean, is_live boolean, created_at timestamptz, owner_email text,

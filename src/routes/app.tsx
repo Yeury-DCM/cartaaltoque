@@ -8,7 +8,6 @@ import {
   MapPinned,
   Palette,
   QrCode,
-  Receipt,
   Shield,
   UtensilsCrossed,
 } from "lucide-react";
@@ -133,7 +132,6 @@ function Workspace({ session }: { session: Session }) {
 const NAV = [
   { to: "/app", label: "Inicio", Icon: Home, exact: true },
   { to: "/app/menu", label: "Menú", Icon: UtensilsCrossed },
-  { to: "/app/pedidos", label: "Pedidos", Icon: Receipt },
   { to: "/app/pagina", label: "Mi página", Icon: Palette },
   { to: "/app/qr", label: "QR", Icon: QrCode },
   { to: "/app/zonas", label: "Zonas", Icon: MapPinned },
@@ -147,16 +145,12 @@ function Shell() {
       <header className="sticky top-0 z-30 border-b border-primary/15 bg-background/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-3 md:px-8">
           <div className="flex min-w-0 items-center gap-3">
-            {r.logo_path ? (
+            {r.logo_path && (
               <img
                 src={mediaUrl(r.logo_path)}
                 alt=""
-                className="h-10 w-10 shrink-0 rounded-xl object-contain"
+                className="h-10 w-auto max-w-[96px] shrink-0 object-contain"
               />
-            ) : (
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary font-display text-2xl text-primary-foreground">
-                {r.name.slice(0, 1).toUpperCase()}
-              </span>
             )}
             {memberships.length > 1 ? (
               <select

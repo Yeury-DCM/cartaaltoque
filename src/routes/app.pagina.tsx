@@ -235,6 +235,9 @@ function PageSettings() {
             onRemove={() => removeImage("cover")}
           />
         </div>
+        <p className="text-[11px] text-foreground/50">
+          Sube tu logo en PNG con fondo transparente: así se ve con su propia forma, sin recuadro.
+        </p>
         <div className={labelClass}>
           Color principal
           <div className="flex flex-wrap items-center gap-2 pt-1">

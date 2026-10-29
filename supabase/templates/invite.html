@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light only">
+<title>Te invitaron a un equipo</title>
+</head>
+<body style="margin:0;padding:0;background:#f3f1ee;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">Acepta la invitación y entra al panel.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f3f1ee;padding:32px 12px;">
+  <tr><td align="center">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:16px;overflow:hidden;">
+      <tr><td align="center" style="background:#0D0D0D;padding:28px 24px;border-bottom:4px solid #F5A01E;"><div style="font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-size:34px;line-height:1;letter-spacing:1px;color:#ffffff;text-transform:uppercase;">Carta al <span style="color:#F5A01E;">Toque</span></div></td></tr>
+      <tr><td style="padding:36px 32px 8px;font-family:Arial,Helvetica,sans-serif;color:#1a1a1a;">
+        <h1 style="margin:0 0 14px;font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-size:30px;line-height:1.1;letter-spacing:.5px;text-transform:uppercase;font-weight:normal;color:#0D0D0D;">Te invitaron a un equipo</h1>
+        <div style="font-size:16px;line-height:1.6;color:#3a3a3a;">Te invitaron a ayudar a administrar un menú en Carta al Toque. Acepta la invitación para crear tu acceso.</div>
+      </td></tr>
+      <tr><td align="center" style="padding:24px 32px 8px;">
+        <a href="{{ .ConfirmationURL }}" style="display:inline-block;background:#F5A01E;color:#0D0D0D;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;padding:15px 30px;border-radius:8px;">Aceptar invitación</a>
+      </td></tr>
+      <tr><td style="padding:20px 32px 32px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#777777;">
+        Si no fuiste tú, puedes ignorar este correo.<br><br>
+        Si el botón no funciona, copia este enlace en tu navegador:<br>
+        <a href="{{ .ConfirmationURL }}" style="color:#777777;word-break:break-all;">{{ .ConfirmationURL }}</a>
+      </td></tr>
+    </table>
+    <p style="margin:18px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;color:#9a9a9a;">Carta al Toque · Tu menú digital con pedidos por WhatsApp</p>
+  </td></tr>
+</table>
+</body>
+</html>

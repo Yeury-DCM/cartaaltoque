@@ -32,6 +32,7 @@ type Row = {
   items_count: number;
   orders_7d: number;
   orders_total: number;
+  views_7d: number;
 };
 
 type Stats = Record<
@@ -42,7 +43,8 @@ type Stats = Record<
   | "suspended"
   | "new_7d"
   | "orders_7d"
-  | "orders_total",
+  | "orders_total"
+  | "views_7d",
   number
 >;
 
@@ -193,7 +195,7 @@ function Dashboard() {
       <main className="mx-auto max-w-6xl space-y-6 px-5 py-6 md:px-8">
         {error && <ErrorNote>{error}</ErrorNote>}
 
-        <section className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <section className="grid grid-cols-2 gap-3 md:grid-cols-3">
           <Stat label="Restaurantes" value={stats?.restaurants} />
           <Stat label="En línea" value={stats?.live} />
           <Stat label="Nuevos 7 días" value={stats?.new_7d} />
@@ -202,6 +204,7 @@ function Dashboard() {
           <Stat label="Activos (pagan)" value={stats?.active} />
           <Stat label="Suspendidos" value={stats?.suspended} />
           <Stat label="Pedidos totales" value={stats?.orders_total} />
+          <Stat label="Visitas 7 días" value={stats?.views_7d} />
         </section>
 
         <div className="flex gap-2">
@@ -278,7 +281,8 @@ function Dashboard() {
                         </p>
                       </div>
                       <span className="text-xs text-foreground/60">
-                        {r.items_count} platos · {r.orders_7d} ped. 7d · {r.orders_total} total
+                        {r.items_count} platos · {r.views_7d} visitas 7d · {r.orders_7d} ped. 7d ·{" "}
+                        {r.orders_total} total
                       </span>
                       {busy === r.id && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
                     </div>
