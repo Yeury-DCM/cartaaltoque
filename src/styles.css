@@ -707,8 +707,10 @@
   .dev-stage {
     perspective: 2400px;
   }
+  /* Sin preserve-3d a propósito: dentro de un contexto 3D con la ventana escalada, Chrome
+     no entrega los clics del ratón a los botones. Así el conjunto se inclina como un solo
+     plano y todo responde. */
   .dev-tilt {
-    transform-style: preserve-3d;
     will-change: transform;
   }
 

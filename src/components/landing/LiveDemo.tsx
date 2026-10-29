@@ -51,7 +51,7 @@ function Stage() {
           </div>
           <div
             className="absolute"
-            style={{ right: "-2%", top: "7%", transform: "translateZ(120px)" }}
+            style={{ right: "-2%", top: "7%", transform: "scale(1.03)", transformOrigin: "center" }}
           >
             <Phone width={300}>
               <DemoPhone />

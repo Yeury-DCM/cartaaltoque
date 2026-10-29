@@ -15,13 +15,14 @@ import {
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import {
+  activeZone,
   CATEGORIES,
   cartLines,
-  DELIVERY_FEE,
+  displayName,
+  initials,
   isFresh,
   money,
   orderMessage,
-  RESTAURANT,
   useDemo,
   type CategoryId,
   type DemoItem,
@@ -42,6 +43,15 @@ export function DemoPhone() {
       {state.screen === "menu" && <MenuScreen />}
       {state.screen === "cart" && <CartScreen />}
       {state.screen === "chat" && <ChatScreen />}
+      {state.toast && (
+        <div
+          key={state.toast.at}
+          role="status"
+          className="sheet-in absolute inset-x-5 bottom-24 z-30 rounded-xl bg-white px-4 py-3 text-center text-[13px] font-medium leading-snug text-[#111] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.7)]"
+        >
+          {state.toast.text}
+        </div>
+      )}
     </div>
   );
 }
@@ -67,20 +77,37 @@ function MenuScreen() {
           }}
         />
         <p className="relative text-[10px] uppercase tracking-[0.4em] text-primary">Carta</p>
-        <h3 className="relative font-display text-[46px] uppercase leading-none">{RESTAURANT}</h3>
-        <p className="relative mt-1.5 text-[12.5px] text-foreground/65">
-          Pizzas al horno de leña y burgers de la casa
-        </p>
+        <h3 className="relative break-words font-display text-[46px] uppercase leading-none">
+          {displayName(state)}
+        </h3>
+        {state.tagline.trim() && (
+          <p className="relative mt-1.5 text-[12.5px] text-foreground/65">{state.tagline}</p>
+        )}
         <p className="relative mt-2 inline-flex items-center gap-1.5 text-[10.5px] uppercase tracking-[0.15em] text-foreground/55">
           <Clock className="h-3 w-3 text-primary" /> Lun–Dom · 12 pm – 11 pm
         </p>
         <div className="relative mt-3 flex justify-center gap-2">
-          <span className="flex h-9 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-[13px] font-bold text-primary-foreground">
-            <WhatsAppIcon className="h-4 w-4" /> WhatsApp
-          </span>
-          <span className="grid h-9 w-9 place-items-center rounded-xl border border-primary/30 bg-foreground/5">
+          {state.whatsapp && (
+            <button
+              type="button"
+              onClick={() =>
+                dispatch({ type: "chat", message: `Hola ${displayName(state)}, ¿están abiertos?` })
+              }
+              className="flex h-9 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-[13px] font-bold text-primary-foreground transition active:scale-95"
+            >
+              <WhatsAppIcon className="h-4 w-4" /> WhatsApp
+            </button>
+          )}
+          <button
+            type="button"
+            aria-label="Instagram"
+            onClick={() =>
+              dispatch({ type: "toast", text: "En tu menú real, aquí se abre tu Instagram." })
+            }
+            className="grid h-9 w-9 place-items-center rounded-xl border border-primary/30 bg-foreground/5 transition active:scale-95"
+          >
             <Instagram className="h-4 w-4" />
-          </span>
+          </button>
         </div>
       </div>
 
@@ -118,6 +145,7 @@ function MenuScreen() {
                     key={i.id}
                     item={i}
                     flashAt={isFresh(state.flash, `item:${i.id}`) ? state.flash!.at : 0}
+                    canOrder={state.whatsapp}
                     onAdd={() => dispatch({ type: "add", id: i.id })}
                   />
                 ))}
@@ -126,7 +154,7 @@ function MenuScreen() {
         ))}
       </div>
 
-      {count > 0 && (
+      {state.whatsapp && count > 0 && (
         <div className="absolute inset-x-0 bottom-0 px-4 pb-5">
           <button
             key={isFresh(state.flash, "cart") ? state.flash!.at : "bar"}
@@ -154,10 +182,12 @@ function MenuScreen() {
 function ItemCard({
   item,
   flashAt,
+  canOrder,
   onAdd,
 }: {
   item: DemoItem;
   flashAt: number;
+  canOrder: boolean;
   onAdd: () => void;
 }) {
   const Icon = ICON[item.cat];
@@ -189,7 +219,7 @@ function ItemCard({
           )}
         </div>
       </div>
-      {item.available && (
+      {canOrder && item.available && (
         <button
           type="button"
           onClick={onAdd}
@@ -207,7 +237,8 @@ function CartScreen() {
   const { state, dispatch } = useDemo();
   const lines = cartLines(state);
   const subtotal = lines.reduce((n, l) => n + l.qty * l.item.price, 0);
-  const fee = state.fulfillment === "delivery" ? DELIVERY_FEE : 0;
+  const zone = activeZone(state);
+  const fee = state.fulfillment === "delivery" && zone ? zone.fee : 0;
 
   const pill = (on: boolean) =>
     `flex h-11 items-center justify-center gap-2 rounded-xl border text-[13px] font-bold uppercase tracking-wide transition-colors ${
@@ -219,7 +250,7 @@ function CartScreen() {
   const send = () =>
     dispatch({
       type: "send",
-      message: orderMessage(state.nextNumber, lines, state.fulfillment),
+      message: orderMessage(state.nextNumber, lines, state.fulfillment, displayName(state), zone),
     });
 
   return (
@@ -290,15 +321,20 @@ function CartScreen() {
             <Bike className="h-4 w-4" /> Delivery
           </button>
         </div>
-        {state.fulfillment === "delivery" && (
-          <div className="rounded-lg border border-primary bg-primary/15 px-3 py-2">
-            <div className="flex justify-between text-[13px] font-bold">
-              <span>Zona 1</span>
-              <span className="text-primary">{money(DELIVERY_FEE)}</span>
+        {state.fulfillment === "delivery" &&
+          (zone ? (
+            <div className="rounded-lg border border-primary bg-primary/15 px-3 py-2">
+              <div className="flex justify-between text-[13px] font-bold">
+                <span>{zone.name}</span>
+                <span className="text-primary">{money(zone.fee)}</span>
+              </div>
+              <p className="text-[11px] text-foreground/55">{zone.hoods}</p>
             </div>
-            <p className="text-[11px] text-foreground/55">Piantini · Naco · Evaristo Morales</p>
-          </div>
-        )}
+          ) : (
+            <p className="rounded-lg border border-primary/20 bg-foreground/5 px-3 py-2 text-[12px] text-foreground/60">
+              Sin zonas activas: el costo de entrega se confirma por el chat.
+            </p>
+          ))}
       </div>
 
       <footer className="shrink-0 space-y-3 border-t border-primary/15 px-4 pb-6 pt-4">
@@ -324,12 +360,19 @@ function ChatScreen() {
       <div className="bg-[#1F2C33]">
         <StatusBar color="#E9EDEF" />
         <div className="flex items-center gap-3 px-3 pb-3">
-          <ChevronLeft className="h-6 w-6 text-[#00A884]" />
+          <button
+            type="button"
+            aria-label="Volver al menú"
+            onClick={() => dispatch({ type: "screen", screen: "menu" })}
+            className="grid h-8 w-8 place-items-center rounded-full"
+          >
+            <ChevronLeft className="h-6 w-6 text-[#00A884]" />
+          </button>
           <span className="grid h-10 w-10 place-items-center rounded-full bg-[#2A3942] font-display text-[20px]">
-            DJ
+            {initials(displayName(state))}
           </span>
           <div className="min-w-0">
-            <p className="truncate text-[16px] font-semibold">{RESTAURANT}</p>
+            <p className="truncate text-[16px] font-semibold">{displayName(state)}</p>
             <p className="text-[12px] text-[#8696A0]">en línea</p>
           </div>
         </div>
