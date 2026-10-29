@@ -1,0 +1,541 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Chambra Food Truck — Dominican street food brand
+ * Dark-only theme. Bold, handcrafted, premium street culture.
+ *
+ * Palette:
+ *   Black     #0D0D0D  -> background
+ *   Orange    #F5A01E  -> primary (brand)
+ *   Red       #B22222  -> destructive / accent
+ *   White     #FFFFFF  -> foreground
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-whatsapp: var(--whatsapp);
+
+  --font-display: "Bebas Neue", "Anton", sans-serif;
+  --font-body: "DM Sans", "Inter", sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+
+  /* #0D0D0D */
+  --background: oklch(0.18 0 0);
+  /* #FFFFFF */
+  --foreground: oklch(1 0 0);
+
+  /* slightly elevated card surface */
+  --card: oklch(0.22 0.005 60);
+  --card-foreground: oklch(1 0 0);
+
+  --popover: oklch(0.22 0.005 60);
+  --popover-foreground: oklch(1 0 0);
+
+  /* #F5A01E orange */
+  --primary: oklch(0.76 0.16 60);
+  --primary-foreground: oklch(0.13 0 0);
+
+  --secondary: oklch(0.28 0.01 60);
+  --secondary-foreground: oklch(1 0 0);
+
+  --muted: oklch(0.25 0.005 60);
+  --muted-foreground: oklch(0.72 0.01 60);
+
+  --accent: oklch(0.76 0.16 60);
+  --accent-foreground: oklch(0.13 0 0);
+
+  /* #B22222 red */
+  --destructive: oklch(0.5 0.18 27);
+  --destructive-foreground: oklch(1 0 0);
+
+  --border: oklch(0.76 0.16 60 / 20%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.76 0.16 60 / 60%);
+
+  --chart-1: oklch(0.76 0.16 60);
+  --chart-2: oklch(0.5 0.18 27);
+  --chart-3: oklch(0.85 0.12 80);
+  --chart-4: oklch(0.4 0.05 60);
+  --chart-5: oklch(0.6 0.1 40);
+
+  --sidebar: oklch(0.18 0 0);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.76 0.16 60);
+  --sidebar-primary-foreground: oklch(0.13 0 0);
+  --sidebar-accent: oklch(0.25 0.005 60);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.76 0.16 60 / 20%);
+  --sidebar-ring: oklch(0.76 0.16 60 / 60%);
+
+  /* WhatsApp green #25D366 */
+  --whatsapp: oklch(0.74 0.18 145);
+}
+
+/* Dark-only site — keep .dark identical to :root so the dark variant in any
+   pasted shadcn snippets still resolves. */
+.dark {
+  --background: oklch(0.18 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.22 0.005 60);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.22 0.005 60);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(0.76 0.16 60);
+  --primary-foreground: oklch(0.13 0 0);
+  --secondary: oklch(0.28 0.01 60);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.25 0.005 60);
+  --muted-foreground: oklch(0.72 0.01 60);
+  --accent: oklch(0.76 0.16 60);
+  --accent-foreground: oklch(0.13 0 0);
+  --destructive: oklch(0.5 0.18 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.76 0.16 60 / 20%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.76 0.16 60 / 60%);
+  --sidebar: oklch(0.18 0 0);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.76 0.16 60);
+  --sidebar-primary-foreground: oklch(0.13 0 0);
+  --sidebar-accent: oklch(0.25 0.005 60);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.76 0.16 60 / 20%);
+  --sidebar-ring: oklch(0.76 0.16 60 / 60%);
+  --whatsapp: oklch(0.74 0.18 145);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /* Safari en iOS hace zoom automático al enfocar un campo con letra menor a
+     16px. Forzamos 16px en celular para que no "salte" el zoom al escribir.
+     !important porque las clases de Tailwind (text-sm, text-xs) pesan más
+     que esta capa "base" y si no, la ganan ellas. */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+    border-radius: 16px;
+    transition:
+      box-shadow 280ms ease,
+      border-color 280ms ease,
+      transform 280ms ease;
+  }
+
+  .glass-card:hover {
+    border-color: color-mix(in srgb, var(--color-primary) 55%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-primary) 15%, transparent),
+      0 12px 40px -10px color-mix(in srgb, var(--color-primary) 35%, transparent);
+  }
+
+  /* Filled orange button */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-radius: 8px;
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease,
+      background 200ms ease;
+    cursor: pointer;
+    border: 0;
+  }
+
+  .btn-primary:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 30px -8px color-mix(in srgb, var(--color-primary) 55%, transparent);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.99);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    background: transparent;
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--color-primary) 50%, transparent);
+    transition:
+      transform 200ms ease,
+      background 200ms ease,
+      border-color 200ms ease;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover {
+    transform: scale(1.03);
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    border-color: var(--color-primary);
+  }
+
+  /* Animated grain — slow drift gives a hand-printed feel */
+  .grain {
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    background-size: 200px 200px;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+  }
+
+  /* Reveal on scroll — works with useReveal hook */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    transition:
+      opacity 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Detalle de platillo: la hoja sube suave y el fondo se desvanece */
+  @keyframes backdrop-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes backdrop-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes sheet-in {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  @keyframes sheet-out {
+    from {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(28px) scale(0.98);
+    }
+  }
+  .backdrop-in {
+    animation: backdrop-in 260ms ease-out both;
+  }
+  .backdrop-out {
+    animation: backdrop-out 220ms ease-in both;
+  }
+  .sheet-in {
+    animation: sheet-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .sheet-out {
+    animation: sheet-out 220ms ease-in both;
+  }
+
+  /* Página de broma: cada línea entra con su propio retraso (inline) */
+  .joke-line {
+    opacity: 0;
+    animation: fade-up-in 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes bar-pop {
+    0% {
+      opacity: 0;
+      transform: translateY(24px) scale(0.97);
+    }
+    60% {
+      opacity: 1;
+      transform: translateY(-3px) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .bar-pop {
+    animation: bar-pop 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transition: none;
+    }
+    .sheet-in,
+    .sheet-out,
+    .backdrop-in,
+    .backdrop-out,
+    .bar-pop {
+      animation-duration: 1ms;
+    }
+    .joke-line {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
+  /* Divider with grain texture rather than a flat line */
+  .divider-grain {
+    position: relative;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--color-primary) 60%, transparent) 20%,
+      color-mix(in srgb, var(--color-primary) 90%, transparent) 50%,
+      color-mix(in srgb, var(--color-primary) 60%, transparent) 80%,
+      transparent 100%
+    );
+    box-shadow: 0 0 22px 0 color-mix(in srgb, var(--color-primary) 22%, transparent);
+  }
+
+  /* El grano se desvanece hacia los bordes (máscara) para no dibujar un recuadro */
+  .divider-grain::after {
+    content: "";
+    position: absolute;
+    inset: -8px 0;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 0%, transparent 100%);
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 0%, transparent 100%);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='20'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.4' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  /* Hero soft fade-in on load */
+  @keyframes fade-up-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-up-in {
+    animation: fade-up-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .delay-150 {
+    animation-delay: 150ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+
+  /* Hover pulse for cards */
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-primary) 40%, transparent);
+    }
+    50% {
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-primary) 0%, transparent);
+    }
+  }
+
+  .glow-pulse {
+    animation: glow-pulse 2.4s ease-in-out infinite;
+  }
+
+  /* Fondo del hero: columnas de fotos que suben y bajan en bucle. Cada pista lleva el set
+     duplicado y se desplaza -50%, así el reinicio es invisible. */
+  @keyframes wall-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes wall-down {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .wall-track {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    will-change: transform;
+    animation: wall-up 90s linear infinite;
+  }
+
+  .wall-track.reverse {
+    animation-name: wall-down;
+  }
+
+  /* El muro deja de animarse cuando el hero no se ve (ahorra GPU y batería). */
+  .wall-paused .wall-track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wall-track {
+      animation: none;
+    }
+  }
+
+  /* Masonry via CSS columns for the gallery on desktop */
+  .masonry {
+    column-count: 1;
+    column-gap: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .masonry {
+      column-count: 3;
+      column-gap: 1rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .masonry {
+      column-count: 4;
+    }
+  }
+
+  .masonry > * {
+    break-inside: avoid;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 1024px) {
+    .masonry > * {
+      margin-bottom: 1rem;
+    }
+  }
+}
