@@ -159,10 +159,6 @@ function Landing() {
             </h2>
           </Reveal>
           <ol className="relative mt-16 grid gap-5 md:grid-cols-3">
-            <span
-              aria-hidden
-              className="absolute left-[16%] right-[16%] top-[52px] hidden h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent md:block"
-            />
             {STEPS.map(({ Icon, title, text }, i) => (
               <Reveal
                 as="li"
@@ -173,6 +169,14 @@ function Landing() {
                 <span className="relative mx-auto grid h-[72px] w-[72px] place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[0_18px_40px_-12px_var(--primary)]">
                   <Icon className="h-8 w-8" />
                 </span>
+                {/* Conector hacia el siguiente paso: del borde de este icono al del próximo,
+                    a la altura exacta de su centro (28px de padding + 36px = 64px). */}
+                {i < STEPS.length - 1 && (
+                  <span
+                    aria-hidden
+                    className="absolute left-[calc(50%+48px)] top-[64px] hidden h-px w-[calc(100%-74.4px)] bg-gradient-to-r from-primary/70 to-primary/20 md:block"
+                  />
+                )}
                 <span className="mt-6 block font-mono text-[12px] tracking-[0.3em] text-foreground/40">
                   PASO 0{i + 1}
                 </span>
