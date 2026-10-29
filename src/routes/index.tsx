@@ -316,7 +316,7 @@ function Landing() {
 function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 md:px-6 md:pt-5">
-      <div className="nav-glass mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl px-3 py-2 md:px-4">
+      <div className="nav-glass backdrop-blur-2xl backdrop-saturate-150 mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl px-3 py-2 md:px-4">
         <a href="#inicio" aria-label={APP_NAME} className="shrink-0">
           <BrandLogo className="h-8 md:h-9" />
         </a>
