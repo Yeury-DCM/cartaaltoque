@@ -8,6 +8,11 @@ const { E1, E2, E3, E4, E5 } = CUES;
 const SFX: Record<SceneId, React.ReactNode> = {
   E1: (
     <>
+      {/* Tensión: sin música, drone grave + reloj, y un riser que crece hasta el corte. */}
+      <Sfx name="drone" at={0} db={-15} maxDur={3.4} />
+      <Sfx name="clock_ticktock" at={6.032 - 0.1} db={-17} maxDur={3.5} />
+      <Sfx name="riser" at={3.4} db={-13} />
+      <Sfx name="reverse_swell" at={3.4} db={-14} />
       <Sfx name="pen_fast" at={E1.strike + 0.08} db={-7} />
       <Sfx name="pen_write" at={E1.write + 0.06} db={-8} maxDur={0.6} />
       {[E1.stack1, E1.stack2, E1.stack3].map((at, i) => (
@@ -20,6 +25,9 @@ const SFX: Record<SceneId, React.ReactNode> = {
   ),
   E2: (
     <>
+      {/* Resolución: entra el drop de la música con un golpe grave. */}
+      <Sfx name="sub_drop" at={0} db={-9} />
+      <Sfx name="bass_hit" at={0} db={-12} />
       <Sfx name="whoosh_short" at={0.12} db={-13} />
       <Sfx name="tap" at={E2.tapPrice} db={-7} />
       {[0, 1, 2].map((i) => (

@@ -136,8 +136,10 @@ def build_music(norm, edit):
     src0 = int(off * SR)
     lo, hi = max(0, src0), min(len(m), src0 + n)
     a[lo - src0: hi - src0] = m[lo:hi]
-    # entrada suave del tramo previo al drop
-    a = fade(a, 0.25, 0.0)
+    # E1 va sin música (tensión con efectos): la pista entra justo en el drop
+    cut = int((t_drop - 0.012) * SR)
+    a[:cut] = 0
+    a[cut:] = fade(a[cut:], 0.004, 0.0)
     fo = int(TL["music"]["fadeOut"] * SR)
     x = np.linspace(0, 1, fo)[:, None]
     tail = a[-fo:]

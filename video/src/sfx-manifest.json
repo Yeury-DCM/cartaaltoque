@@ -83,5 +83,35 @@
   "file": "audio/sfx/whoosh_tech.wav",
   "hit": 0.052,
   "dur": 0.432
+ },
+ "riser": {
+  "file": "audio/sfx/riser.wav",
+  "hit": 2.4,
+  "dur": 2.4
+ },
+ "sub_drop": {
+  "file": "audio/sfx/sub_drop.wav",
+  "hit": 0.0,
+  "dur": 1.5
+ },
+ "reverse_swell": {
+  "file": "audio/sfx/reverse_swell.wav",
+  "hit": 1.6,
+  "dur": 1.6
+ },
+ "drone": {
+  "file": "audio/sfx/drone.wav",
+  "hit": 0.0,
+  "dur": 7.4
+ },
+ "clock_ticktock": {
+  "file": "audio/sfx/clock_ticktock.wav",
+  "hit": 6.032,
+  "dur": 13.209
+ },
+ "bass_hit": {
+  "file": "audio/sfx/bass_hit.wav",
+  "hit": 0.032,
+  "dur": 1.052
  }
 }

@@ -62,28 +62,32 @@ const page = (end: number, accent: string[], ...pairs: [string, number][]): Capt
 });
 
 // Tiempos de la voz real (faster-whisper + silencios y valles de energía), ya desplazados
-// al "at" de cada tramo. Voz: "Tu menú… ¿cuántas veces lo imprimiste este año? Ahora lo cambias
-// en segundos desde tu celular, y tu cliente lo abre con solo escanear un QR, sin esperar.
-// Carta al Toque. Pruébalo catorce días gratis."
+// al "at" de cada tramo. Voz: "Tu menú, ¿cuántas veces lo imprimiste este año? Cámbialo desde
+// tu celular, en segundos y ya está en todas las mesas. Y tu cliente lo abre con un QR: sin
+// esperar, sin apps. Con tu logo, tus colores y tu estilo. ¡Carta al Toque, 14 días gratis!"
 export const CAPTIONS: Record<SceneId, CaptionPage[]> = {
   E1: [
-    page(1.2, ["menú…"], ["Tu", 0.06], ["menú…", 0.31]),
-    page(2.22, ["veces"], ["¿cuántas", 1.52], ["veces", 1.89], ["lo", 2.1]),
-    page(3.5, ["imprimiste"], ["imprimiste", 2.25], ["este", 2.84], ["año?", 3.08]),
+    page(1.25, ["menú,"], ["Tu", 0.04], ["menú,", 0.21]),
+    page(2.1, ["veces"], ["¿cuántas", 1.4], ["veces", 1.66], ["lo", 1.9]),
+    page(3.4, ["imprimiste"], ["imprimiste", 2.16], ["este", 2.62], ["año?", 2.84]),
   ],
   E2: [
-    page(1.0, ["cambias"], ["Ahora", 0.17], ["lo", 0.47], ["cambias", 0.68]),
-    page(1.95, ["segundos"], ["en", 1.03], ["segundos", 1.18]),
-    page(3.4, ["celular,"], ["desde", 2.01], ["tu", 2.37], ["celular,", 2.52]),
+    page(1.45, ["celular,"], ["Cámbialo", 0.05], ["desde", 0.44], ["tu", 0.66], ["celular,", 0.88]),
+    page(2.5, ["segundos"], ["en", 1.56], ["segundos", 1.71]),
+    page(4.6, ["mesas."], ["y", 2.57], ["ya", 2.69], ["está", 2.93], ["en", 3.19], ["todas", 3.37], ["las", 3.65], ["mesas.", 3.99]),
   ],
   E3: [
-    page(1.2, ["cliente"], ["y", 0.15], ["tu", 0.26], ["cliente", 0.39], ["lo", 0.82], ["abre", 1.02]),
-    page(3.02, ["QR,"], ["con", 1.24], ["solo", 1.44], ["escanear", 1.69], ["un", 2.2], ["QR,", 2.32]),
-    page(4.3, ["esperar."], ["sin", 3.12], ["esperar.", 3.36]),
+    page(1.0, ["cliente"], ["Y", 0.08], ["tu", 0.15], ["cliente", 0.25], ["lo", 0.71], ["abre", 0.83]),
+    page(2.2, ["QR:"], ["con", 1.05], ["un", 1.29], ["QR:", 1.43]),
+    page(4.1, ["esperar,", "apps."], ["sin", 2.31], ["esperar,", 2.51], ["sin", 3.31], ["apps.", 3.55]),
   ],
-  E4: [],
+  E4: [
+    page(1.0, ["logo,"], ["Con", 0.07], ["tu", 0.19], ["logo,", 0.35]),
+    page(1.9, ["colores"], ["tus", 1.02], ["colores", 1.11]),
+    page(2.9, ["estilo."], ["y", 1.95], ["tu", 2.09], ["estilo.", 2.23]),
+  ],
   E5: [
-    page(1.1, ["Toque."], ["Carta", 0.05], ["al", 0.5], ["Toque.", 0.62]),
-    page(2.99, ["gratis."], ["Pruébalo", 1.16], ["14", 1.57], ["días", 2.0], ["gratis.", 2.2]),
+    page(1.3, ["Toque,"], ["¡Carta", 0.05], ["al", 0.35], ["Toque,", 0.59]),
+    page(3.0, ["gratis!"], ["14", 1.4], ["días", 1.81], ["gratis!", 2.17]),
   ],
 };

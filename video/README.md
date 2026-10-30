@@ -1,6 +1,6 @@
 # Carta al Toque: anuncio vertical (Remotion)
 
-1080×1920 · 30 fps. `CartaAd` dura 18 s (E1–E5) y `CartaAd15`, 15,5 s (sin E4). Cada escena también es una composición propia para hacer QA (`E1-Gancho` … `E5-Cierre`).
+1080×1920 · 30 fps. `CartaAd` dura 18 s (E1–E5) y `CartaAd15`, 15,1 s (sin E4). Cada escena también es una composición propia para hacer QA (`E1-Gancho` … `E5-Cierre`).
 
 Proyecto independiente: no importa nada de la app. Las pantallas (`src/ui/`) son copias adaptadas de `src/components/landing/` de la app, sin animaciones CSS: todo se calcula desde `useCurrentFrame`.
 

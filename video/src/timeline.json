@@ -5,19 +5,19 @@
   "scenes": [
     {
       "id": "E1",
-      "frames": 105
+      "frames": 102
     },
     {
       "id": "E2",
-      "frames": 135
+      "frames": 138
     },
     {
       "id": "E3",
-      "frames": 135
+      "frames": 123
     },
     {
       "id": "E4",
-      "frames": 75
+      "frames": 87
     },
     {
       "id": "E5",
@@ -26,83 +26,107 @@
   ],
   "cues": {
     "E1": {
-      "title1": 0.06,
-      "strike": 0.36,
-      "write": 0.75,
-      "title2": 1.52,
-      "stack1": 1.89,
-      "stack2": 2.25,
-      "stack3": 3.05
+      "title1": 0.04,
+      "strike": 0.2,
+      "write": 0.6,
+      "title2": 1.4,
+      "stack1": 1.66,
+      "stack2": 2.16,
+      "stack3": 2.84
     },
     "E2": {
-      "title1": 0.17,
-      "tapPrice": 0.55,
-      "type": 0.72,
-      "save": 1.18,
-      "tapSwitch": 2.05,
+      "title1": 0.05,
+      "tapPrice": 0.9,
+      "type": 1.12,
+      "save": 1.71,
+      "tapSwitch": 2.2,
       "title2": 2.6
     },
     "E3": {
-      "title1": 0.15,
-      "aim": 0.9,
-      "lock": 2.32,
-      "open": 2.5,
-      "tapPlus": 3.65,
-      "title2": 3.12
+      "title1": 0.08,
+      "aim": 0.3,
+      "lock": 1.43,
+      "open": 1.6,
+      "tapPlus": 2.9,
+      "title2": 2.31
     },
     "E4": {
       "v1": 0.0,
-      "v2": 0.83,
-      "v3": 1.66
+      "v2": 1.02,
+      "v3": 2.09
     },
     "E5": {
       "logo": 0.03,
-      "tagline": 0.62,
-      "offer": 1.57,
-      "url": 2.05,
-      "wa": 2.35
+      "tagline": 0.59,
+      "offer": 1.4,
+      "url": 2.17,
+      "wa": 2.45
     }
   },
   "voice": [
     {
-      "id": "v1",
+      "id": "v1a",
       "src": "voz.mp3",
       "from": 0.0,
-      "to": 3.47,
+      "to": 0.88,
       "scene": "E1",
       "at": 0.03
     },
     {
-      "id": "v2",
+      "id": "v1b",
       "src": "voz.mp3",
-      "from": 4.06,
-      "to": 6.99,
+      "from": 1.5,
+      "to": 3.34,
+      "scene": "E1",
+      "at": 1.36
+    },
+    {
+      "id": "v2a",
+      "src": "voz.mp3",
+      "from": 3.93,
+      "to": 5.28,
       "scene": "E2",
-      "at": 0.12
+      "at": 0.03
+    },
+    {
+      "id": "v2b",
+      "src": "voz.mp3",
+      "from": 5.7,
+      "to": 8.69,
+      "scene": "E2",
+      "at": 1.53
     },
     {
       "id": "v3",
       "src": "voz.mp3",
-      "from": 7.36,
-      "to": 11.3,
+      "from": 9.06,
+      "to": 13.03,
       "scene": "E3",
-      "at": 0.1
+      "at": 0.05
     },
     {
-      "id": "v5a",
+      "id": "v4a",
       "src": "voz.mp3",
-      "from": 11.82,
-      "to": 12.9,
-      "scene": "E5",
-      "at": 0.0
+      "from": 13.44,
+      "to": 15.2,
+      "scene": "E4",
+      "at": 0.05
     },
     {
-      "id": "v5b",
+      "id": "v4b",
       "src": "voz.mp3",
-      "from": 13.12,
-      "to": 14.99,
+      "from": 15.4,
+      "to": 16.28,
+      "scene": "E4",
+      "at": 1.93
+    },
+    {
+      "id": "v5",
+      "src": "voz.mp3",
+      "from": 16.68,
+      "to": 19.57,
       "scene": "E5",
-      "at": 1.12
+      "at": 0.03
     }
   ],
   "music": {

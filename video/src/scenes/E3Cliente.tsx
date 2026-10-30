@@ -16,22 +16,49 @@ const PTOP = 500;
 const ITEMS_NOW = withChanges(ITEMS, true, true);
 const PLUS_XY = { x: 346, y: 520 };
 
-/** Foto del sitio (pareja escaneando el QR), recortada sobre la mesa y oscurecida. */
-const Backdrop: React.FC<{ blur?: number; dim?: number; zoom?: number }> = ({ blur = 0, dim = 0.62, zoom = 1 }) => (
-  <AbsoluteFill style={{ overflow: "hidden", background: BRAND.carbon }}>
+// Foto del hero del sitio: 1672×941. Se usa a tamaño nativo (sin ampliar) para que se vea nítida.
+const HERO = { w: 1672, h: 941 };
+
+/**
+ * Foto del sitio (pareja escaneando el QR) en su tamaño real, encuadrada en la pareja y la
+ * mesa, con fundido al carbón arriba y abajo. `t` = segundos, para un acercamiento muy lento.
+ */
+const Backdrop: React.FC<{ t: number }> = ({ t }) => {
+  const top = 640;
+  const k = 1 + t * 0.012;
+  return (
+    <AbsoluteFill style={{ overflow: "hidden", background: BRAND.carbon }}>
+      <div
+        style={{
+          position: "absolute",
+          width: HERO.w,
+          height: HERO.h,
+          left: 1080 - HERO.w,
+          top,
+          transform: `scale(${k})`,
+          transformOrigin: "70% 60%",
+        }}
+      >
+        <Img
+          src={staticFile("brand/hero.webp")}
+          // el reset de Tailwind (img { max-width: 100% }) la aplastaba al ancho del cuadro
+          style={{ position: "absolute", inset: 0, width: HERO.w, height: HERO.h, maxWidth: "none" }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: alpha(BRAND.carbon, 0.35) }} />
+        <div style={{ position: "absolute", left: 0, right: 0, top: -2, height: 260, background: `linear-gradient(${BRAND.carbon}, ${alpha(BRAND.carbon, 0)})` }} />
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: -2, height: 300, background: `linear-gradient(${alpha(BRAND.carbon, 0)}, ${BRAND.carbon})` }} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/** Lo que ve la cámara detrás del afiche: la misma foto, desenfocada como fondo. */
+const CameraBg: React.FC = () => (
+  <AbsoluteFill style={{ overflow: "hidden", background: "#000" }}>
     <Img
       src={staticFile("brand/hero.webp")}
-      style={{
-        position: "absolute",
-        height: "100%",
-        left: "50%",
-        // la mesa y el porta-QR del hero quedan al centro del cuadro
-        transform: `translateX(-56%) scale(${zoom})`,
-        transformOrigin: "56% 70%",
-        filter: blur ? `blur(${blur}px)` : undefined,
-      }}
+      style={{ position: "absolute", width: (HERO.w / HERO.h) * 844, height: 844, maxWidth: "none", left: -620, top: 0, filter: "blur(10px) brightness(0.6)" }}
     />
-    <AbsoluteFill style={{ background: alpha(BRAND.carbon, dim) }} />
   </AbsoluteFill>
 );
 
@@ -81,9 +108,7 @@ const CameraScreen: React.FC<{ lock: number; banner: number; drift: number; puls
   const top = (844 - ph) / 2 - 20 + drift * 6 + hand[1];
   return (
     <div style={{ position: "relative", width: 390, height: 844, overflow: "hidden", background: "#000" }}>
-      <div style={{ position: "absolute", inset: -40 }}>
-        <Backdrop blur={6} dim={0.35} zoom={1.6} />
-      </div>
+      <CameraBg />
       <div style={{ position: "absolute", left, top, width: pw, height: ph, boxShadow: "0 20px 40px rgba(0,0,0,0.5)" }}>
         <div style={{ transform: `scale(${k})`, transformOrigin: "0 0" }}>
           <Poster />
@@ -144,7 +169,7 @@ export const E3Cliente: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: BRAND.carbon }}>
-      <Backdrop />
+      <Backdrop t={t} />
       {/* afiche sobre la mesa */}
       <div
         style={{

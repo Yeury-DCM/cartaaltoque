@@ -1,5 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { Captions } from "../components/Captions";
 import { CUES, f } from "../timeline";
 import { BRAND, FONT, SAFE, SPRING } from "../theme";
 import { ITEMS, withChanges, type FontStyle, type MenuTheme } from "../ui/data";
@@ -101,7 +102,7 @@ export const E4Marca: React.FC = () => {
         style={{
           position: "absolute",
           left: 540 - PW / 2,
-          top: 600 + (1 - enter) * 900,
+          top: 575 + (1 - enter) * 900,
           transform: `scale(${1 - 0.02 * bump(cur)})`,
         }}
       >
@@ -119,6 +120,7 @@ export const E4Marca: React.FC = () => {
           })}
         </Phone>
       </div>
+      <Captions scene="E4" />
     </AbsoluteFill>
   );
 };
