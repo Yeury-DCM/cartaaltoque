@@ -16,7 +16,6 @@ import { Reveal } from "@/components/Reveal";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { Compare } from "@/components/landing/Compare";
 import { Faq } from "@/components/landing/Faq";
-import { HeroPhone } from "@/components/landing/HeroPhone";
 import { LiveDemo } from "@/components/landing/LiveDemo";
 import { Statement } from "@/components/landing/Statement";
 import { TryQr } from "@/components/landing/TryQr";
@@ -84,43 +83,64 @@ function Landing() {
     <div className="relative min-h-screen overflow-x-clip bg-background text-foreground">
       <Nav />
 
-      {/* ─── Hero + demo en vivo ─── */}
-      <section id="inicio" className="relative overflow-hidden pb-24 pt-36 md:pt-44">
-        <GrainOverlay />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 md:px-8 lg:grid-cols-[1.15fr_0.85fr]">
-         <div>
-          <h1 className="fade-up-in delay-150 font-display text-[clamp(60px,8.4vw,128px)] uppercase leading-[0.86]">
-            Tu menú, <span className="text-primary">al toque.</span>
-          </h1>
-          <p className="fade-up-in delay-300 mt-7 max-w-xl text-lg leading-relaxed text-foreground/70">
-            Tus clientes escanean el QR, arman su pedido desde el celular y te llega completo por
-            WhatsApp: platos, tamaños, entrega y total. Sin apps y sin comisiones por pedido.
-          </p>
-          <div className="fade-up-in delay-500 mt-10 flex flex-wrap gap-3">
-            <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary">
-              Crear mi menú gratis
-            </Link>
-            <a href="#demo" className="btn-pill btn-pill-ghost">
-              Pruébalo aquí <ArrowDown className="h-4 w-4" />
-            </a>
-          </div>
-          <ul className="fade-up-in delay-500 mt-8 flex flex-wrap gap-x-7 gap-y-2 text-[14px] text-foreground/55">
-            {[
-              `${TRIAL_DAYS} días gratis`,
-              "Sin tarjeta",
-              "Sin comisión por pedido",
-              "Listo en minutos",
-            ].map((f) => (
-              <li key={f} className="check-item">
-                {f}
-              </li>
-            ))}
-          </ul>
-         </div>
-         <HeroPhone />
+      {/* ─── Hero ─── */}
+      <section
+        id="inicio"
+        className="relative flex flex-col overflow-hidden md:min-h-[100svh] md:flex-row md:items-center"
+      >
+        {/* En celular la foto es una banda arriba; desde tablet va de fondo detrás del texto. */}
+        <div className="relative h-[46svh] w-full shrink-0 md:absolute md:inset-0 md:h-auto">
+          <img
+            src="/hero.webp"
+            srcSet="/hero-sm.webp 900w, /hero.webp 1672w"
+            sizes="100vw"
+            alt=""
+            fetchPriority="high"
+            className="h-full w-full object-cover object-[68%_center]"
+          />
+          {/* Oscurece el lado del texto y funde los bordes con el resto de la página. */}
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,18,18,0.55)_0%,transparent_25%,transparent_55%,#121212_100%)] md:bg-[linear-gradient(90deg,rgba(18,18,18,0.92)_0%,rgba(18,18,18,0.7)_42%,rgba(18,18,18,0.1)_75%),linear-gradient(180deg,rgba(18,18,18,0.55)_0%,transparent_22%,transparent_70%,#121212_100%)]"
+          />
         </div>
+        <GrainOverlay />
+        <div className="relative mx-auto w-full max-w-6xl px-5 pb-16 pt-2 md:px-8 md:pb-24 md:pt-40">
+          <div className="max-w-xl lg:max-w-2xl">
+            <h1 className="fade-up-in delay-150 font-display text-[clamp(60px,8.4vw,128px)] uppercase leading-[0.86]">
+              Tu menú, <span className="text-primary">al toque.</span>
+            </h1>
+            <p className="fade-up-in delay-300 mt-7 max-w-xl text-lg leading-relaxed text-foreground/75">
+              Tus clientes escanean el QR, arman su pedido desde el celular y te llega completo por
+              WhatsApp: platos, tamaños, entrega y total. Sin apps y sin comisiones por pedido.
+            </p>
+            <div className="fade-up-in delay-500 mt-10 flex flex-wrap gap-3">
+              <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary">
+                Crear mi menú gratis
+              </Link>
+              <a href="#demo" className="btn-pill btn-pill-ghost">
+                Pruébalo aquí <ArrowDown className="h-4 w-4" />
+              </a>
+            </div>
+            <ul className="fade-up-in delay-500 mt-8 flex flex-wrap gap-x-7 gap-y-2 text-[14px] text-foreground/65">
+              {[
+                `${TRIAL_DAYS} días gratis`,
+                "Sin tarjeta",
+                "Sin comisión por pedido",
+                "Listo en minutos",
+              ].map((f) => (
+                <li key={f} className="check-item">
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
 
-        <div id="demo" className="relative mx-auto mt-20 max-w-6xl scroll-mt-28 px-5 md:px-8">
+      {/* ─── Demo en vivo ─── */}
+      <section className="relative overflow-hidden pb-24 pt-10">
+        <div id="demo" className="relative mx-auto max-w-6xl scroll-mt-28 px-5 md:px-8">
           <LiveDemo />
         </div>
       </section>
