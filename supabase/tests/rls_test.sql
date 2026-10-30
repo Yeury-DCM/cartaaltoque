@@ -292,6 +292,16 @@ begin
   perform tests.fails('anon no infla visitas directo',
     format('insert into public.menu_views_daily (restaurant_id, day, views) values (%L, current_date, 999)', ra), 'permission denied');
 
+  -- Aperturas de plato: solo con la función, y solo de platos del menú indicado.
+  perform public.track_item_open('pizza-a', pizza);
+  perform public.track_item_open('PIZZA-A', pizza);
+  perform public.track_item_open('burger-b', pizza);
+  perform public.track_item_open('no-existe', pizza);
+  perform public.track_item_open('pizza-a', gen_random_uuid());
+  perform tests.fails('anon no lee aperturas', 'select * from public.item_opens_daily', 'permission denied');
+  perform tests.fails('anon no infla aperturas directo',
+    format('insert into public.item_opens_daily (restaurant_id, item_id, day, opens) values (%L, %L, current_date, 999)', ra, pizza), 'permission denied');
+
   -- Pedido válido. Se manda un unit_price falso: se ignora.
   o := public.place_order('pizza-a', jsonb_build_array(
          jsonb_build_object('item_id', pizza, 'variant_id', grande, 'qty', 2, 'unit_price', 1, 'note', 'Sin cebolla'),
@@ -348,6 +358,8 @@ begin
   perform tests.fails('A no altera líneas', 'update public.order_items set unit_price = 0', 'permission denied');
   perform tests.check('A ve sus 2 visitas', (select sum(views) from public.menu_views_daily) = 2);
   perform tests.fails('A no altera sus visitas', 'update public.menu_views_daily set views = 1000', 'permission denied');
+  perform tests.check('A ve sus 2 aperturas de plato', (select sum(opens) from public.item_opens_daily) = 2);
+  perform tests.fails('A no altera sus aperturas', 'update public.item_opens_daily set opens = 1000', 'permission denied');
   perform tests.keep('a_order', oid);
   perform tests.logout();
 
@@ -355,6 +367,7 @@ begin
   perform tests.rows('B no ve pedidos de A', 'select 1 from public.orders', 0);
   perform tests.rows('B no ve líneas de A', 'select 1 from public.order_items', 0);
   perform tests.rows('B no ve visitas de A', 'select 1 from public.menu_views_daily', 0);
+  perform tests.rows('B no ve aperturas de A', 'select 1 from public.item_opens_daily', 0);
   perform tests.affects('B no cambia estados de A', format('update public.orders set status = %L where id = %L', 'cancelled', tests.id('a_order')), 0);
   perform tests.logout();
 end $$;

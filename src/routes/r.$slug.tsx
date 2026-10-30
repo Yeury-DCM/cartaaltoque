@@ -113,6 +113,17 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
     void supabase.rpc("track_menu_view", { p_slug: r.slug }).then(() => undefined);
   }, [r.slug]);
 
+  // Cada plato que el cliente abre cuenta una vez por visita (alimenta "platos más abiertos").
+  const openedItems = useRef(new Set<string>());
+  useEffect(() => {
+    if (!selected || openedItems.current.has(selected.id)) return;
+    openedItems.current.add(selected.id);
+    // supabase-js solo envía la petición al esperarla: sin .then() nunca sale.
+    void supabase
+      .rpc("track_item_open", { p_slug: r.slug, p_item_id: selected.id })
+      .then(() => undefined);
+  }, [selected, r.slug]);
+
   // Espera a que React pinte la nueva lista: al acortarse, el navegador reajusta
   // el scroll y puede cancelar un desplazamiento iniciado antes del render.
   useLayoutEffect(() => {

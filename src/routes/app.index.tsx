@@ -1,6 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check, Circle, Copy, ExternalLink } from "lucide-react";
+import {
+  ActivityChart,
+  TopItems,
+  type DayPoint,
+  type TopItem,
+} from "@/components/admin/ActivityChart";
 import { useAdmin } from "@/lib/admin";
 import { menuPath, menuUrl } from "@/lib/brand";
 import { supabase } from "@/lib/supabase";
@@ -15,6 +21,8 @@ type Stats = {
   items: number;
   withPhoto: number;
   links: number;
+  series: DayPoint[];
+  top: TopItem[];
 };
 
 function startOfToday() {
@@ -58,10 +66,56 @@ function HomePage() {
         .select("day, views")
         .eq("restaurant_id", rid)
         .gte("day", drDate(6)),
-    ]).then(([today, week, items, links, views]) => {
+      supabase
+        .from("orders")
+        .select("created_at")
+        .eq("restaurant_id", rid)
+        .gte("created_at", weekAgo)
+        .limit(5000),
+      supabase
+        .from("item_opens_daily")
+        .select("item_id, opens")
+        .eq("restaurant_id", rid)
+        .gte("day", drDate(29)),
+      supabase.from("items").select("id, name").eq("restaurant_id", rid),
+    ]).then(([today, week, items, links, views, orderRows, opensRows, names]) => {
       const list = (items.data ?? []) as { item_photos: unknown[] }[];
       const days = (views.data ?? []) as { day: string; views: number }[];
+      const ordersByDay = new Map<string, number>();
+      for (const o of (orderRows.data ?? []) as { created_at: string }[]) {
+        const d = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Santo_Domingo" }).format(
+          new Date(o.created_at),
+        );
+        ordersByDay.set(d, (ordersByDay.get(d) ?? 0) + 1);
+      }
+      const series: DayPoint[] = [6, 5, 4, 3, 2, 1, 0].map((back) => {
+        const day = drDate(back);
+        const [yy, mm, dd] = day.split("-").map(Number);
+        const weekday = new Intl.DateTimeFormat("es-DO", { weekday: "short", timeZone: "UTC" })
+          .format(new Date(Date.UTC(yy, mm - 1, dd)))
+          .replace(".", "");
+        return {
+          day,
+          label: `${weekday} ${dd}`,
+          views: days.find((v) => v.day === day)?.views ?? 0,
+          orders: ordersByDay.get(day) ?? 0,
+        };
+      });
+      const opens = new Map<string, number>();
+      for (const o of (opensRows.data ?? []) as { item_id: string; opens: number }[]) {
+        opens.set(o.item_id, (opens.get(o.item_id) ?? 0) + o.opens);
+      }
+      const nameOf = new Map(
+        ((names.data ?? []) as { id: string; name: string }[]).map((n) => [n.id, n.name]),
+      );
+      const top = [...opens.entries()]
+        .filter(([id]) => nameOf.has(id))
+        .map(([id, n]) => ({ id, name: nameOf.get(id)!, opens: n }))
+        .sort((a, b) => b.opens - a.opens)
+        .slice(0, 5);
       setStats({
+        series,
+        top,
         viewsToday: days.find((d) => d.day === drDate())?.views ?? 0,
         viewsWeek: days.reduce((n, d) => n + d.views, 0),
         today: today.count ?? 0,
@@ -146,6 +200,28 @@ function HomePage() {
           hint="Pedidos que tus clientes te mandaron por WhatsApp desde el menú"
         />
         <Stat label="Pedidos enviados 7 días" value={stats ? String(stats.week) : "—"} />
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+        <div className="glass-card p-5">
+          <h2 className="font-display text-3xl uppercase">Actividad</h2>
+          {stats ? (
+            <div className="mt-3">
+              <ActivityChart data={stats.series} />
+            </div>
+          ) : (
+            <div className="mt-3 h-[220px] animate-pulse rounded-xl bg-foreground/5" />
+          )}
+        </div>
+        <div className="glass-card p-5">
+          <h2 className="font-display text-3xl uppercase">Platos más abiertos</h2>
+          <p className="mb-4 text-[12px] text-foreground/50">Últimos 30 días</p>
+          {stats ? (
+            <TopItems items={stats.top} />
+          ) : (
+            <div className="h-32 animate-pulse rounded-xl bg-foreground/5" />
+          )}
+        </div>
       </section>
 
       <section className="glass-card p-5">
