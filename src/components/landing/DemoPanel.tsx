@@ -11,6 +11,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { menuPath, publicOrigin } from "@/lib/brand";
+import { FONT_STYLES, THEMES } from "@/lib/brand-color";
 import {
   CATEGORIES,
   displayName,
@@ -220,6 +221,34 @@ function PaginaTab() {
           Color de tu marca
         </p>
         <Swatches />
+        <p className="mb-2 mt-4 text-[10px] uppercase tracking-[0.15em] text-foreground/60">
+          Tema y tipografía
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {THEMES.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              aria-pressed={state.theme === t.id}
+              onClick={() => dispatch({ type: "theme", theme: t.id })}
+              className={`rounded-lg border px-3 py-1.5 text-[12px] font-bold transition ${state.theme === t.id ? "border-primary bg-primary/15 text-foreground" : "border-white/10 text-foreground/60 hover:border-primary/50"}`}
+            >
+              {t.label}
+            </button>
+          ))}
+          <span className="mx-1 w-px bg-white/10" />
+          {FONT_STYLES.map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              aria-pressed={state.font === f.id}
+              onClick={() => dispatch({ type: "font", font: f.id })}
+              className={`rounded-lg border px-3 py-1.5 text-[12px] font-bold transition ${state.font === f.id ? "border-primary bg-primary/15 text-foreground" : "border-white/10 text-foreground/60 hover:border-primary/50"}`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </section>
       <section className={card}>
         <h4 className="font-display text-[22px] uppercase leading-none">Pedidos por WhatsApp</h4>

@@ -33,3 +33,37 @@ export function brandStyle(color: string | null | undefined): CSSProperties {
     "--border": `color-mix(in srgb, ${hex} 20%, transparent)`,
   } as CSSProperties;
 }
+
+export type MenuTheme = "dark" | "light";
+export type FontStyle = "classic" | "elegant" | "modern" | "bold";
+
+export const THEMES: { id: MenuTheme; label: string }[] = [
+  { id: "dark", label: "Oscuro" },
+  { id: "light", label: "Claro" },
+];
+
+/** Estilos de letra del menú. "classic" es la que ya carga toda la app. */
+export const FONT_STYLES: { id: FontStyle; label: string; hint: string }[] = [
+  { id: "classic", label: "Clásica", hint: "Condensada y directa" },
+  { id: "elegant", label: "Elegante", hint: "Serif fina, de carta fina" },
+  { id: "modern", label: "Moderna", hint: "Ligera y espaciada" },
+  { id: "bold", label: "Atrevida", hint: "Gruesa y con carácter" },
+];
+
+const FONT_HREF: Partial<Record<FontStyle, string>> = {
+  elegant:
+    "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap",
+  modern: "https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap",
+  bold: "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap",
+};
+
+/** Hoja de estilos de Google Fonts del estilo elegido (la clásica no necesita ninguna extra). */
+export const fontHref = (style: FontStyle | null | undefined) =>
+  style ? FONT_HREF[style] : undefined;
+
+/** Todas las hojas extra, para pantallas que muestran los cuatro estilos a la vez. */
+export const ALL_FONT_HREFS = Object.values(FONT_HREF) as string[];
+
+export const asTheme = (v: unknown): MenuTheme => (v === "light" ? "light" : "dark");
+export const asFontStyle = (v: unknown): FontStyle =>
+  v === "elegant" || v === "modern" || v === "bold" ? v : "classic";

@@ -14,6 +14,14 @@ import {
   supabase,
 } from "@/lib/supabase";
 import {
+  ALL_FONT_HREFS,
+  asFontStyle,
+  brandStyle,
+  asTheme,
+  FONT_STYLES,
+  THEMES,
+} from "@/lib/brand-color";
+import {
   DEFAULT_BRAND,
   isValidSlug,
   LINK_KINDS,
@@ -56,6 +64,8 @@ function PageSettings() {
     address: r.address ?? "",
     hours: r.hours ?? "",
     brand_color: r.brand_color,
+    theme: asTheme(r.theme),
+    font_style: asFontStyle(r.font_style),
     currency: r.currency,
     slug: r.slug,
     is_published: r.is_published,
@@ -139,6 +149,8 @@ function PageSettings() {
           address: form.address.trim() || null,
           hours: form.hours.trim() || null,
           brand_color: form.brand_color,
+          theme: form.theme,
+          font_style: form.font_style,
           currency: form.currency,
           slug: form.slug,
           is_published: form.is_published,
@@ -266,6 +278,71 @@ function PageSettings() {
             >
               Restablecer
             </button>
+          </div>
+        </div>
+
+        <div className={labelClass}>
+          Tema
+          <div className="flex gap-2 pt-1">
+            {THEMES.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => set("theme", t.id)}
+                aria-pressed={form.theme === t.id}
+                className={`flex-1 rounded-xl border px-4 py-3 text-sm normal-case tracking-normal transition ${form.theme === t.id ? "border-primary bg-primary/10 text-foreground" : "border-input text-foreground/60 hover:border-primary/50"}`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className={labelClass}>
+          Tipografía
+          {ALL_FONT_HREFS.map((href) => (
+            <link key={href} rel="stylesheet" href={href} />
+          ))}
+          <div className="grid gap-2 pt-1 sm:grid-cols-2">
+            {FONT_STYLES.map((f) => (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => set("font_style", f.id)}
+                aria-pressed={form.font_style === f.id}
+                className={`rounded-xl border px-4 py-3 text-left normal-case tracking-normal transition ${form.font_style === f.id ? "border-primary bg-primary/10" : "border-input hover:border-primary/50"}`}
+              >
+                <span
+                  data-font={f.id}
+                  className="font-display block text-2xl leading-tight text-foreground"
+                >
+                  {form.name || "Tu restaurante"}
+                </span>
+                <span className="text-[11px] text-foreground/50">
+                  {f.label} · {f.hint}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div
+          data-theme={form.theme}
+          data-font={form.font_style}
+          style={brandStyle(form.brand_color)}
+          className="rounded-2xl border border-input bg-background p-5 normal-case tracking-normal text-foreground"
+        >
+          <p className="text-[10px] uppercase tracking-[0.25em] text-foreground/45">Vista previa</p>
+          <p className="font-display mt-1 text-4xl leading-none">{form.name || "Tu restaurante"}</p>
+          <p className="mt-1 text-sm text-foreground/65">{form.tagline || "Tu frase corta aquí"}</p>
+          <div className="glass-card mt-4 flex items-center justify-between p-4">
+            <div>
+              <p className="font-display text-xl">Plato de ejemplo</p>
+              <p className="text-xs text-foreground/60">Ingredientes y detalles del plato.</p>
+            </div>
+            <span className="rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground">
+              RD$ 450
+            </span>
           </div>
         </div>
       </section>

@@ -39,7 +39,11 @@ const ICON: Record<CategoryId, typeof Pizza> = {
 export function DemoPhone() {
   const { state } = useDemo();
   return (
-    <div className="relative h-full w-full overflow-hidden bg-background text-foreground">
+    <div
+      data-theme={state.theme}
+      data-font={state.font}
+      className="relative h-full w-full overflow-hidden bg-background text-foreground"
+    >
       {state.screen === "menu" && <MenuScreen />}
       {state.screen === "cart" && <CartScreen />}
       {state.screen === "chat" && <ChatScreen />}

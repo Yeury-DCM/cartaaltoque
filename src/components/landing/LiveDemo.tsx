@@ -1,4 +1,4 @@
-import { brandStyle } from "@/lib/brand-color";
+import { ALL_FONT_HREFS, brandStyle } from "@/lib/brand-color";
 import { DemoPanel, DemoPanelCompact } from "./DemoPanel";
 import { DemoPhone } from "./DemoPhone";
 import { DemoProvider, useDemo } from "./demo-store";
@@ -22,6 +22,9 @@ function Stage() {
 
   return (
     <div style={brandStyle(state.color)}>
+      {ALL_FONT_HREFS.map((href) => (
+        <link key={href} rel="stylesheet" href={href} />
+      ))}
       <p className="mx-auto mb-10 max-w-2xl text-center text-[15px] leading-relaxed text-foreground/65">
         Esto es Carta al Toque en vivo. Toca <b className="text-primary">+</b> en el celular y envía
         el pedido, o apaga un plato y cambia el color en el panel.

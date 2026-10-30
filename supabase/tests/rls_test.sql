@@ -226,6 +226,14 @@ begin
   perform tests.deletes_nothing('B no borra archivos de A',
     format('delete from storage.objects where name like %L', ra || '/%'));
 
+  perform tests.affects('B cambia su tema y tipografía',
+    format('update public.restaurants set theme = %L, font_style = %L where id = %L', 'light', 'elegant', rb), 1);
+  perform tests.fails('Tema inválido rechazado',
+    format('update public.restaurants set theme = %L where id = %L', 'neon', rb), 'check constraint');
+  perform tests.fails('Tipografía inválida rechazada',
+    format('update public.restaurants set font_style = %L where id = %L', 'comic', rb), 'check constraint');
+  perform tests.affects('B no cambia el tema de A',
+    format('update public.restaurants set theme = %L where id = %L', 'light', ra), 0);
   perform tests.affects('B sí edita lo suyo', format('update public.restaurants set tagline = %L where id = %L', 'Las mejores', rb), 1);
   perform tests.fails('Enlace no-https rechazado',
     format('insert into public.restaurant_links (restaurant_id, kind, url) values (%L, %L, %L)', rb, 'website', 'javascript:alert(1)'), 'check constraint');
@@ -270,6 +278,7 @@ begin
 
   m := public.get_public_menu('PIZZA-A ');
   perform tests.check('menú público existe', m is not null);
+  perform tests.check('menú público trae tema y tipografía', m->'restaurant'->>'theme' = 'dark' and m->'restaurant'->>'font_style' = 'classic');
   perform tests.check('menú trae 3 platos (sin la categoría oculta)', jsonb_array_length(m->'items') = 3);
   perform tests.check('menú no trae lo oculto', not (m::text like '%Oculto%' or m::text like '%Secreto%'));
   perform tests.check('menú no expone plan ni estado', not (m->'restaurant' ? 'plan' or m->'restaurant' ? 'status'));

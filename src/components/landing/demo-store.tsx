@@ -1,3 +1,4 @@
+import type { FontStyle, MenuTheme } from "@/lib/brand-color";
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from "react";
 
 /**
@@ -101,6 +102,8 @@ type State = {
   items: DemoItem[];
   zones: Zone[];
   color: string;
+  theme: MenuTheme;
+  font: FontStyle;
   name: string;
   tagline: string;
   /** Si el negocio tiene WhatsApp, el menú ofrece carrito; si no, es solo una carta. */
@@ -122,6 +125,8 @@ type State = {
 type Action =
   | { type: "toggle"; id: string }
   | { type: "color"; color: string }
+  | { type: "theme"; theme: MenuTheme }
+  | { type: "font"; font: FontStyle }
   | { type: "name"; value: string }
   | { type: "tagline"; value: string }
   | { type: "whatsapp"; value: boolean }
@@ -141,6 +146,8 @@ const initial: State = {
   items: ITEMS,
   zones: ZONES,
   color: SWATCHES[0],
+  theme: "dark",
+  font: "classic",
   name: RESTAURANT,
   tagline: TAGLINE,
   whatsapp: true,
@@ -175,6 +182,10 @@ function reducer(s: State, a: Action): State {
       };
     case "color":
       return { ...s, color: a.color, flash: flash("color") };
+    case "theme":
+      return { ...s, theme: a.theme, flash: flash("color") };
+    case "font":
+      return { ...s, font: a.font, flash: flash("color") };
     case "name":
       return { ...s, name: a.value.slice(0, 30) };
     case "tagline":

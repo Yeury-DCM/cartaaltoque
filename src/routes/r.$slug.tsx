@@ -14,6 +14,7 @@ import { CartProvider, useCart } from "@/lib/cart";
 import { filterAndSort, mainPhoto, type Item, type SortKey } from "@/lib/menu";
 import { whatsappUrl } from "@/lib/order";
 import { mediaUrl, photoUrl, supabase, useOriginalOnError } from "@/lib/supabase";
+import { fontHref } from "@/lib/brand-color";
 import { brandStyle, fetchPublicMenu, type PublicMenu } from "@/lib/tenant";
 
 export const Route = createFileRoute("/r/$slug")({
@@ -46,6 +47,9 @@ export const Route = createFileRoute("/r/$slug")({
         ...(image ? [{ property: "og:image", content: mediaUrl(image) }] : []),
         { name: "theme-color", content: r.brand_color },
       ],
+      links: fontHref(r.font_style)
+        ? [{ rel: "stylesheet", href: fontHref(r.font_style)! }]
+        : [],
     };
   },
 });
@@ -72,7 +76,11 @@ function MenuPage() {
   const menu = Route.useLoaderData();
   return (
     <CartProvider storageKey={`pedido-${menu.restaurant.slug}`} currency={menu.restaurant.currency}>
-      <div style={brandStyle(menu.restaurant.brand_color)}>
+      <div
+        data-theme={menu.restaurant.theme}
+        data-font={menu.restaurant.font_style}
+        style={brandStyle(menu.restaurant.brand_color)}
+      >
         <MenuContent menu={menu} />
       </div>
     </CartProvider>
@@ -299,7 +307,7 @@ function MenuContent({ menu }: { menu: PublicMenu }) {
             className="inline-flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-foreground/40 opacity-80 transition hover:opacity-100"
           >
             Menú hecho con
-            <BrandLogo className="h-9" />
+            <BrandLogo className="h-9" variant={r.theme === "light" ? "claro" : "oscuro"} />
           </Link>
         </footer>
       </main>

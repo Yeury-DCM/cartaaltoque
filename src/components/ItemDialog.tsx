@@ -95,7 +95,7 @@ export function ItemDialog({
           ref={closeBtn}
           onClick={close}
           aria-label="Cerrar"
-          className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/55 text-foreground backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
+          className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-primary hover:text-primary-foreground"
         >
           <X className="h-5 w-5" />
         </button>

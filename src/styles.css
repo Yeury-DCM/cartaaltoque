@@ -200,7 +200,7 @@
 @layer utilities {
   /* Glassmorphism card */
   .glass-card {
-    background: rgba(255, 255, 255, 0.04);
+    background: color-mix(in srgb, var(--foreground) 4%, transparent);
     border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
     border-radius: 16px;
     transition:
@@ -743,4 +743,81 @@
       animation: none;
     }
   }
+}
+
+
+/* ---------- Personalización del menú de cada restaurante ----------
+   Van sin capa (@layer) a propósito: así ganan a las reglas base y a las utilidades. */
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: oklch(0.985 0.004 80);
+  --foreground: oklch(0.2 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.01 60);
+  --secondary: oklch(0.95 0.006 80);
+  --secondary-foreground: oklch(0.2 0.01 60);
+  --muted: oklch(0.95 0.006 80);
+  --muted-foreground: oklch(0.45 0.01 60);
+  --input: oklch(0 0 0 / 12%);
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+[data-font] {
+  font-family: var(--font-body);
+}
+
+[data-font="elegant"] {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.06em;
+}
+[data-font="elegant"] .font-display,
+[data-font="elegant"] h1,
+[data-font="elegant"] h2,
+[data-font="elegant"] h3 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+[data-font="modern"] {
+  --font-display: "Jost", "DM Sans", sans-serif;
+  --font-body: "Jost", "DM Sans", sans-serif;
+}
+[data-font="modern"] .font-display,
+[data-font="modern"] h1,
+[data-font="modern"] h2,
+[data-font="modern"] h3 {
+  font-family: "Jost", "DM Sans", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+[data-font="bold"] {
+  --font-display: "Archivo Black", "Anton", sans-serif;
+  --font-body: "DM Sans", "Inter", sans-serif;
+}
+[data-font="bold"] .font-display,
+[data-font="bold"] h1,
+[data-font="bold"] h2,
+[data-font="bold"] h3 {
+  font-family: "Archivo Black", "Anton", sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+[data-font="elegant"] .font-body,
+[data-font="elegant"] button,
+[data-font="elegant"] input {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+[data-font="modern"] .font-body,
+[data-font="modern"] button,
+[data-font="modern"] input {
+  font-family: "Jost", "DM Sans", sans-serif;
 }

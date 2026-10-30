@@ -1,3 +1,4 @@
+import type { FontStyle, MenuTheme } from "./brand-color";
 import type { Category, Currency, Item } from "./menu";
 import { normalizeItem } from "./menu";
 import { SSR_CACHE_MS, serverCached } from "./server-cache";
@@ -33,6 +34,8 @@ export type PublicRestaurant = {
   address: string | null;
   hours: string | null;
   currency: Currency;
+  theme: MenuTheme;
+  font_style: FontStyle;
 };
 
 /** Fila completa de restaurants, como la ven sus miembros en el panel. */
