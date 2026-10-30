@@ -258,7 +258,7 @@ function Landing() {
           <Reveal className="premium-card relative overflow-hidden p-10 text-center md:p-14">
             <div className="relative">
               <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">
-                Plan Básico
+                Precio
               </span>
               <h2 className="mt-3 font-display text-[clamp(56px,7vw,96px)] uppercase leading-[0.9]">
                 Empieza gratis
@@ -267,9 +267,21 @@ function Landing() {
                 {TRIAL_DAYS} días con todo incluido: menú, QR con tu logo, pedidos por WhatsApp,
                 zonas de delivery y estadísticas. Sin tarjeta.
               </p>
-              <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary mt-9">
-                Crear mi menú
-              </Link>
+              <div className="mt-9 flex flex-wrap justify-center gap-3">
+                <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary">
+                  Crear mi menú
+                </Link>
+                {SALES_URL && (
+                  <a
+                    href={SALES_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-pill btn-pill-ghost"
+                  >
+                    <WhatsAppIcon className="h-4 w-4" /> Precio y pago por WhatsApp
+                  </a>
+                )}
+              </div>
             </div>
           </Reveal>
         </div>

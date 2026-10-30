@@ -20,8 +20,7 @@ import {
   useAdmin,
   type Membership,
 } from "@/lib/admin";
-import { APP_NAME, SUPPORT_WHATSAPP, menuPath } from "@/lib/brand";
-import { PLAN_LABEL } from "@/lib/features";
+import { APP_NAME, SUPPORT_WHATSAPP, menuPath, menuUrl } from "@/lib/brand";
 import { privatePageHeaders } from "@/lib/security-headers";
 import { useSession } from "@/lib/session";
 import { errorMessage, mediaUrl, supabase } from "@/lib/supabase";
@@ -227,7 +226,7 @@ function StatusBanner() {
   const days = trialDaysLeft(r);
   const live = isLive(r);
   const support = SUPPORT_WHATSAPP
-    ? `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodeURIComponent(`Hola, soy ${r.name} (${r.slug}) y quiero activar mi plan.`)}`
+    ? `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodeURIComponent(`Hola, soy de ${r.name} (${menuUrl(r.slug)}). Quiero activar mi plan y coordinar el pago.`)}`
     : null;
 
   let tone = "border-primary/30 bg-primary/10";
@@ -241,7 +240,7 @@ function StatusBanner() {
   } else if (!r.is_published) {
     text = "Tu menú está oculto. Publícalo desde «Mi página» cuando esté listo.";
   } else if (days !== null) {
-    text = `Prueba gratis: ${days === 1 ? "queda 1 día" : `quedan ${days} días`} · Plan ${PLAN_LABEL[r.plan]}`;
+    text = `Prueba gratis: ${days === 1 ? "queda 1 día" : `quedan ${days} días`}`;
   }
   if (!text) return null;
 
@@ -256,7 +255,7 @@ function StatusBanner() {
             rel="noopener noreferrer"
             className="text-xs font-bold uppercase tracking-[0.15em] text-primary hover:underline"
           >
-            Activar plan
+            Activar plan por WhatsApp
           </a>
         )}
       </div>

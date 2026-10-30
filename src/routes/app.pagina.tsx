@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ImagePlus, Loader2, Trash2 } from "lucide-react";
 import { ErrorNote, fieldClass, labelClass } from "@/components/Center";
+import { PhoneField } from "@/components/PhoneField";
 import { LINK_LABEL } from "@/components/PlatformLinks";
 import { useAdmin } from "@/lib/admin";
 import { menuUrl } from "@/lib/brand";
@@ -100,6 +101,11 @@ function PageSettings() {
       </p>
     );
 
+  // Los teléfonos se validan según el país elegido; el contacto carga aparte (tabla privada).
+  const [contactLoaded, setContactLoaded] = useState(false);
+  const [contactOk, setContactOk] = useState(true);
+  const [waOk, setWaOk] = useState(true);
+
   // El teléfono de contacto vive en su propia tabla privada.
   useEffect(() => {
     void supabase
@@ -109,6 +115,7 @@ function PageSettings() {
       .maybeSingle()
       .then(({ data }) => {
         if (data?.phone) setForm((f) => (f.contact ? f : { ...f, contact: data.phone }));
+        setContactLoaded(true);
       });
   }, [r.id]);
 
@@ -133,11 +140,10 @@ function PageSettings() {
     e.preventDefault();
     const phone = onlyDigits(form.whatsapp);
     if (form.name.trim().length < 2) return setError("El nombre es muy corto.");
-    if (phone && (phone.length < 8 || phone.length > 15))
-      return setError("El WhatsApp debe tener entre 8 y 15 dígitos, con código de país.");
+    if (phone && !waOk) return setError("El WhatsApp de pedidos parece incompleto. Revisa los dígitos.");
     const contactPhone = onlyDigits(form.contact);
-    if (contactPhone && (contactPhone.length < 8 || contactPhone.length > 15))
-      return setError("Tu número de contacto debe tener entre 8 y 15 dígitos, con código de país.");
+    if (!contactPhone || !contactOk)
+      return setError("Tu número de contacto es obligatorio y debe estar completo.");
     if (!isValidSlug(form.slug))
       return setError("La dirección debe tener de 3 a 40 letras minúsculas, números o guiones.");
     if (
@@ -199,15 +205,11 @@ function PageSettings() {
         for (const l of cleanLinks) next[l.kind] = l.url;
         return next;
       });
-      const contactRes = contactPhone
-        ? await supabase
-            .from("restaurant_contacts")
-            .upsert({
-              restaurant_id: r.id,
-              phone: contactPhone,
-              updated_at: new Date().toISOString(),
-            })
-        : await supabase.from("restaurant_contacts").delete().eq("restaurant_id", r.id);
+      const contactRes = await supabase.from("restaurant_contacts").upsert({
+        restaurant_id: r.id,
+        phone: contactPhone,
+        updated_at: new Date().toISOString(),
+      });
       if (contactRes.error) throw contactRes.error;
       await refresh();
       setSaved(true);
@@ -375,21 +377,24 @@ function PageSettings() {
 
       <section className="glass-card space-y-4 p-5">
         <h2 className="text-xs uppercase tracking-[0.2em] text-primary">Contacto con nosotros</h2>
-        <label className={labelClass}>
-          Tu número (privado)
-          <input
-            className={fieldClass}
-            value={form.contact}
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="1 809 555 0000"
-            onChange={(e) => set("contact", e.target.value)}
-          />
+        <div className={labelClass}>
+          Tu número de WhatsApp (privado)
+          {contactLoaded ? (
+            <PhoneField
+              value={form.contact}
+              required
+              onChange={(digits, complete) => {
+                setContactOk(complete);
+                if (digits !== form.contact) set("contact", digits);
+              }}
+            />
+          ) : (
+            <div className="h-10 animate-pulse rounded-lg bg-foreground/5" />
+          )}
           <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
-            Solo lo usamos para ayudarte con tu menú. No se muestra a tus clientes. Déjalo vacío
-            para borrarlo.
+            Por aquí te ayudamos y coordinamos tu plan y tu pago. No se muestra a tus clientes.
           </span>
-        </label>
+        </div>
       </section>
 
       <section className="glass-card space-y-4 p-5">
@@ -424,21 +429,21 @@ function PageSettings() {
           />
         </label>
         <div className="grid gap-4 sm:grid-cols-2">
-          <label className={labelClass}>
+          <div className={labelClass}>
             WhatsApp de pedidos (opcional)
-            <input
-              className={fieldClass}
+            <PhoneField
               value={form.whatsapp}
-              inputMode="tel"
-              placeholder="18095550000"
-              onChange={(e) => set("whatsapp", e.target.value)}
+              onChange={(digits, complete) => {
+                setWaOk(complete);
+                if (digits !== form.whatsapp) set("whatsapp", digits);
+              }}
             />
             <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
               {onlyDigits(form.whatsapp)
                 ? "Tus clientes arman el pedido en el menú y te llega por aquí."
                 : "Sin WhatsApp, tu menú se muestra sin carrito (solo carta con precios)."}
             </span>
-          </label>
+          </div>
           <label className={labelClass}>
             Moneda
             <select

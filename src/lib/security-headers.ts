@@ -10,7 +10,7 @@ const CSP = [
   "script-src 'self' 'unsafe-inline'",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  `img-src 'self' data: blob: https://${SUPABASE_HOST}`,
+  `img-src 'self' data: blob: https://${SUPABASE_HOST} https://cdnjs.cloudflare.com`,
   `connect-src 'self' https://${SUPABASE_HOST} wss://${SUPABASE_HOST}`,
   "frame-src 'none'",
   "frame-ancestors 'none'",

@@ -40,9 +40,10 @@ function Privacy() {
             recibimos tu correo y tu nombre; nunca vemos tu contraseña de Google.
           </li>
           <li>
-            <strong>Teléfono de contacto (opcional):</strong> si lo das, lo usamos solo para
-            ayudarte a configurar tu menú. No aparece en tu menú ni se comparte con terceros; lo
-            puedes borrar cuando quieras desde &quot;Mi página&quot;.
+            <strong>Teléfono de contacto:</strong> el número de WhatsApp que das al registrarte.
+            Lo usamos para ayudarte a configurar tu menú y para coordinar tu plan y tu pago. No
+            aparece en tu menú ni se comparte con terceros; puedes cambiarlo desde &quot;Mi
+            página&quot; o pedir que lo eliminemos junto con tu cuenta.
           </li>
           <li>
             <strong>Contenido del negocio:</strong> nombre, logo, portada, color, horario,
