@@ -21,6 +21,7 @@ type Stats = {
   items: number;
   withPhoto: number;
   links: number;
+  hasContact: boolean;
   series: DayPoint[];
   top: TopItem[];
 };
@@ -78,7 +79,11 @@ function HomePage() {
         .eq("restaurant_id", rid)
         .gte("day", drDate(29)),
       supabase.from("items").select("id, name").eq("restaurant_id", rid),
-    ]).then(([today, week, items, links, views, orderRows, opensRows, names]) => {
+      supabase
+        .from("restaurant_contacts")
+        .select("restaurant_id", { count: "exact", head: true })
+        .eq("restaurant_id", rid),
+    ]).then(([today, week, items, links, views, orderRows, opensRows, names, contact]) => {
       const list = (items.data ?? []) as { item_photos: unknown[] }[];
       const days = (views.data ?? []) as { day: string; views: number }[];
       const ordersByDay = new Map<string, number>();
@@ -114,6 +119,7 @@ function HomePage() {
         .sort((a, b) => b.opens - a.opens)
         .slice(0, 5);
       setStats({
+        hasContact: (contact.count ?? 0) > 0,
         series,
         top,
         viewsToday: days.find((d) => d.day === drDate())?.views ?? 0,
@@ -139,6 +145,11 @@ function HomePage() {
   };
 
   const steps = [
+    {
+      done: stats?.hasContact ?? true,
+      label: "Agrega tu número de contacto (obligatorio)",
+      to: "/app/configuracion" as const,
+    },
     { done: !!r.logo_path, label: "Sube tu logo y elige tu color", to: "/app/pagina" as const },
     {
       done: !!r.whatsapp,

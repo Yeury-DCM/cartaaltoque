@@ -8,6 +8,7 @@ import {
   MapPinned,
   Palette,
   QrCode,
+  Settings,
   Shield,
   UtensilsCrossed,
 } from "lucide-react";
@@ -134,6 +135,7 @@ const NAV = [
   { to: "/app/pagina", label: "Mi página", Icon: Palette },
   { to: "/app/qr", label: "QR", Icon: QrCode },
   { to: "/app/zonas", label: "Zonas", Icon: MapPinned },
+  { to: "/app/configuracion", label: "Ajustes", Icon: Settings },
 ] as const;
 
 function Shell() {

@@ -70,7 +70,6 @@ function PageSettings() {
     currency: r.currency,
     slug: r.slug,
     is_published: r.is_published,
-    contact: "",
   });
   const [links, setLinks] = useState<Record<LinkKind, string>>(
     () => Object.fromEntries(LINK_KINDS.map((k) => [k, ""])) as Record<LinkKind, string>,
@@ -101,23 +100,8 @@ function PageSettings() {
       </p>
     );
 
-  // Los teléfonos se validan según el país elegido; el contacto carga aparte (tabla privada).
-  const [contactLoaded, setContactLoaded] = useState(false);
-  const [contactOk, setContactOk] = useState(true);
+  // El teléfono se valida según el país elegido en el selector.
   const [waOk, setWaOk] = useState(true);
-
-  // El teléfono de contacto vive en su propia tabla privada.
-  useEffect(() => {
-    void supabase
-      .from("restaurant_contacts")
-      .select("phone")
-      .eq("restaurant_id", r.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (data?.phone) setForm((f) => (f.contact ? f : { ...f, contact: data.phone }));
-        setContactLoaded(true);
-      });
-  }, [r.id]);
 
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) => {
     setSaved(false);
@@ -141,9 +125,6 @@ function PageSettings() {
     const phone = onlyDigits(form.whatsapp);
     if (form.name.trim().length < 2) return setError("El nombre es muy corto.");
     if (phone && !waOk) return setError("El WhatsApp de pedidos parece incompleto. Revisa los dígitos.");
-    const contactPhone = onlyDigits(form.contact);
-    if (!contactPhone || !contactOk)
-      return setError("Tu número de contacto es obligatorio y debe estar completo.");
     if (!isValidSlug(form.slug))
       return setError("La dirección debe tener de 3 a 40 letras minúsculas, números o guiones.");
     if (
@@ -205,12 +186,6 @@ function PageSettings() {
         for (const l of cleanLinks) next[l.kind] = l.url;
         return next;
       });
-      const contactRes = await supabase.from("restaurant_contacts").upsert({
-        restaurant_id: r.id,
-        phone: contactPhone,
-        updated_at: new Date().toISOString(),
-      });
-      if (contactRes.error) throw contactRes.error;
       await refresh();
       setSaved(true);
     });
@@ -372,28 +347,6 @@ function PageSettings() {
               RD$ 450
             </span>
           </div>
-        </div>
-      </section>
-
-      <section className="glass-card space-y-4 p-5">
-        <h2 className="text-xs uppercase tracking-[0.2em] text-primary">Contacto con nosotros</h2>
-        <div className={labelClass}>
-          Tu número de WhatsApp (privado)
-          {contactLoaded ? (
-            <PhoneField
-              value={form.contact}
-              required
-              onChange={(digits, complete) => {
-                setContactOk(complete);
-                if (digits !== form.contact) set("contact", digits);
-              }}
-            />
-          ) : (
-            <div className="h-10 animate-pulse rounded-lg bg-foreground/5" />
-          )}
-          <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
-            Por aquí te ayudamos y coordinamos tu plan y tu pago. No se muestra a tus clientes.
-          </span>
         </div>
       </section>
 

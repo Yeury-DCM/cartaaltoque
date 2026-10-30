@@ -16,6 +16,7 @@ import { Route as Kac42ad620b9a47RouteImport } from './routes/kac42ad620b9a47'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
 import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppConfiguracionRouteImport } from './routes/app.configuracion'
 import { Route as AppMenuRouteImport } from './routes/app.menu'
 import { Route as AppPaginaRouteImport } from './routes/app.pagina'
 import { Route as AppQrRouteImport } from './routes/app.qr'
@@ -57,6 +58,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppConfiguracionRoute = AppConfiguracionRouteImport.update({
+  id: '/configuracion',
+  path: '/configuracion',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppMenuRoute = AppMenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -90,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/kac42ad620b9a47': typeof Kac42ad620b9a47Route
   '/privacidad': typeof PrivacidadRoute
   '/terminos': typeof TerminosRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
   '/app/qr': typeof AppQrRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/kac42ad620b9a47': typeof Kac42ad620b9a47Route
   '/privacidad': typeof PrivacidadRoute
   '/terminos': typeof TerminosRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
   '/app/qr': typeof AppQrRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/kac42ad620b9a47': typeof Kac42ad620b9a47Route
   '/privacidad': typeof PrivacidadRoute
   '/terminos': typeof TerminosRoute
+  '/app/configuracion': typeof AppConfiguracionRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
   '/app/qr': typeof AppQrRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/kac42ad620b9a47'
     | '/privacidad'
     | '/terminos'
+    | '/app/configuracion'
     | '/app/menu'
     | '/app/pagina'
     | '/app/qr'
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/kac42ad620b9a47'
     | '/privacidad'
     | '/terminos'
+    | '/app/configuracion'
     | '/app/menu'
     | '/app/pagina'
     | '/app/qr'
@@ -161,6 +172,7 @@ export interface FileRouteTypes {
     | '/kac42ad620b9a47'
     | '/privacidad'
     | '/terminos'
+    | '/app/configuracion'
     | '/app/menu'
     | '/app/pagina'
     | '/app/qr'
@@ -230,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/configuracion': {
+      id: '/app/configuracion'
+      path: '/configuracion'
+      fullPath: '/app/configuracion'
+      preLoaderRoute: typeof AppConfiguracionRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/menu': {
       id: '/app/menu'
       path: '/menu'
@@ -269,6 +288,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppConfiguracionRoute: typeof AppConfiguracionRoute
   AppMenuRoute: typeof AppMenuRoute
   AppPaginaRoute: typeof AppPaginaRoute
   AppQrRoute: typeof AppQrRoute
@@ -277,6 +297,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppConfiguracionRoute: AppConfiguracionRoute,
   AppMenuRoute: AppMenuRoute,
   AppPaginaRoute: AppPaginaRoute,
   AppQrRoute: AppQrRoute,
