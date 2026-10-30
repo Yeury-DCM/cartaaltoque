@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as EntrarRouteImport } from './routes/entrar'
+import { Route as Kac42ad620b9a47RouteImport } from './routes/kac42ad620b9a47'
 import { Route as PrivacidadRouteImport } from './routes/privacidad'
-import { Route as SuperRouteImport } from './routes/super'
 import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppMenuRouteImport } from './routes/app.menu'
@@ -37,14 +37,14 @@ const EntrarRoute = EntrarRouteImport.update({
   path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Kac42ad620b9a47Route = Kac42ad620b9a47RouteImport.update({
+  id: '/kac42ad620b9a47',
+  path: '/kac42ad620b9a47',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacidadRoute = PrivacidadRouteImport.update({
   id: '/privacidad',
   path: '/privacidad',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SuperRoute = SuperRouteImport.update({
-  id: '/super',
-  path: '/super',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TerminosRoute = TerminosRouteImport.update({
@@ -87,8 +87,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/entrar': typeof EntrarRoute
+  '/kac42ad620b9a47': typeof Kac42ad620b9a47Route
   '/privacidad': typeof PrivacidadRoute
-  '/super': typeof SuperRoute
   '/terminos': typeof TerminosRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
@@ -100,8 +100,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/entrar': typeof EntrarRoute
+  '/kac42ad620b9a47': typeof Kac42ad620b9a47Route
   '/privacidad': typeof PrivacidadRoute
-  '/super': typeof SuperRoute
   '/terminos': typeof TerminosRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
@@ -115,8 +115,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/entrar': typeof EntrarRoute
+  '/kac42ad620b9a47': typeof Kac42ad620b9a47Route
   '/privacidad': typeof PrivacidadRoute
-  '/super': typeof SuperRoute
   '/terminos': typeof TerminosRoute
   '/app/menu': typeof AppMenuRoute
   '/app/pagina': typeof AppPaginaRoute
@@ -131,8 +131,8 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/entrar'
+    | '/kac42ad620b9a47'
     | '/privacidad'
-    | '/super'
     | '/terminos'
     | '/app/menu'
     | '/app/pagina'
@@ -144,8 +144,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/entrar'
+    | '/kac42ad620b9a47'
     | '/privacidad'
-    | '/super'
     | '/terminos'
     | '/app/menu'
     | '/app/pagina'
@@ -158,8 +158,8 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/entrar'
+    | '/kac42ad620b9a47'
     | '/privacidad'
-    | '/super'
     | '/terminos'
     | '/app/menu'
     | '/app/pagina'
@@ -173,8 +173,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
   EntrarRoute: typeof EntrarRoute
+  Kac42ad620b9a47Route: typeof Kac42ad620b9a47Route
   PrivacidadRoute: typeof PrivacidadRoute
-  SuperRoute: typeof SuperRoute
   TerminosRoute: typeof TerminosRoute
   RSlugRoute: typeof RSlugRoute
 }
@@ -202,18 +202,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kac42ad620b9a47': {
+      id: '/kac42ad620b9a47'
+      path: '/kac42ad620b9a47'
+      fullPath: '/kac42ad620b9a47'
+      preLoaderRoute: typeof Kac42ad620b9a47RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacidad': {
       id: '/privacidad'
       path: '/privacidad'
       fullPath: '/privacidad'
       preLoaderRoute: typeof PrivacidadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/super': {
-      id: '/super'
-      path: '/super'
-      fullPath: '/super'
-      preLoaderRoute: typeof SuperRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terminos': {
@@ -290,8 +290,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   EntrarRoute: EntrarRoute,
+  Kac42ad620b9a47Route: Kac42ad620b9a47Route,
   PrivacidadRoute: PrivacidadRoute,
-  SuperRoute: SuperRoute,
   TerminosRoute: TerminosRoute,
   RSlugRoute: RSlugRoute,
 }

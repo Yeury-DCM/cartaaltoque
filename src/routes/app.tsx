@@ -179,7 +179,7 @@ function Shell() {
               <span className="hidden sm:inline">Ver menú</span>
             </a>
             {isSuperAdmin && (
-              <Link to="/super" className="btn-ghost !px-3 !py-2 !text-xs" aria-label="Super admin">
+              <Link to="/kac42ad620b9a47" className="btn-ghost !px-3 !py-2 !text-xs" aria-label="Super admin">
                 <Shield className="h-4 w-4" />
               </Link>
             )}

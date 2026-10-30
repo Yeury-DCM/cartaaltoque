@@ -11,9 +11,9 @@ import { supabase } from "@/lib/supabase";
 
 type Mode = "entrar" | "registro" | "olvide" | "nueva-clave";
 
-/** Solo se aceptan destinos internos ("/app…", "/super…"): evita redirecciones abiertas. */
-function safeNext(next: unknown): "/app" | "/super" {
-  return typeof next === "string" && next.startsWith("/super") ? "/super" : "/app";
+/** Solo se aceptan destinos internos (el panel y la administración): evita redirecciones abiertas. */
+function safeNext(next: unknown): "/app" | "/kac42ad620b9a47" {
+  return typeof next === "string" && next.startsWith("/kac42ad620b9a47") ? "/kac42ad620b9a47" : "/app";
 }
 
 export const Route = createFileRoute("/entrar")({
@@ -108,7 +108,7 @@ function AuthPage() {
     });
   };
 
-  // Google: la página se va a Google y vuelve a /app (o a /super) ya con la sesión iniciada.
+  // Google: la página se va a Google y vuelve a /app (o a la administración) ya con la sesión iniciada.
   const google = () =>
     void run(async () => {
       const { error } = await supabase.auth.signInWithOAuth({

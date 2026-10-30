@@ -414,7 +414,7 @@ function PageSettings() {
             className={fieldClass}
             value={form.tagline}
             maxLength={140}
-            placeholder="Las mejores pizzas de la zona"
+            placeholder="Sabor de casa, servido al momento"
             onChange={(e) => set("tagline", e.target.value)}
           />
         </label>

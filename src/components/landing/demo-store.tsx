@@ -7,7 +7,7 @@ import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNo
  * Es solo una simulación local: no toca la base de datos.
  */
 
-export type CategoryId = "pizzas" | "burgers" | "bebidas";
+export type CategoryId = "entradas" | "fuertes" | "bebidas";
 
 export type DemoItem = {
   id: string;
@@ -20,54 +20,54 @@ export type DemoItem = {
 
 export type Zone = { id: string; name: string; hoods: string; fee: number; active: boolean };
 
-export const RESTAURANT = "Pizzería Don Juan";
-const TAGLINE = "Pizzas al horno de leña y burgers de la casa";
+export const RESTAURANT = "La Terraza";
+const TAGLINE = "Parrilla criolla y platos para compartir";
 
 export const CATEGORIES: { id: CategoryId; name: string }[] = [
-  { id: "pizzas", name: "Pizzas" },
-  { id: "burgers", name: "Burgers" },
+  { id: "entradas", name: "Entradas" },
+  { id: "fuertes", name: "Platos fuertes" },
   { id: "bebidas", name: "Bebidas" },
 ];
 
 /** Los mismos platos que el restaurante demo real (/r/demo). */
 const ITEMS: DemoItem[] = [
   {
-    id: "margarita",
-    cat: "pizzas",
-    name: "Margarita",
-    desc: "Tomate, mozzarella y albahaca fresca.",
-    price: 450,
+    id: "tostones",
+    cat: "entradas",
+    name: "Tostones",
+    desc: "Dorados y crujientes, con salsa rosada.",
+    price: 250,
     available: true,
   },
   {
-    id: "pepperoni",
-    cat: "pizzas",
-    name: "Pepperoni",
-    desc: "Mozzarella y pepperoni crujiente.",
+    id: "yuquitas",
+    cat: "entradas",
+    name: "Yuquitas de queso",
+    desc: "Rellenas de queso, con dip de ajo.",
+    price: 280,
+    available: true,
+  },
+  {
+    id: "costillas",
+    cat: "fuertes",
+    name: "Costillas BBQ",
+    desc: "Media tabla glaseada en salsa BBQ.",
+    price: 850,
+    available: true,
+  },
+  {
+    id: "pollo",
+    cat: "fuertes",
+    name: "Pollo a la parrilla",
+    desc: "Pechuga marinada, arroz y ensalada.",
     price: 550,
     available: true,
   },
   {
-    id: "donjuan",
-    cat: "pizzas",
-    name: "Don Juan",
-    desc: "Jamón, maíz y cebolla caramelizada.",
-    price: 650,
-    available: true,
-  },
-  {
-    id: "clasica",
-    cat: "burgers",
-    name: "Clásica",
-    desc: "Res, cheddar, lechuga y tomate.",
-    price: 350,
-    available: true,
-  },
-  {
-    id: "doble",
-    cat: "burgers",
-    name: "Doble queso",
-    desc: "Doble carne y doble cheddar.",
+    id: "hamburguesa",
+    cat: "fuertes",
+    name: "Hamburguesa de la casa",
+    desc: "Res, cheddar, tocino y papas.",
     price: 450,
     available: true,
   },

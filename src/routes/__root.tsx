@@ -1,10 +1,21 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  HeadContent,
+  Scripts,
+  useRouterState,
+} from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import { NotFoundJoke, isCuriousPath } from "@/components/NotFoundJoke";
 import { APP_DOMAIN, APP_NAME, APP_TAGLINE } from "@/lib/brand";
 import { securityHeaders } from "@/lib/security-headers";
 
 function NotFoundComponent() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (isCuriousPath(pathname)) return <NotFoundJoke />;
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">

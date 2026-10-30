@@ -9,7 +9,7 @@ with r as (
   insert into public.restaurants (
     slug, name, tagline, description, brand_color, whatsapp, address, hours, status, plan
   ) values (
-    'demo', 'Pizzería Don Juan', 'Pizzas al horno de leña y burgers de la casa',
+    'demo', 'La Terraza', 'Parrilla criolla y platos para compartir',
     'Restaurante de demostración de Carta al Toque. Arma tu pedido y mira cómo llega por WhatsApp.',
     '#FF7101', '18090000000', 'Av. Ejemplo 123, Santo Domingo', 'Lun–Dom · 12 pm – 11 pm',
     'active', 'basic'
@@ -17,7 +17,7 @@ with r as (
 ),
 cats as (
   insert into public.categories (restaurant_id, name, sort_order)
-  select r.id, c.name, c.ord from r, (values ('Pizzas', 1), ('Burgers', 2), ('Bebidas', 3)) as c(name, ord)
+  select r.id, c.name, c.ord from r, (values ('Entradas', 1), ('Platos fuertes', 2), ('Bebidas', 3)) as c(name, ord)
   returning id, name, restaurant_id
 ),
 items as (
@@ -25,11 +25,11 @@ items as (
   select c.restaurant_id, c.id, i.name, i.descr, i.price, i.ord
   from cats c
   join (values
-    ('Pizzas', 'Margarita', 'Salsa de tomate, mozzarella y albahaca fresca.', 450, 1),
-    ('Pizzas', 'Pepperoni', 'Mozzarella y pepperoni crujiente.', 550, 2),
-    ('Pizzas', 'Don Juan', 'La de la casa: jamón, maíz, cebolla caramelizada y queso.', 650, 3),
-    ('Burgers', 'Clásica', 'Carne de res, queso cheddar, lechuga y tomate.', 350, 1),
-    ('Burgers', 'Doble queso', 'Doble carne, doble cheddar y salsa de la casa.', 450, 2),
+    ('Entradas', 'Tostones', 'Dorados y crujientes, con salsa rosada.', 250, 1),
+    ('Entradas', 'Yuquitas de queso', 'Rellenas de queso, con dip de ajo.', 280, 2),
+    ('Platos fuertes', 'Costillas BBQ', 'Media tabla glaseada en salsa BBQ.', 850, 1),
+    ('Platos fuertes', 'Pollo a la parrilla', 'Pechuga marinada, arroz y ensalada.', 550, 2),
+    ('Platos fuertes', 'Hamburguesa de la casa', 'Res, cheddar, tocino y papas.', 450, 3),
     ('Bebidas', 'Limonada frozen', 'Limón natural, bien fría.', 150, 1),
     ('Bebidas', 'Refresco', 'Lata de 355 ml.', 80, 2)
   ) as i(cat, name, descr, price, ord) on i.cat = c.name
@@ -39,10 +39,8 @@ insert into public.item_variants (restaurant_id, item_id, label, price, sort_ord
 select it.restaurant_id, it.id, v.label, v.price, v.ord
 from items it
 join (values
-  ('Margarita', 'Personal', 450, 1), ('Margarita', 'Grande', 850, 2),
-  ('Pepperoni', 'Personal', 550, 1), ('Pepperoni', 'Grande', 990, 2),
-  ('Don Juan', 'Personal', 650, 1), ('Don Juan', 'Grande', 1150, 2),
-  ('Clásica', 'Sola', 350, 1), ('Clásica', 'Con papas', 450, 2)
+  ('Costillas BBQ', 'Media tabla', 850, 1), ('Costillas BBQ', 'Tabla completa', 1500, 2),
+  ('Hamburguesa de la casa', 'Sola', 450, 1), ('Hamburguesa de la casa', 'Con papas', 550, 2)
 ) as v(item, label, price, ord) on v.item = it.name;
 
 insert into public.delivery_zones (restaurant_id, name, neighborhoods, fee, sort_order)

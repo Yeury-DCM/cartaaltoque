@@ -5,27 +5,28 @@ import { Reveal } from "@/components/Reveal";
 const BEFORE: { me: boolean; text: string }[] = [
   { me: false, text: "Buenas, ¿qué tienen hoy?" },
   { me: true, text: "📷 Foto del menú" },
-  { me: false, text: "¿Cuánto es la pepperoni grande?" },
-  { me: true, text: "RD$ 990" },
-  { me: false, text: "¿Y la personal?" },
-  { me: true, text: "550" },
-  { me: false, text: "Ok, una grande y una limonada" },
+  { me: false, text: "¿Cuánto son las costillas BBQ?" },
+  { me: true, text: "RD$ 850" },
+  { me: false, text: "¿Y los tostones?" },
+  { me: true, text: "250" },
+  { me: false, text: "Ok, unas costillas, tostones y una limonada" },
   { me: true, text: "¿Para recoger o delivery?" },
   { me: false, text: "Delivery, a Naco. ¿Cuánto sería?" },
-  { me: true, text: "1,140 + 100 del delivery" },
+  { me: true, text: "1,250 + 100 del delivery" },
   { me: false, text: "Dale. ¿A nombre de quién lo pongo?" },
   { me: true, text: "…" },
 ];
 
-const AFTER = `Hola Pizzería Don Juan, quiero hacer este pedido (#18):
+const AFTER = `Hola La Terraza, quiero hacer este pedido (#18):
 
-• 1x Pepperoni (Grande) — RD$ 990
+• 1x Costillas BBQ — RD$ 850
+• 1x Tostones — RD$ 250
 • 1x Limonada frozen — RD$ 150
 
 Delivery — Zona 1 (RD$ 100)
 Barrio dentro de la zona: Piantini, Naco
 
-Total: RD$ 1,240
+Total: RD$ 1,350
 Nombre: Ana`;
 
 /** "Antes y después": un pedido por chat contra un pedido armado desde el menú. */

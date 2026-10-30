@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Beef,
   Bike,
   CheckCheck,
   ChevronLeft,
@@ -7,9 +8,8 @@ import {
   CupSoda,
   Instagram,
   Minus,
-  Pizza,
   Plus,
-  Sandwich,
+  Salad,
   ShoppingBag,
   Store,
 } from "lucide-react";
@@ -29,9 +29,9 @@ import {
 } from "./demo-store";
 import { StatusBar } from "./devices";
 
-const ICON: Record<CategoryId, typeof Pizza> = {
-  pizzas: Pizza,
-  burgers: Sandwich,
+const ICON: Record<CategoryId, typeof Salad> = {
+  entradas: Salad,
+  fuertes: Beef,
   bebidas: CupSoda,
 };
 

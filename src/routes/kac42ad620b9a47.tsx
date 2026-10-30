@@ -10,7 +10,7 @@ import { useSession } from "@/lib/session";
 import { errorMessage, supabase } from "@/lib/supabase";
 import type { Plan, RestaurantStatus } from "@/lib/tenant";
 
-export const Route = createFileRoute("/super")({
+export const Route = createFileRoute("/kac42ad620b9a47")({
   ssr: false,
   headers: privatePageHeaders,
   head: () => ({
@@ -79,7 +79,7 @@ function SuperPage() {
 
   if (session === undefined) return <FullSpinner />;
   if (!session)
-    return <Navigate to="/entrar" search={{ modo: "entrar", next: "/super" }} replace />;
+    return <Navigate to="/entrar" search={{ modo: "entrar", next: "/kac42ad620b9a47" }} replace />;
   if (allowed === null) return <FullSpinner />;
   if (!allowed)
     return (

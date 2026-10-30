@@ -162,7 +162,7 @@ function InicioTab() {
         <section className={card}>
           <h4 className="font-display text-[22px] uppercase leading-none">Tu menú en línea</h4>
           <p className="mt-2 break-all text-[13px] font-bold">
-            cartaaltoque.com/r/pizzeria-don-juan
+            cartaaltoque.com/r/la-terraza
           </p>
           <p className="mt-3 text-[12.5px] leading-snug text-foreground/60">
             Esta es la dirección que abre tu QR. Cada visita y cada pedido se cuenta aquí.

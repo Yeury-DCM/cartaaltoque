@@ -105,7 +105,7 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
               value={name}
               onChange={(e) => setName(e.target.value)}
               maxLength={80}
-              placeholder="Pizzería Don Juan"
+              placeholder="Mi Restaurante"
               autoFocus
               required
             />
@@ -129,7 +129,7 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
                       .slice(0, 40),
                   );
                 }}
-                placeholder="pizzeria-don-juan"
+                placeholder="mi-restaurante"
                 required
               />
               <span className="pr-3">
