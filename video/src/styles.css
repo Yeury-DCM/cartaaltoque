@@ -1,0 +1,192 @@
+@import "tailwindcss" source(none);
+@source "./";
+
+/*
+ * Tokens copiados de la app (src/styles.css de cartaltoque) para que las pantallas
+ * del video sean las del producto. Sin animaciones CSS: todo se mueve con useCurrentFrame.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-whatsapp: var(--whatsapp);
+
+  --font-display: "Bebas Neue", "Anton", sans-serif;
+  --font-body: "DM Sans", "Inter", sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.18 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.22 0.005 60);
+  --card-foreground: oklch(1 0 0);
+  --primary: oklch(0.71 0.196 47);
+  --primary-foreground: oklch(0.13 0 0);
+  --secondary: oklch(0.28 0.01 60);
+  --muted: oklch(0.25 0.005 60);
+  --muted-foreground: oklch(0.72 0.01 60);
+  --destructive: oklch(0.5 0.18 27);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.71 0.196 47 / 20%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.71 0.196 47 / 60%);
+  --whatsapp: oklch(0.74 0.18 145);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: color-mix(in srgb, var(--foreground) 4%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+    border-radius: 16px;
+  }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.6rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-radius: 8px;
+    border: 0;
+  }
+}
+
+@layer components {
+  .phone-frame {
+    padding: 11px;
+    border-radius: 52px;
+    background: linear-gradient(160deg, #3a3a3a, #121212 45%, #1e1e1e);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 50px 100px -30px rgba(0, 0, 0, 0.9),
+      0 0 0 1px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .phone-screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: 42px;
+    background: #0d0d0d;
+  }
+  .phone-island {
+    position: absolute;
+    left: 50%;
+    z-index: 50;
+    border-radius: 999px;
+    background: #000;
+  }
+}
+
+/* Personalización del menú de cada restaurante (igual que la app). */
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: oklch(0.985 0.004 80);
+  --foreground: oklch(0.2 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 60);
+  --secondary: oklch(0.95 0.006 80);
+  --muted: oklch(0.95 0.006 80);
+  --muted-foreground: oklch(0.45 0.01 60);
+  --input: oklch(0 0 0 / 12%);
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+[data-font] {
+  font-family: var(--font-body);
+}
+
+[data-font="elegant"] {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.06em;
+}
+[data-font="elegant"] .font-display,
+[data-font="elegant"] h3,
+[data-font="elegant"] h4 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+[data-font="modern"] {
+  --font-display: "Jost", "DM Sans", sans-serif;
+  --font-body: "Jost", "DM Sans", sans-serif;
+}
+[data-font="modern"] .font-display,
+[data-font="modern"] h3,
+[data-font="modern"] h4 {
+  font-family: "Jost", "DM Sans", sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+[data-font="bold"] {
+  --font-display: "Archivo Black", "Anton", sans-serif;
+  --font-body: "DM Sans", "Inter", sans-serif;
+}
+[data-font="bold"] .font-display,
+[data-font="bold"] h3,
+[data-font="bold"] h4 {
+  font-family: "Archivo Black", "Anton", sans-serif;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+[data-font="elegant"] button {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+[data-font="modern"] button {
+  font-family: "Jost", "DM Sans", sans-serif;
+}

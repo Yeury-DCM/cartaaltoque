@@ -1,0 +1,91 @@
+{
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "scenes": [
+    {
+      "id": "E1",
+      "frames": 105
+    },
+    {
+      "id": "E2",
+      "frames": 135
+    },
+    {
+      "id": "E3",
+      "frames": 135
+    },
+    {
+      "id": "E4",
+      "frames": 75
+    },
+    {
+      "id": "E5",
+      "frames": 90
+    }
+  ],
+  "cues": {
+    "E1": {
+      "title1": 0.1,
+      "strike": 0.45,
+      "write": 0.85,
+      "title2": 1.2,
+      "stack1": 1.6,
+      "stack2": 2.15,
+      "stack3": 2.7
+    },
+    "E2": {
+      "title1": 0.15,
+      "tapPrice": 0.7,
+      "type": 0.95,
+      "save": 1.5,
+      "tapSwitch": 2.2,
+      "title2": 2.85
+    },
+    "E3": {
+      "title1": 0.1,
+      "aim": 0.15,
+      "lock": 0.85,
+      "open": 1.05,
+      "tapPlus": 2.3,
+      "title2": 2.75
+    },
+    "E4": {
+      "v1": 0.0,
+      "v2": 0.83,
+      "v3": 1.66
+    },
+    "E5": {
+      "logo": 0.12,
+      "tagline": 0.45,
+      "offer": 0.8,
+      "url": 1.0,
+      "wa": 1.35
+    }
+  },
+  "voice": [],
+  "music": {
+    "src": "uplifting-bass_lily-j_mixkit-726.mp3",
+    "bpm": 136,
+    "dropAt": {
+      "scene": "E2",
+      "at": 0.0
+    },
+    "fadeOut": 1.2
+  },
+  "edits": {
+    "CartaAd": [
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5"
+    ],
+    "CartaAd15": [
+      "E1",
+      "E2",
+      "E3",
+      "E5"
+    ]
+  }
+}

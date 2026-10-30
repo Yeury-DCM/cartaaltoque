@@ -1,0 +1,7 @@
+node_modules
+out
+build
+.DS_Store
+.env
+public/audio/music
+public/audio/voice

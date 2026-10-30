@@ -1,0 +1,33 @@
+{
+  "name": "carta-al-toque-video",
+  "version": "1.0.0",
+  "description": "Anuncio vertical de Carta al Toque (Remotion)",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "lint": "tsc"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.535",
+    "@remotion/cli": "4.0.535",
+    "@remotion/google-fonts": "4.0.535",
+    "@remotion/media": "4.0.535",
+    "@remotion/paths": "4.0.535",
+    "@remotion/tailwind-v4": "4.0.535",
+    "lucide-react": "0.575.0",
+    "qrcode": "1.5.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.535",
+    "tailwindcss": "4.2.1"
+  },
+  "devDependencies": {
+    "@types/qrcode": "1.5.5",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  }
+}
