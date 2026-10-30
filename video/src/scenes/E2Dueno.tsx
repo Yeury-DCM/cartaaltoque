@@ -16,6 +16,8 @@ const TOP = 550;
 // Coordenadas lógicas (390×844) del precio de Costillas y del interruptor de Pollo en el panel.
 const PRICE_XY = { x: 262, y: 418 };
 const SWITCH_XY = { x: 323, y: 488 };
+// Centro de la tarjeta de Costillas en el menú del cliente (con el menú ya desplazado).
+const CARD_XY = { x: 170, y: 50 + 612 - 214 + 48 };
 
 // "En segundos": el destello dura 14 frames (la app usa 27) y el cambio viaja al menú en 3.
 const FLASH = 14;
@@ -119,7 +121,9 @@ export const E2Dueno: React.FC = () => {
             scroll={scroll}
             flash={{ [`item:${NEW_PRICE.id}`]: priceFlashR, [`item:${SOLD_OUT}`]: offFlashR }}
             flashLen={FLASH}
+            open={{ id: NEW_PRICE.id, since: frame - f(C.openDish) - 2 }}
           />
+          <Touch x={CARD_XY.x} y={CARD_XY.y} since={frame - f(C.openDish)} />
         </Phone>
       </div>
 

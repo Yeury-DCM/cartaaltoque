@@ -40,6 +40,8 @@ const SFX: Record<SceneId, React.ReactNode> = {
       <Sfx name="whoosh_tech" at={E2.tapSwitch + 0.12} db={-16} />
       <Sfx name="pop_light" at={E2.tapSwitch + 0.2} db={-10} />
       <Sfx name="confirm_tone" at={E2.title2} db={-15} />
+      <Sfx name="tap" at={E2.openDish} db={-9} />
+      <Sfx name="whoosh_short" at={E2.openDish + 0.12} db={-16} />
     </>
   ),
   E3: (

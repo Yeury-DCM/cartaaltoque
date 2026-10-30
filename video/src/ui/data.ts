@@ -16,6 +16,8 @@ export type DemoItem = {
   desc: string;
   price: number;
   available: boolean;
+  /** Foto principal del plato (public/dishes/, Pexels). */
+  photo: string;
 };
 
 export const RESTAURANT = "La Terraza";
@@ -28,12 +30,12 @@ export const CATEGORIES: { id: CategoryId; name: string }[] = [
 ];
 
 export const ITEMS: DemoItem[] = [
-  { id: "tostones", cat: "entradas", name: "Tostones", desc: "Dorados y crujientes, con salsa rosada.", price: 250, available: true },
-  { id: "yuquitas", cat: "entradas", name: "Yuquitas de queso", desc: "Rellenas de queso, con dip de ajo.", price: 280, available: true },
-  { id: "costillas", cat: "fuertes", name: "Costillas BBQ", desc: "Media tabla glaseada en salsa BBQ.", price: 850, available: true },
-  { id: "pollo", cat: "fuertes", name: "Pollo a la parrilla", desc: "Pechuga marinada, arroz y ensalada.", price: 550, available: true },
-  { id: "hamburguesa", cat: "fuertes", name: "Hamburguesa de la casa", desc: "Res, cheddar, tocino y papas.", price: 450, available: true },
-  { id: "limonada", cat: "bebidas", name: "Limonada frozen", desc: "Limón natural, bien fría.", price: 150, available: true },
+  { id: "tostones", cat: "entradas", name: "Tostones", desc: "Dorados y crujientes, con salsa rosada.", price: 250, available: true, photo: "dishes/tostones.jpg" },
+  { id: "yuquitas", cat: "entradas", name: "Yuquitas de queso", desc: "Rellenas de queso, con dip de ajo.", price: 280, available: true, photo: "dishes/yuquitas.jpg" },
+  { id: "costillas", cat: "fuertes", name: "Costillas BBQ", desc: "Media tabla glaseada en salsa BBQ.", price: 850, available: true, photo: "dishes/costillas.jpg" },
+  { id: "pollo", cat: "fuertes", name: "Pollo a la parrilla", desc: "Pechuga marinada, arroz y ensalada.", price: 550, available: true, photo: "dishes/pollo.jpg" },
+  { id: "hamburguesa", cat: "fuertes", name: "Hamburguesa de la casa", desc: "Res, cheddar, tocino y papas.", price: 450, available: true, photo: "dishes/hamburguesa.jpg" },
+  { id: "limonada", cat: "bebidas", name: "Limonada frozen", desc: "Limón natural, bien fría.", price: 150, available: true, photo: "dishes/limonada.jpg" },
 ];
 
 /** Los cambios que hace el dueño en E2 (y que el cliente ya ve en E3). */

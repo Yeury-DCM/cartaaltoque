@@ -8,6 +8,7 @@
 | Bebas Neue, DM Sans, Cormorant Garamond, Jost, Archivo Black | Google Fonts vía `@remotion/google-fonts` | SIL Open Font License |
 | Íconos | lucide-react | ISC |
 | Glifo de WhatsApp | Simple Icons | CC0 |
+| Fotos de los platos (`public/dishes/`, recortadas) | Pexels: tostones 39143744, yuquitas 14883833, costillas 38545816, pollo 34463128, hamburguesa 28828555, limonada 4134388 (`https://www.pexels.com/photo/<id>/`) | Pexels License (uso comercial libre, sin atribución obligatoria) |
 | Logos de Carta al Toque y foto del hero | `public/` de la app (archivos originales del sitio) | Propiedad de Carta al Toque |
 | Voz | ElevenLabs (entregada por el cliente) | Del cliente |
 

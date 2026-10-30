@@ -1,6 +1,7 @@
 import React, { type ReactNode } from "react";
-import { Beef, Clock, CupSoda, Instagram, Plus, Salad, ShoppingBag } from "lucide-react";
-import { Easing, interpolate } from "remotion";
+import { Clock, Instagram, Plus, ShoppingBag } from "lucide-react";
+import { Easing, Img, interpolate, staticFile } from "remotion";
+import { ItemSheet } from "./ItemSheet";
 import { WhatsAppIcon } from "./WhatsAppIcon";
 import { StatusBar, flashShadow } from "./devices";
 import {
@@ -9,17 +10,10 @@ import {
   money,
   RESTAURANT,
   TAGLINE,
-  type CategoryId,
   type DemoItem,
   type FontStyle,
   type MenuTheme,
 } from "./data";
-
-const ICON: Record<CategoryId, typeof Salad> = {
-  entradas: Salad,
-  fuertes: Beef,
-  bebidas: CupSoda,
-};
 
 export type MenuProps = {
   items: DemoItem[];
@@ -40,6 +34,8 @@ export type MenuProps = {
   press?: { id: string; since: number };
   /** Duración del destello en frames. */
   flashLen?: number;
+  /** Detalle del plato abierto: id y frames desde que se tocó. */
+  open?: { id: string; since: number };
 };
 
 /**
@@ -60,7 +56,9 @@ export const MenuScreen: React.FC<MenuProps> = ({
   scroll = 0,
   press,
   flashLen,
+  open,
 }) => {
+  const opened = open && open.since >= 0 ? items.find((i) => i.id === open.id) : undefined;
   const lines = items.filter((i) => cart[i.id]).map((item) => ({ item, qty: cart[item.id] }));
   const count = lines.reduce((n, l) => n + l.qty, 0);
   const total = lines.reduce((n, l) => n + l.qty * l.item.price, 0);
@@ -171,6 +169,7 @@ export const MenuScreen: React.FC<MenuProps> = ({
           </div>
         </div>
       )}
+      {opened ? <ItemSheet item={opened} since={open!.since} canOrder={whatsapp} /> : null}
     </div>
   );
 };
@@ -182,18 +181,15 @@ const ItemCard: React.FC<{ item: DemoItem; flash?: number; flashLen?: number; ca
   canOrder,
   press,
 }) => {
-  const Icon = ICON[item.cat];
   const pressS = press === undefined ? 1 : interpolate(press, [-1, 1, 5], [1, 0.9, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <li
       className={`glass-card relative flex gap-3 p-2.5 ${item.available ? "" : "opacity-55"}`}
       style={{ boxShadow: flashShadow(flash, flashLen) }}
     >
-      <div
-        className="grid h-[76px] w-[76px] shrink-0 place-items-center rounded-xl"
-        style={{ background: "linear-gradient(135deg, color-mix(in srgb, var(--primary) 42%, #1b1b1b), #141414 85%)" }}
-      >
-        <Icon className={`h-8 w-8 text-white/90 ${item.available ? "" : "grayscale"}`} />
+      {/* Con foto, como la tarjeta del menú real (r.$slug.tsx): recorte cuadrado y gris si está agotado. */}
+      <div className="relative h-[76px] w-[76px] shrink-0 overflow-hidden rounded-xl bg-foreground/5">
+        <Img src={staticFile(item.photo)} className={`h-full w-full object-cover ${item.available ? "" : "grayscale"}`} />
       </div>
       <div className="flex min-w-0 flex-1 flex-col py-0.5 pr-10">
         <p className="font-display text-[21px] uppercase leading-tight">{item.name}</p>

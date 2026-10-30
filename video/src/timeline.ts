@@ -28,7 +28,7 @@ export const editFrames = (edit: EditId) => EDITS[edit].reduce((a, id) => a + SC
 /** Momentos clave de cada escena (segundos locales). Los leen las escenas y los efectos. */
 export const CUES = TL.cues as {
   E1: Record<"title1" | "strike" | "write" | "title2" | "stack1" | "stack2" | "stack3", number>;
-  E2: Record<"title1" | "tapPrice" | "type" | "save" | "tapSwitch" | "title2", number>;
+  E2: Record<"title1" | "tapPrice" | "type" | "save" | "tapSwitch" | "title2" | "openDish", number>;
   E3: Record<"title1" | "aim" | "lock" | "open" | "tapPlus" | "title2", number>;
   E4: Record<"v1" | "v2" | "v3", number>;
   E5: Record<"logo" | "tagline" | "offer" | "url" | "wa", number>;
