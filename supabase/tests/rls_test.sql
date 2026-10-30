@@ -299,6 +299,7 @@ begin
   perform public.track_item_open('no-existe', pizza);
   perform public.track_item_open('pizza-a', gen_random_uuid());
   perform tests.fails('anon no lee aperturas', 'select * from public.item_opens_daily', 'permission denied');
+  perform tests.fails('anon no lee contactos', 'select * from public.restaurant_contacts', 'permission denied');
   perform tests.fails('anon no infla aperturas directo',
     format('insert into public.item_opens_daily (restaurant_id, item_id, day, opens) values (%L, %L, current_date, 999)', ra, pizza), 'permission denied');
 
@@ -360,6 +361,9 @@ begin
   perform tests.fails('A no altera sus visitas', 'update public.menu_views_daily set views = 1000', 'permission denied');
   perform tests.check('A ve sus 2 aperturas de plato', (select sum(opens) from public.item_opens_daily) = 2);
   perform tests.fails('A no altera sus aperturas', 'update public.item_opens_daily set opens = 1000', 'permission denied');
+  perform tests.affects('A guarda su teléfono de contacto', format('insert into public.restaurant_contacts (restaurant_id, phone) values (%L, %L)', ra, '18098704800'), 1);
+  perform tests.fails('teléfono de contacto inválido', format('update public.restaurant_contacts set phone = %L where restaurant_id = %L', '12ab', ra), 'check constraint');
+  perform tests.check('A ve su teléfono de contacto', (select phone from public.restaurant_contacts) = '18098704800');
   perform tests.keep('a_order', oid);
   perform tests.logout();
 
@@ -368,6 +372,9 @@ begin
   perform tests.rows('B no ve líneas de A', 'select 1 from public.order_items', 0);
   perform tests.rows('B no ve visitas de A', 'select 1 from public.menu_views_daily', 0);
   perform tests.rows('B no ve aperturas de A', 'select 1 from public.item_opens_daily', 0);
+  perform tests.rows('B no ve contacto de A', 'select 1 from public.restaurant_contacts', 0);
+  perform tests.fails('B no pone contacto a A', format('insert into public.restaurant_contacts (restaurant_id, phone) values (%L, %L)', ra, '18095550000'), 'row-level security');
+  perform tests.affects('B no cambia el contacto de A', format('update public.restaurant_contacts set phone = %L where restaurant_id = %L', '18095550000', ra), 0);
   perform tests.affects('B no cambia estados de A', format('update public.orders set status = %L where id = %L', 'cancelled', tests.id('a_order')), 0);
   perform tests.logout();
 end $$;
@@ -413,6 +420,7 @@ begin
     format('select * from public.admin_list_restaurants() where id in (%L, %L)', ra, rb), 2);
   perform tests.check('super ve correo del dueño', (select owner_email from public.admin_list_restaurants() where id = ra) = 'a@tests.local');
   perform tests.check('super ve visitas 7 días', (select views_7d from public.admin_list_restaurants() where id = ra) = 2);
+  perform tests.check('super ve el contacto del dueño', (select contact_phone from public.admin_list_restaurants() where id = ra) = '18098704800');
   perform tests.rows('super NO lee tablas de tenants directo', 'select 1 from public.items', 0);
   perform tests.check('super es admin', public.is_platform_admin());
 

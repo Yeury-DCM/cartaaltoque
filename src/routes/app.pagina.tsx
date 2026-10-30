@@ -69,6 +69,7 @@ function PageSettings() {
     currency: r.currency,
     slug: r.slug,
     is_published: r.is_published,
+    contact: "",
   });
   const [links, setLinks] = useState<Record<LinkKind, string>>(
     () => Object.fromEntries(LINK_KINDS.map((k) => [k, ""])) as Record<LinkKind, string>,
@@ -99,6 +100,18 @@ function PageSettings() {
       </p>
     );
 
+  // El teléfono de contacto vive en su propia tabla privada.
+  useEffect(() => {
+    void supabase
+      .from("restaurant_contacts")
+      .select("phone")
+      .eq("restaurant_id", r.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.phone) setForm((f) => (f.contact ? f : { ...f, contact: data.phone }));
+      });
+  }, [r.id]);
+
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) => {
     setSaved(false);
     setForm((f) => ({ ...f, [k]: v }));
@@ -122,6 +135,9 @@ function PageSettings() {
     if (form.name.trim().length < 2) return setError("El nombre es muy corto.");
     if (phone && (phone.length < 8 || phone.length > 15))
       return setError("El WhatsApp debe tener entre 8 y 15 dígitos, con código de país.");
+    const contactPhone = onlyDigits(form.contact);
+    if (contactPhone && (contactPhone.length < 8 || contactPhone.length > 15))
+      return setError("Tu número de contacto debe tener entre 8 y 15 dígitos, con código de país.");
     if (!isValidSlug(form.slug))
       return setError("La dirección debe tener de 3 a 40 letras minúsculas, números o guiones.");
     if (
@@ -183,6 +199,16 @@ function PageSettings() {
         for (const l of cleanLinks) next[l.kind] = l.url;
         return next;
       });
+      const contactRes = contactPhone
+        ? await supabase
+            .from("restaurant_contacts")
+            .upsert({
+              restaurant_id: r.id,
+              phone: contactPhone,
+              updated_at: new Date().toISOString(),
+            })
+        : await supabase.from("restaurant_contacts").delete().eq("restaurant_id", r.id);
+      if (contactRes.error) throw contactRes.error;
       await refresh();
       setSaved(true);
     });
@@ -345,6 +371,25 @@ function PageSettings() {
             </span>
           </div>
         </div>
+      </section>
+
+      <section className="glass-card space-y-4 p-5">
+        <h2 className="text-xs uppercase tracking-[0.2em] text-primary">Contacto con nosotros</h2>
+        <label className={labelClass}>
+          Tu número (privado)
+          <input
+            className={fieldClass}
+            value={form.contact}
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="1 809 555 0000"
+            onChange={(e) => set("contact", e.target.value)}
+          />
+          <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
+            Solo lo usamos para ayudarte con tu menú. No se muestra a tus clientes. Déjalo vacío
+            para borrarlo.
+          </span>
+        </label>
       </section>
 
       <section className="glass-card space-y-4 p-5">

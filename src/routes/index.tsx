@@ -19,11 +19,16 @@ import { Faq } from "@/components/landing/Faq";
 import { LiveDemo } from "@/components/landing/LiveDemo";
 import { Statement } from "@/components/landing/Statement";
 import { TryQr } from "@/components/landing/TryQr";
-import { APP_NAME, TRIAL_DAYS } from "@/lib/brand";
+import { APP_NAME, SUPPORT_WHATSAPP, TRIAL_DAYS } from "@/lib/brand";
 
 export const Route = createFileRoute("/")({ component: Landing });
 
 const signup = { modo: "registro", next: "/app" } as const;
+
+/** WhatsApp de ventas: solo aparece si está configurado. */
+const SALES_URL = SUPPORT_WHATSAPP
+  ? `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodeURIComponent(`Hola, quiero información de ${APP_NAME}.`)}`
+  : "";
 
 const STEPS = [
   {
@@ -299,9 +304,21 @@ function Landing() {
             <p className="mx-auto mt-6 max-w-xl text-lg text-foreground/70">
               Créalo en minutos, imprime tu QR y empieza a recibir pedidos por WhatsApp.
             </p>
-            <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary mt-10">
-              Crear mi menú gratis
-            </Link>
+            <div className="mt-10 flex flex-wrap justify-center gap-3">
+              <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary">
+                Crear mi menú gratis
+              </Link>
+              {SALES_URL && (
+                <a
+                  href={SALES_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-pill btn-pill-ghost"
+                >
+                  <WhatsAppIcon className="h-4 w-4" /> Hablar con ventas
+                </a>
+              )}
+            </div>
           </Reveal>
         </div>
       </section>

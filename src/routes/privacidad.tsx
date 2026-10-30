@@ -40,6 +40,11 @@ function Privacy() {
             recibimos tu correo y tu nombre; nunca vemos tu contraseña de Google.
           </li>
           <li>
+            <strong>Teléfono de contacto (opcional):</strong> si lo das, lo usamos solo para
+            ayudarte a configurar tu menú. No aparece en tu menú ni se comparte con terceros; lo
+            puedes borrar cuando quieras desde &quot;Mi página&quot;.
+          </li>
+          <li>
             <strong>Contenido del negocio:</strong> nombre, logo, portada, color, horario,
             dirección, WhatsApp, enlaces, platos, fotos, precios y zonas de entrega.
           </li>

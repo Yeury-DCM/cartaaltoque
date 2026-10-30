@@ -21,6 +21,7 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
   const [slug, setSlug] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
   const [whatsapp, setWhatsapp] = useState("");
+  const [contact, setContact] = useState("");
   const [available, setAvailable] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +44,10 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
   const phone = onlyDigits(whatsapp);
   // Opcional: sin WhatsApp el menú se muestra sin carrito. Si lo escribe, tiene que ser válido.
   const phoneOk = phone.length === 0 || (phone.length >= 8 && phone.length <= 15);
-  const canSubmit = name.trim().length >= 2 && isValidSlug(slug) && available !== false && phoneOk;
+  const contactDigits = onlyDigits(contact);
+  const contactOk = contactDigits.length === 0 || (contactDigits.length >= 8 && contactDigits.length <= 15);
+  const canSubmit =
+    name.trim().length >= 2 && isValidSlug(slug) && available !== false && phoneOk && contactOk;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +64,12 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
       await supabase
         .from("categories")
         .insert({ restaurant_id: id as string, name: "Platos", sort_order: 1 });
+      // Opcional y privado: si falla no frena la creación del menú.
+      if (contactDigits) {
+        await supabase
+          .from("restaurant_contacts")
+          .upsert({ restaurant_id: id as string, phone: contactDigits });
+      }
       await onCreated(id as string);
     } catch (e) {
       setError(errorMessage(e));
@@ -151,6 +161,22 @@ export function Onboarding({ onCreated }: { onCreated: (id: string) => Promise<v
             <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
               Con código de país (en RD empieza con 1). Aquí te llegan los pedidos. Si no trabajas
               con WhatsApp, déjalo vacío: tu menú se verá igual, solo que sin carrito.
+            </span>
+          </label>
+
+          <label className={labelClass}>
+            Tu número para ayudarte a empezar (opcional)
+            <input
+              className={fieldClass}
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              inputMode="tel"
+              placeholder="1 809 555 0000"
+              autoComplete="tel"
+            />
+            <span className="block text-[11px] normal-case tracking-normal text-foreground/50">
+              Te escribimos por WhatsApp para ayudarte a dejar el menú listo. Es privado: no se
+              muestra en tu menú ni se comparte.
             </span>
           </label>
 

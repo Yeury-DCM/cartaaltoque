@@ -34,6 +34,7 @@ type Row = {
   orders_7d: number;
   orders_total: number;
   views_7d: number;
+  contact_phone: string | null;
 };
 
 type Stats = Record<
@@ -289,6 +290,16 @@ function Dashboard() {
                       {busy === r.id && <Loader2 className="h-4 w-4 animate-spin text-primary" />}
                     </div>
                     <div className="mt-3 flex flex-wrap items-center gap-2">
+                      {r.contact_phone && (
+                        <a
+                          href={`https://wa.me/${r.contact_phone}?text=${encodeURIComponent(`Hola, soy de ${APP_NAME}. Vi que creaste el menú de ${r.name}, ¿te ayudo a dejarlo listo?`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn-ghost !px-3 !py-1.5 !text-[11px]"
+                        >
+                          WhatsApp · {r.contact_phone}
+                        </a>
+                      )}
                       <select
                         className={sel}
                         value={r.status}
