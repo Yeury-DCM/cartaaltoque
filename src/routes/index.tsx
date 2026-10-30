@@ -16,7 +16,7 @@ import { Reveal } from "@/components/Reveal";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { Compare } from "@/components/landing/Compare";
 import { Faq } from "@/components/landing/Faq";
-import { HeroSpotlight } from "@/components/landing/HeroSpotlight";
+import { HeroPhone } from "@/components/landing/HeroPhone";
 import { LiveDemo } from "@/components/landing/LiveDemo";
 import { Statement } from "@/components/landing/Statement";
 import { TryQr } from "@/components/landing/TryQr";
@@ -86,19 +86,17 @@ function Landing() {
 
       {/* ─── Hero + demo en vivo ─── */}
       <section id="inicio" className="relative overflow-hidden pb-24 pt-36 md:pt-44">
-        <div aria-hidden className="hero-glow absolute inset-0" />
-        <div aria-hidden className="grid-lines absolute inset-0" />
-        <HeroSpotlight />
         <GrainOverlay />
-        <div className="relative mx-auto max-w-6xl px-5 text-center md:px-8">
-          <h1 className="fade-up-in delay-150 mx-auto max-w-5xl font-display text-[clamp(64px,10.5vw,148px)] uppercase leading-[0.86]">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-14 px-5 md:px-8 lg:grid-cols-[1.15fr_0.85fr]">
+         <div>
+          <h1 className="fade-up-in delay-150 font-display text-[clamp(60px,8.4vw,128px)] uppercase leading-[0.86]">
             Tu menú, <span className="text-primary">al toque.</span>
           </h1>
-          <p className="fade-up-in delay-300 mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-foreground/70 md:text-xl">
+          <p className="fade-up-in delay-300 mt-7 max-w-xl text-lg leading-relaxed text-foreground/70">
             Tus clientes escanean el QR, arman su pedido desde el celular y te llega completo por
             WhatsApp: platos, tamaños, entrega y total. Sin apps y sin comisiones por pedido.
           </p>
-          <div className="fade-up-in delay-500 mt-10 flex flex-wrap justify-center gap-3">
+          <div className="fade-up-in delay-500 mt-10 flex flex-wrap gap-3">
             <Link to="/entrar" search={signup} className="btn-pill btn-pill-primary">
               Crear mi menú gratis
             </Link>
@@ -106,7 +104,7 @@ function Landing() {
               Pruébalo aquí <ArrowDown className="h-4 w-4" />
             </a>
           </div>
-          <ul className="fade-up-in delay-500 mt-8 flex flex-wrap justify-center gap-x-7 gap-y-2 text-[14px] text-foreground/55">
+          <ul className="fade-up-in delay-500 mt-8 flex flex-wrap gap-x-7 gap-y-2 text-[14px] text-foreground/55">
             {[
               `${TRIAL_DAYS} días gratis`,
               "Sin tarjeta",
@@ -118,6 +116,8 @@ function Landing() {
               </li>
             ))}
           </ul>
+         </div>
+         <HeroPhone />
         </div>
 
         <div id="demo" className="relative mx-auto mt-20 max-w-6xl scroll-mt-28 px-5 md:px-8">
@@ -166,7 +166,7 @@ function Landing() {
                 delay={i * 120}
                 className="premium-card relative p-7 text-center"
               >
-                <span className="relative mx-auto grid h-[72px] w-[72px] place-items-center rounded-2xl bg-primary text-primary-foreground shadow-[0_18px_40px_-12px_var(--primary)]">
+                <span className="relative mx-auto grid h-[72px] w-[72px] place-items-center rounded-2xl bg-primary text-primary-foreground">
                   <Icon className="h-8 w-8" />
                 </span>
                 {/* Conector hacia el siguiente paso: del borde de este icono al del próximo,
@@ -231,7 +231,6 @@ function Landing() {
       <section id="precio" className="relative py-24 md:py-32">
         <div className="mx-auto max-w-3xl px-5 md:px-8">
           <Reveal className="premium-card relative overflow-hidden p-10 text-center md:p-14">
-            <div aria-hidden className="hero-glow absolute inset-0 opacity-70" />
             <div className="relative">
               <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-primary">
                 Plan Básico
@@ -271,7 +270,6 @@ function Landing() {
 
       {/* ─── Cierre ─── */}
       <section className="relative overflow-hidden py-32 text-center md:py-44">
-        <div aria-hidden className="hero-glow absolute inset-0" />
         <GrainOverlay />
         <div className="relative mx-auto max-w-4xl px-5 md:px-8">
           <Reveal>
