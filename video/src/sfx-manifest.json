@@ -1,0 +1,82 @@
+{
+ "whoosh_short": {
+  "file": "audio/sfx/whoosh_short.wav",
+  "hit": 0.252,
+  "dur": 0.702
+ },
+ "whoosh_short_lr": {
+  "file": "audio/sfx/whoosh_short_lr.wav",
+  "hit": 0.252,
+  "dur": 0.702
+ },
+ "whoosh_air_up": {
+  "file": "audio/sfx/whoosh_air_up.wav",
+  "hit": 0.252,
+  "dur": 2.393
+ },
+ "impact_deep": {
+  "file": "audio/sfx/impact_deep.wav",
+  "hit": 0.342,
+  "dur": 1.752
+ },
+ "pop_msg": {
+  "file": "audio/sfx/pop_msg.wav",
+  "hit": 0.012,
+  "dur": 0.282
+ },
+ "confirm_tone": {
+  "file": "audio/sfx/confirm_tone.wav",
+  "hit": 0.19,
+  "dur": 2.56
+ },
+ "correct_tone": {
+  "file": "audio/sfx/correct_tone.wav",
+  "hit": 0.02,
+  "dur": 2.41
+ },
+ "click_ui": {
+  "file": "audio/sfx/click_ui.wav",
+  "hit": 0.0,
+  "dur": 0.199
+ },
+ "click_check": {
+  "file": "audio/sfx/click_check.wav",
+  "hit": 0.012,
+  "dur": 0.149
+ },
+ "click_select": {
+  "file": "audio/sfx/click_select.wav",
+  "hit": 0.01,
+  "dur": 0.27
+ },
+ "tap": {
+  "file": "audio/sfx/tap.wav",
+  "hit": 0.0,
+  "dur": 0.32
+ },
+ "pop_light": {
+  "file": "audio/sfx/pop_light.wav",
+  "hit": 0.02,
+  "dur": 0.18
+ },
+ "pen_write": {
+  "file": "audio/sfx/pen_write.wav",
+  "hit": 0.042,
+  "dur": 0.902
+ },
+ "pen_fast": {
+  "file": "audio/sfx/pen_fast.wav",
+  "hit": 0.46,
+  "dur": 0.793
+ },
+ "paper_move": {
+  "file": "audio/sfx/paper_move.wav",
+  "hit": 0.182,
+  "dur": 0.794
+ },
+ "counter_tick": {
+  "file": "audio/sfx/counter_tick.wav",
+  "hit": 1.202,
+  "dur": 6.452
+ }
+}
