@@ -708,11 +708,17 @@
   font-family: var(--font-body);
 }
 
+/* Un elemento con data-font y font-display a la vez (las muestras de Mi página) conserva su display. */
+[data-font="classic"].font-display {
+  font-family: var(--font-display);
+}
+
 [data-font="elegant"] {
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-body: "Cormorant Garamond", Georgia, serif;
   font-size: 1.06em;
 }
+[data-font="elegant"].font-display,
 [data-font="elegant"] .font-display,
 [data-font="elegant"] h1,
 [data-font="elegant"] h2,
@@ -726,6 +732,7 @@
   --font-display: "Jost", "DM Sans", sans-serif;
   --font-body: "Jost", "DM Sans", sans-serif;
 }
+[data-font="modern"].font-display,
 [data-font="modern"] .font-display,
 [data-font="modern"] h1,
 [data-font="modern"] h2,
@@ -740,6 +747,7 @@
   --font-display: "Archivo Black", "Anton", sans-serif;
   --font-body: "DM Sans", "Inter", sans-serif;
 }
+[data-font="bold"].font-display,
 [data-font="bold"] .font-display,
 [data-font="bold"] h1,
 [data-font="bold"] h2,
@@ -758,4 +766,11 @@
 [data-font="modern"] button,
 [data-font="modern"] input {
   font-family: "Jost", "DM Sans", sans-serif;
+}
+
+/* Si el menú es claro, también lo es lo que queda fuera de él (rebote del scroll, hueco bajo la página). */
+html:has(.menu-root[data-theme="light"]),
+body:has(.menu-root[data-theme="light"]) {
+  background-color: oklch(0.985 0.004 80);
+  color-scheme: light;
 }

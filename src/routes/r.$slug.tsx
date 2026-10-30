@@ -77,6 +77,7 @@ function MenuPage() {
   return (
     <CartProvider storageKey={`pedido-${menu.restaurant.slug}`} currency={menu.restaurant.currency}>
       <div
+        className="menu-root min-h-screen"
         data-theme={menu.restaurant.theme}
         data-font={menu.restaurant.font_style}
         style={brandStyle(menu.restaurant.brand_color)}

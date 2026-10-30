@@ -90,7 +90,7 @@ async function loadPublicMenu(slug: string): Promise<PublicMenu | null> {
   };
 }
 
-/** Menú público por slug; en el servidor se reutiliza hasta 1 minuto. */
+/** Menú público por slug; en el servidor se reutiliza hasta 15 segundos. */
 export const fetchPublicMenu = (rawSlug: string) => {
   const slug = normalizeSlug(rawSlug);
   return serverCached(`menu:${slug}`, SSR_CACHE_MS, () => loadPublicMenu(slug));

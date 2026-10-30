@@ -26,4 +26,4 @@ export function serverCached<T>(key: string, ttlMs: number, load: () => Promise<
   return value;
 }
 
-export const SSR_CACHE_MS = 60_000;
+export const SSR_CACHE_MS = 15_000;
