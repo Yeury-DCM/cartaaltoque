@@ -23,12 +23,14 @@ const SFX: Record<SceneId, React.ReactNode> = {
       <Sfx name="whoosh_short" at={0.12} db={-13} />
       <Sfx name="tap" at={E2.tapPrice} db={-7} />
       {[0, 1, 2].map((i) => (
-        <Sfx key={i} name="click_ui" at={E2.type + i * 0.12} db={-13} />
+        <Sfx key={i} name="click_ui" at={E2.type + i * 0.07} db={-13} />
       ))}
       <Sfx name="tap" at={E2.save} db={-9} />
-      <Sfx name="pop_light" at={E2.save + 0.02} db={-8} />
+      <Sfx name="whoosh_tech" at={E2.save + 0.02} db={-14} />
+      <Sfx name="pop_light" at={E2.save + 0.1} db={-8} />
       <Sfx name="click_check" at={E2.tapSwitch} db={-7} />
-      <Sfx name="pop_light" at={E2.tapSwitch + 0.12} db={-9} />
+      <Sfx name="whoosh_tech" at={E2.tapSwitch + 0.12} db={-16} />
+      <Sfx name="pop_light" at={E2.tapSwitch + 0.2} db={-10} />
       <Sfx name="confirm_tone" at={E2.title2} db={-15} />
     </>
   ),

@@ -61,26 +61,29 @@ const page = (end: number, accent: string[], ...pairs: [string, number][]): Capt
   accent,
 });
 
-// Tiempos provisionales (estimados) hasta tener la voz real.
+// Tiempos de la voz real (faster-whisper + silencios y valles de energía), ya desplazados
+// al "at" de cada tramo. Voz: "Tu menú… ¿cuántas veces lo imprimiste este año? Ahora lo cambias
+// en segundos desde tu celular, y tu cliente lo abre con solo escanear un QR, sin esperar.
+// Carta al Toque. Pruébalo catorce días gratis."
 export const CAPTIONS: Record<SceneId, CaptionPage[]> = {
   E1: [
-    page(0.95, ["menú…"], ["Tu", 0.12], ["menú…", 0.32]),
-    page(2.02, ["veces"], ["¿cuántas", 1.15], ["veces", 1.6], ["lo", 1.92]),
-    page(3.4, ["imprimiste"], ["imprimiste", 2.05], ["este", 2.68], ["año?", 2.88]),
+    page(1.2, ["menú…"], ["Tu", 0.06], ["menú…", 0.31]),
+    page(2.22, ["veces"], ["¿cuántas", 1.52], ["veces", 1.89], ["lo", 2.1]),
+    page(3.5, ["imprimiste"], ["imprimiste", 2.25], ["este", 2.84], ["año?", 3.08]),
   ],
   E2: [
-    page(1.08, ["cambias"], ["Ahora", 0.12], ["lo", 0.48], ["cambias", 0.62]),
-    page(2.2, ["celular,"], ["desde", 1.12], ["tu", 1.4], ["celular,", 1.55]),
-    page(4.3, ["solo."], ["y", 2.4], ["se", 2.52], ["actualiza", 2.7], ["solo.", 3.3]),
+    page(1.0, ["cambias"], ["Ahora", 0.17], ["lo", 0.47], ["cambias", 0.68]),
+    page(1.95, ["segundos"], ["en", 1.03], ["segundos", 1.18]),
+    page(3.4, ["celular,"], ["desde", 2.01], ["tu", 2.37], ["celular,", 2.52]),
   ],
   E3: [
-    page(1.35, ["cliente"], ["Y", 0.1], ["tu", 0.22], ["cliente", 0.36], ["lo", 0.82], ["abre", 0.95]),
-    page(2.55, ["QR:"], ["escaneando", 1.4], ["un", 1.95], ["QR:", 2.08]),
-    page(4.3, ["esperar."], ["sin", 2.72], ["mesero,", 2.95], ["sin", 3.45], ["esperar.", 3.65]),
+    page(1.2, ["cliente"], ["y", 0.15], ["tu", 0.26], ["cliente", 0.39], ["lo", 0.82], ["abre", 1.02]),
+    page(3.02, ["QR,"], ["con", 1.24], ["solo", 1.44], ["escanear", 1.69], ["un", 2.2], ["QR,", 2.32]),
+    page(4.3, ["esperar."], ["sin", 3.12], ["esperar.", 3.36]),
   ],
   E4: [],
   E5: [
-    page(1.35, ["Toque."], ["Carta", 0.2], ["al", 0.55], ["Toque.", 0.68]),
-    page(2.9, ["gratis."], ["Pruébalo", 1.45], ["gratis.", 1.95]),
+    page(1.1, ["Toque."], ["Carta", 0.05], ["al", 0.5], ["Toque.", 0.62]),
+    page(2.99, ["gratis."], ["Pruébalo", 1.16], ["14", 1.57], ["días", 2.0], ["gratis.", 2.2]),
   ],
 };

@@ -28,13 +28,15 @@ export type PanelProps = {
   switches?: Record<string, number>;
   /** Frames desde el cambio de cada fila. */
   flash?: Record<string, number | undefined>;
+  /** Duración del destello en frames. */
+  flashLen?: number;
 };
 
 /**
  * Panel del dueño en el celular: la pestaña "Menú" de DemoPanel.tsx (cabecera, pestañas y
  * filas con precio + interruptor) en el ancho de un teléfono.
  */
-export const PanelScreen: React.FC<PanelProps> = ({ items, edit, switches = {}, flash = {} }) => (
+export const PanelScreen: React.FC<PanelProps> = ({ items, edit, switches = {}, flash = {}, flashLen }) => (
   <div className="relative flex h-full w-full flex-col overflow-hidden bg-background text-foreground" style={brandStyle("#FF7101")}>
     <StatusBar />
     <header className="shrink-0 border-b border-primary/15">
@@ -70,7 +72,7 @@ export const PanelScreen: React.FC<PanelProps> = ({ items, edit, switches = {}, 
               <li
                 key={i.id}
                 className="flex h-[62px] items-center gap-3 rounded-xl border border-primary/10 bg-foreground/5 px-3"
-                style={{ boxShadow: flashShadow(flash[i.id]) }}
+                style={{ boxShadow: flashShadow(flash[i.id], flashLen) }}
               >
                 <div className="min-w-0 flex-1">
                   <p className={`truncate text-[14px] font-bold ${on > 0.5 ? "" : "text-foreground/45 line-through"}`}>{i.name}</p>

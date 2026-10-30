@@ -59,11 +59,12 @@ export function StatusBar({ color = "#F5F5F5" }: { color?: string }) {
 
 /**
  * El "demo-flash" de la app (anillo de --primary que se abre y se apaga en 900 ms),
- * calculado por frame. `since` = frames desde que cambió (negativo = todavía no).
+ * calculado por frame. `since` = frames desde que cambió (negativo = todavía no);
+ * `len` = duración en frames (27 = 900 ms, como en la app).
  */
-export const flashShadow = (since: number | undefined): string | undefined => {
-  if (since === undefined || since < 0 || since > 27) return undefined;
-  const p = Easing.out(Easing.quad)(since / 27);
+export const flashShadow = (since: number | undefined, len = 27): string | undefined => {
+  if (since === undefined || since < 0 || since > len) return undefined;
+  const p = Easing.out(Easing.quad)(since / len);
   return `0 0 0 ${14 * p}px color-mix(in srgb, var(--primary) ${70 * (1 - p)}%, transparent)`;
 };
 

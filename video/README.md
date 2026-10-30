@@ -10,13 +10,19 @@ Proyecto independiente: no importa nada de la app. Las pantallas (`src/ui/`) son
 - `src/timeline.ts`: tipos, helpers y subtítulos palabra por palabra (máx. 7 palabras por página).
 - `src/theme.ts`: tokens de marca y fuentes. `src/styles.css`: tokens de Tailwind copiados de la app.
 - `src/scenes/`: las escenas E1…E5. `src/components/`: subtítulos, titulares y SFX (`SceneSfx.tsx` = efectos de cada escena).
-- `assets-src/`: voz original (`voice/`) y música sin procesar. `public/audio/`: audio listo para el render.
+- `assets-src/`: voz original (`voice/voz.mp3`, con sus tiempos por palabra en `words.json`) y música sin procesar. `public/audio/`: audio listo para el render.
 
 ## Comandos
 
 ```console
 npm install
 npm run dev
+```
+
+Tiempos por palabra de una voz nueva (faster-whisper con el modelo `small` local). Después hay que ajustar los inicios contra los silencios y pasarlos a `timeline.json` y `timeline.ts`:
+
+```console
+python scripts/words.py assets-src/voice/voz.mp3 > assets-src/voice/words.json
 ```
 
 Audio (voz por tramos y música de cada montaje con ducking), después de cambiar `timeline.json`:

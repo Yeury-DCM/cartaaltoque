@@ -78,5 +78,10 @@
   "file": "audio/sfx/counter_tick.wav",
   "hit": 1.202,
   "dur": 6.452
+ },
+ "whoosh_tech": {
+  "file": "audio/sfx/whoosh_tech.wav",
+  "hit": 0.052,
+  "dur": 0.432
  }
 }

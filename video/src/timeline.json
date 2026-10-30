@@ -26,29 +26,29 @@
   ],
   "cues": {
     "E1": {
-      "title1": 0.1,
-      "strike": 0.45,
-      "write": 0.85,
-      "title2": 1.2,
-      "stack1": 1.6,
-      "stack2": 2.15,
-      "stack3": 2.7
+      "title1": 0.06,
+      "strike": 0.36,
+      "write": 0.75,
+      "title2": 1.52,
+      "stack1": 1.89,
+      "stack2": 2.25,
+      "stack3": 3.05
     },
     "E2": {
-      "title1": 0.15,
-      "tapPrice": 0.7,
-      "type": 0.95,
-      "save": 1.5,
-      "tapSwitch": 2.2,
-      "title2": 2.85
+      "title1": 0.17,
+      "tapPrice": 0.55,
+      "type": 0.72,
+      "save": 1.18,
+      "tapSwitch": 2.05,
+      "title2": 2.6
     },
     "E3": {
-      "title1": 0.1,
-      "aim": 0.15,
-      "lock": 0.85,
-      "open": 1.05,
-      "tapPlus": 2.3,
-      "title2": 2.75
+      "title1": 0.15,
+      "aim": 0.9,
+      "lock": 2.32,
+      "open": 2.5,
+      "tapPlus": 3.65,
+      "title2": 3.12
     },
     "E4": {
       "v1": 0.0,
@@ -56,14 +56,55 @@
       "v3": 1.66
     },
     "E5": {
-      "logo": 0.12,
-      "tagline": 0.45,
-      "offer": 0.8,
-      "url": 1.0,
-      "wa": 1.35
+      "logo": 0.03,
+      "tagline": 0.62,
+      "offer": 1.57,
+      "url": 2.05,
+      "wa": 2.35
     }
   },
-  "voice": [],
+  "voice": [
+    {
+      "id": "v1",
+      "src": "voz.mp3",
+      "from": 0.0,
+      "to": 3.47,
+      "scene": "E1",
+      "at": 0.03
+    },
+    {
+      "id": "v2",
+      "src": "voz.mp3",
+      "from": 4.06,
+      "to": 6.99,
+      "scene": "E2",
+      "at": 0.12
+    },
+    {
+      "id": "v3",
+      "src": "voz.mp3",
+      "from": 7.36,
+      "to": 11.3,
+      "scene": "E3",
+      "at": 0.1
+    },
+    {
+      "id": "v5a",
+      "src": "voz.mp3",
+      "from": 11.82,
+      "to": 12.9,
+      "scene": "E5",
+      "at": 0.0
+    },
+    {
+      "id": "v5b",
+      "src": "voz.mp3",
+      "from": 13.12,
+      "to": 14.99,
+      "scene": "E5",
+      "at": 1.12
+    }
+  ],
   "music": {
     "src": "uplifting-bass_lily-j_mixkit-726.mp3",
     "bpm": 136,

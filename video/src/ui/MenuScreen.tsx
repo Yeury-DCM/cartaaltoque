@@ -38,6 +38,8 @@ export type MenuProps = {
   scroll?: number;
   /** Botón + presionado: id del plato y frames desde el toque. */
   press?: { id: string; since: number };
+  /** Duración del destello en frames. */
+  flashLen?: number;
 };
 
 /**
@@ -57,6 +59,7 @@ export const MenuScreen: React.FC<MenuProps> = ({
   flash = {},
   scroll = 0,
   press,
+  flashLen,
 }) => {
   const lines = items.filter((i) => cart[i.id]).map((item) => ({ item, qty: cart[item.id] }));
   const count = lines.reduce((n, l) => n + l.qty, 0);
@@ -138,6 +141,7 @@ export const MenuScreen: React.FC<MenuProps> = ({
                           key={i.id}
                           item={i}
                           flash={flash[`item:${i.id}`]}
+                          flashLen={flashLen}
                           canOrder={whatsapp}
                           press={press?.id === i.id ? press.since : undefined}
                         />
@@ -171,9 +175,10 @@ export const MenuScreen: React.FC<MenuProps> = ({
   );
 };
 
-const ItemCard: React.FC<{ item: DemoItem; flash?: number; canOrder: boolean; press?: number }> = ({
+const ItemCard: React.FC<{ item: DemoItem; flash?: number; flashLen?: number; canOrder: boolean; press?: number }> = ({
   item,
   flash,
+  flashLen,
   canOrder,
   press,
 }) => {
@@ -182,7 +187,7 @@ const ItemCard: React.FC<{ item: DemoItem; flash?: number; canOrder: boolean; pr
   return (
     <li
       className={`glass-card relative flex gap-3 p-2.5 ${item.available ? "" : "opacity-55"}`}
-      style={{ boxShadow: flashShadow(flash) }}
+      style={{ boxShadow: flashShadow(flash, flashLen) }}
     >
       <div
         className="grid h-[76px] w-[76px] shrink-0 place-items-center rounded-xl"

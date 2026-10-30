@@ -36,8 +36,8 @@ const Backdrop: React.FC<{ blur?: number; dim?: number; zoom?: number }> = ({ bl
 );
 
 /** Esquinas del visor de la cámara alrededor del QR (coordenadas lógicas del teléfono). */
-const Brackets: React.FC<{ x: number; y: number; size: number; lock: number }> = ({ x, y, size, lock }) => {
-  const pad = interpolate(lock, [0, 1], [26, 6]);
+const Brackets: React.FC<{ x: number; y: number; size: number; lock: number; pulse: number }> = ({ x, y, size, lock, pulse }) => {
+  const pad = interpolate(lock, [0, 1], [26 + 4 * pulse, 6]);
   const col = lock > 0.5 ? BRAND.orange : "#FFFFFF";
   const L = 34;
   const s = size + pad * 2;
@@ -67,12 +67,18 @@ const Brackets: React.FC<{ x: number; y: number; size: number; lock: number }> =
   return <div style={{ position: "absolute", left: x - pad, top: y - pad, width: s, height: s }}>{[0, 1, 2, 3].map(corner)}</div>;
 };
 
-const CameraScreen: React.FC<{ lock: number; banner: number; drift: number }> = ({ lock, banner, drift }) => {
+const CameraScreen: React.FC<{ lock: number; banner: number; drift: number; pulse: number; hand: [number, number] }> = ({
+  lock,
+  banner,
+  drift,
+  pulse,
+  hand,
+}) => {
   const k = 0.25; // afiche en la pantalla
   const pw = POSTER.w * k;
   const ph = POSTER.h * k;
-  const left = (390 - pw) / 2 + drift * 10;
-  const top = (844 - ph) / 2 - 20 + drift * 6;
+  const left = (390 - pw) / 2 + drift * 10 + hand[0];
+  const top = (844 - ph) / 2 - 20 + drift * 6 + hand[1];
   return (
     <div style={{ position: "relative", width: 390, height: 844, overflow: "hidden", background: "#000" }}>
       <div style={{ position: "absolute", inset: -40 }}>
@@ -83,7 +89,7 @@ const CameraScreen: React.FC<{ lock: number; banner: number; drift: number }> = 
           <Poster />
         </div>
       </div>
-      <Brackets x={left + POSTER.qr.x * k} y={top + POSTER.qr.y * k} size={POSTER.qr.size * k} lock={lock} />
+      <Brackets x={left + POSTER.qr.x * k} y={top + POSTER.qr.y * k} size={POSTER.qr.size * k} lock={lock} pulse={pulse} />
       <div style={{ position: "absolute", inset: 0 }}>
         <StatusBar />
       </div>
@@ -157,7 +163,13 @@ export const E3Cliente: React.FC = () => {
       </div>
       <div style={{ position: "absolute", left: 540 - PW / 2, top: py, transform: `rotate(${prot}deg)` }}>
         <Phone width={PW}>
-          <CameraScreen lock={lock} banner={banner} drift={1 - rise} />
+          <CameraScreen
+            lock={lock}
+            banner={banner}
+            drift={1 - rise}
+            pulse={(Math.sin(frame / 4) + 1) / 2}
+            hand={[Math.sin(frame / 11) * 3 * (1 - lock), Math.cos(frame / 13) * 2 * (1 - lock)]}
+          />
           {open > 0 ? (
             <div style={{ position: "absolute", inset: 0, opacity: open, transform: `scale(${0.92 + 0.08 * open})`, transformOrigin: "50% 80%" }}>
               <MenuScreen
@@ -174,7 +186,7 @@ export const E3Cliente: React.FC = () => {
       </div>
 
       <Title at={C.title1} until={C.title2} size={150} parts={[{ t: "Escanea", hl: true }]} />
-      <Title at={C.title2} size={112} parts={[{ t: "Sin mesero. " }, { t: "Sin esperar.", hl: true }]} />
+      <Title at={C.title2} size={112} parts={[{ t: "Sin esperar. " }, { t: "Sin apps.", hl: true }]} />
       <Captions scene="E3" />
     </AbsoluteFill>
   );
