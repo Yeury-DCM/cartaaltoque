@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ArrowLeft, ExternalLink, Loader2, LogOut, RefreshCw, Search } from "lucide-react";
+import { ArrowLeft, ExternalLink, Loader2, LogOut, RefreshCw, Search, Trash2 } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Center, ErrorNote, FullSpinner } from "@/components/Center";
 import { APP_NAME, menuPath } from "@/lib/brand";
@@ -130,6 +130,31 @@ function Dashboard() {
     try {
       const { error } = await supabase.rpc("admin_update_restaurant", { p_id: row.id, ...patch });
       if (error) throw error;
+      await load();
+    } catch (e) {
+      setError(errorMessage(e));
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const remove = async (row: Row) => {
+    const typed = prompt(
+      `Vas a BORRAR "${row.name}" con sus platos, pedidos y archivos. No se puede deshacer.
+
+Para confirmar escribe: ${row.slug}`,
+    );
+    if (typed === null) return;
+    setBusy(row.id);
+    try {
+      const { error } = await supabase.rpc("admin_delete_restaurant", {
+        p_id: row.id,
+        p_confirm_slug: typed.trim(),
+      });
+      if (error)
+        throw error.message === "confirm_mismatch"
+          ? new Error("El texto no coincide: no se borró nada.")
+          : error;
       await load();
     } catch (e) {
       setError(errorMessage(e));
@@ -358,6 +383,13 @@ function Dashboard() {
                       >
                         <ExternalLink className="h-3.5 w-3.5" /> Ver menú
                       </a>
+                      <button
+                        className="btn-ghost !px-3 !py-1.5 !text-[11px] !text-destructive"
+                        disabled={busy === r.id}
+                        onClick={() => void remove(r)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" /> Borrar
+                      </button>
                     </div>
                   </li>
                 ))}

@@ -493,5 +493,28 @@ begin
   perform tests.check('un fallo del envío no frena el registro', true);
 end $$;
 
+-- ───────────── Super admin borra un restaurante ─────────────
+do $$
+declare rd uuid;
+begin
+  rd := (select id from public.restaurants where slug = 'bar-d');
+  insert into public.categories (restaurant_id, name, sort_order) values (rd, 'Cat D', 1);
+  insert into public.items (restaurant_id, category_id, name, price)
+    values (rd, (select id from public.categories where restaurant_id = rd limit 1), 'Plato D', 100);
+  perform tests.login('00000000-0000-4000-8000-00000000000d');
+  perform tests.fails('un dueño no borra su restaurante', format('select public.admin_delete_restaurant(%L, %L)', rd, 'bar-d'), 'forbidden');
+  perform tests.logout();
+  perform tests.login('00000000-0000-4000-8000-0000000000ff');
+  perform tests.fails('exige el slug exacto', format('select public.admin_delete_restaurant(%L, %L)', rd, 'otro'), 'confirm_mismatch');
+  perform public.admin_delete_restaurant(rd, 'bar-d');
+  perform tests.logout();
+  perform tests.check('restaurante borrado', not exists (select 1 from public.restaurants where id = rd));
+  perform tests.check('platos y contacto borrados',
+    not exists (select 1 from public.items where restaurant_id = rd)
+    and not exists (select 1 from public.restaurant_contacts where restaurant_id = rd));
+  perform tests.check('queda en la auditoría con su nombre',
+    exists (select 1 from private.audit_log where action = 'restaurant.delete' and details ->> 'slug' = 'bar-d'));
+end $$;
+
 select 'ALL TESTS PASSED' as result;
 rollback;
