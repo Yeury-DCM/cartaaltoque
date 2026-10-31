@@ -8,8 +8,8 @@ import { alpha, FONT, PAPER, SPRING } from "../theme";
 import { ITEMS, CATEGORIES, money } from "../ui/data";
 
 const C = CUES.E1;
-const W = 640;
-const H = 880;
+export const W = 640;
+export const H = 880;
 
 // Posiciones del menú impreso (px de la hoja).
 const ROWS: { kind: "cat" | "item"; text: string; price?: number; id?: string; y: number }[] = (() => {
@@ -37,7 +37,7 @@ const DIGITS = [
 ];
 
 /** Menú impreso, gastado: mancha de café, pliegue y esquina doblada. */
-const PrintedMenu: React.FC<{ strike: number; write: number; seed?: string }> = ({ strike, write, seed = "m" }) => {
+export const PrintedMenu: React.FC<{ strike: number; write: number; seed?: string }> = ({ strike, write, seed = "m" }) => {
   const sk = evolvePath(strike, STRIKE);
   return (
     <div

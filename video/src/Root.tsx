@@ -1,5 +1,6 @@
 import React from "react";
-import { Composition } from "remotion";
+import { Composition, Still } from "remotion";
+import { FEED, FLYERS } from "./flyers/Flyers";
 import "./styles.css";
 import { Ad, SceneStandalone } from "./Main";
 import { FPS, SCENE_FRAMES, editFrames } from "./timeline";
@@ -15,5 +16,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="E3-Cliente" component={SceneStandalone} defaultProps={{ scene: "E3" as const }} durationInFrames={SCENE_FRAMES.E3} {...size} />
     <Composition id="E4-Marca" component={SceneStandalone} defaultProps={{ scene: "E4" as const }} durationInFrames={SCENE_FRAMES.E4} {...size} />
     <Composition id="E5-Cierre" component={SceneStandalone} defaultProps={{ scene: "E5" as const }} durationInFrames={SCENE_FRAMES.E5} {...size} />
+    {FLYERS.map((fl) => (
+      <Still key={fl.id} id={fl.id} component={fl.component} {...FEED} />
+    ))}
   </>
 );
