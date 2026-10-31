@@ -466,5 +466,32 @@ begin
   perform tests.logout();
 end $$;
 
+-- ───────────── Aviso por correo de cliente nuevo ─────────────
+do $$
+declare rd uuid; v_body jsonb;
+begin
+  perform tests.login('00000000-0000-4000-8000-00000000000d');
+  rd := public.create_restaurant('Bar <b>D</b> & Co', 'bar-d');
+  insert into public.restaurant_contacts (restaurant_id, phone) values (rd, '18095550004');
+  perform tests.logout();
+  perform tests.check('sin llave en Vault no se envía', (select count(*) from net.sent) = 0);
+
+  insert into vault.decrypted_secrets values ('resend_api_key', 'test-key');
+  perform tests.login('00000000-0000-4000-8000-00000000000d');
+  rd := (select id from public.restaurants where slug = 'bar-d');
+  delete from public.restaurant_contacts where restaurant_id = rd;
+  insert into public.restaurant_contacts (restaurant_id, phone) values (rd, '18095550004');
+  perform tests.logout();
+  select body into v_body from net.sent;
+  perform tests.check('se envía un correo', (select count(*) from net.sent) = 1);
+  perform tests.check('va a los super admins', v_body -> 'to' = '["super@tests.local"]'::jsonb);
+  perform tests.check('el asunto trae el nombre', (v_body ->> 'subject') like '%Bar <b>D</b> & Co%');
+  perform tests.check('el nombre va escapado en el HTML',
+    (v_body ->> 'html') like '%Bar &lt;b&gt;D&lt;/b&gt; &amp; Co%' and (v_body ->> 'html') not like '%<b>D</b>%');
+  perform tests.check('trae el contacto y el dueño',
+    (v_body ->> 'html') like '%18095550004%' and (v_body ->> 'html') like '%d@tests.local%');
+  perform tests.check('un fallo del envío no frena el registro', true);
+end $$;
+
 select 'ALL TESTS PASSED' as result;
 rollback;

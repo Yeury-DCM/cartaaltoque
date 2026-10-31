@@ -39,3 +39,13 @@ grant usage on schema public to anon, authenticated;
 alter default privileges in schema public grant all on tables to anon, authenticated;
 alter default privileges in schema public grant all on functions to anon, authenticated;
 alter default privileges in schema public grant all on sequences to anon, authenticated;
+
+-- Vault y pg_net: en las pruebas se imitan; el envío real de correo no se ejecuta.
+create schema vault;
+create table vault.decrypted_secrets (name text, decrypted_secret text);
+create schema net;
+create table net.sent (url text, body jsonb);
+create function net.http_post(url text, body jsonb default '{}', headers jsonb default '{}')
+returns bigint language sql as $$
+  insert into net.sent values (url, body) returning 1::bigint
+$$;
