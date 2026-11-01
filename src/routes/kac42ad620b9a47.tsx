@@ -7,7 +7,7 @@ import { APP_NAME, menuPath } from "@/lib/brand";
 import { PLAN_LABEL } from "@/lib/features";
 import { privatePageHeaders } from "@/lib/security-headers";
 import { useSession } from "@/lib/session";
-import { errorMessage, supabase } from "@/lib/supabase";
+import { MEDIA_BUCKET, errorMessage, supabase } from "@/lib/supabase";
 import type { Plan, RestaurantStatus } from "@/lib/tenant";
 
 export const Route = createFileRoute("/kac42ad620b9a47")({
@@ -138,6 +138,26 @@ function Dashboard() {
     }
   };
 
+  /** Borra las imágenes del restaurante por la API de Storage (SQL no puede hacerlo). */
+  const purgeFiles = async (restaurantId: string) => {
+    const bucket = supabase.storage.from(MEDIA_BUCKET);
+    const files: string[] = [];
+    const walk = async (dir: string) => {
+      const { data, error } = await bucket.list(dir, { limit: 1000 });
+      if (error) throw error;
+      for (const entry of data ?? []) {
+        // Las carpetas vienen sin id.
+        if (entry.id === null) await walk(`${dir}/${entry.name}`);
+        else files.push(`${dir}/${entry.name}`);
+      }
+    };
+    await walk(restaurantId);
+    if (files.length) {
+      const { error } = await bucket.remove(files);
+      if (error) throw error;
+    }
+  };
+
   const remove = async (row: Row) => {
     const typed = prompt(
       `Vas a BORRAR "${row.name}" con sus platos, pedidos y archivos. No se puede deshacer.
@@ -155,7 +175,15 @@ Para confirmar escribe: ${row.slug}`,
         throw error.message === "confirm_mismatch"
           ? new Error("El texto no coincide: no se borró nada.")
           : error;
+      let filesLeft = false;
+      try {
+        await purgeFiles(row.id);
+      } catch {
+        filesLeft = true;
+      }
       await load();
+      if (filesLeft)
+        setError("El restaurante se borró, pero no se pudieron borrar todas sus imágenes.");
     } catch (e) {
       setError(errorMessage(e));
     } finally {
